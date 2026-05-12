@@ -1,0 +1,67 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "你更享受哪种工作状态？",
+      "options": [
+        {"label": "A", "text": "花一整天调试C++代码，找到一个性能瓶颈然后优化掉", "tag": "code"},
+        {"label": "B", "text": "用示波器/逻辑分析仪看波形，调通一个硬件模块", "tag": "circuit"},
+        {"label": "C", "text": "两者都喜欢，最好能混合", "tag": "mixed"}
+      ]
+    },
+    {
+      "id": 2,
+      "text": "你对数学推导（优化理论/矩阵分析/概率论）的态度？",
+      "options": [
+        {"label": "A", "text": "喜欢，觉得数学很美", "tag": "math-love"},
+        {"label": "B", "text": "能忍受，用到就学", "tag": "math-ok"},
+        {"label": "C", "text": "讨厌，只想写代码/画电路", "tag": "math-hate"}
+      ]
+    },
+    {
+      "id": 3,
+      "text": "你的核心目标是什么？",
+      "options": [
+        {"label": "A", "text": "毕业拿最高薪（50万+）", "tag": "salary"},
+        {"label": "B", "text": "稳定就业，不要太卷", "tag": "stable"},
+        {"label": "C", "text": "走学术路线（读博→教职）", "tag": "academic"}
+      ]
+    },
+    {
+      "id": 4,
+      "text": "你能接受的\"不确定性\"程度？",
+      "options": [
+        {"label": "A", "text": "低（想走确定能成功的路）", "tag": "low-risk"},
+        {"label": "B", "text": "中（愿意承担一定风险）", "tag": "mid-risk"},
+        {"label": "C", "text": "高（愿意赌一把前沿方向）", "tag": "high-risk"}
+      ]
+    },
+    {
+      "id": 5,
+      "text": "你目前最擅长什么？",
+      "options": [
+        {"label": "A", "text": "C++/Python编程，算法能力强", "tag": "coding"},
+        {"label": "B", "text": "数字电路，Verilog写过一点", "tag": "digital"},
+        {"label": "C", "text": "模拟电路，半导体物理学得好", "tag": "analog"},
+        {"label": "D", "text": "什么都还行，没特别突出", "tag": "general"}
+      ]
+    }
+  ],
+  "matchingRules": [
+    {"tags": ["code", "math-love", "salary", "low-risk", "coding"], "direction": "ai-compiler", "professors": ["wang-yu", "zhai-jidong"]},
+    {"tags": ["code", "math-ok", "salary", "low-risk", "coding"], "direction": "distributed", "professors": ["zhai-jidong"]},
+    {"tags": ["code", "math-ok", "salary", "mid-risk", "coding"], "direction": "llm-system", "professors": ["sun-guangyu"]},
+    {"tags": ["circuit", "math-ok", "stable", "mid-risk", "digital"], "direction": "riscv", "professors": ["wei-shaojun", "sun-guangyu"]},
+    {"tags": ["circuit", "math-ok", "academic", "high-risk", "analog"], "direction": "cim", "professors": ["yin-shouyi"]},
+    {"tags": ["circuit", "math-ok", "stable", "low-risk", "analog"], "direction": "edge-ai", "professors": ["yang-huazhong"]},
+    {"tags": ["mixed", "math-ok", "stable", "low-risk", "digital"], "direction": "fpga-eda", "professors": ["luo-guojie"]},
+    {"tags": ["mixed", "math-ok", "salary", "mid-risk", "coding"], "direction": "llm-system", "professors": ["sun-guangyu"]},
+    {"tags": ["code", "math-hate", "salary", "low-risk", "coding"], "direction": "distributed", "professors": ["zhai-jidong"]},
+    {"tags": ["circuit", "math-ok", "academic", "high-risk", "analog"], "direction": "neuromorphic", "professors": ["huang-tiejun"]}
+  ],
+  "defaultRecommendation": {
+    "direction": "llm-system",
+    "professors": ["sun-guangyu"],
+    "reason": "最全面起步点——就业面宽、薪资高、不依赖流片"
+  }
+}
