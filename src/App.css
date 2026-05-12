@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
-/* Design Tokens from ui-ux-pro-max */
+/* Design Tokens from ui-ux-pro-max — Data-Dense Dashboard */
 @theme {
   --color-primary: #1E40AF;
   --color-primary-light: #3B82F6;
   --color-primary-dark: #1E3A8A;
   --color-accent: #D97706;
   --color-accent-light: #F59E0B;
-  --color-surface: #F8FAFC;
+  --color-surface: #F5F5F5;
   --color-surface-raised: #FFFFFF;
   --color-muted: #E9EEF6;
   --color-border: #DBEAFE;
@@ -16,6 +16,12 @@
   --font-heading: 'Crimson Pro', 'Noto Sans SC', Georgia, serif;
   --font-body: 'Atkinson Hyperlegible', 'Noto Sans SC', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* Data-Dense Dashboard variables */
+  --grid-gap: 8px;
+  --card-padding: 12px;
+  --font-size-small: 12px;
+  --table-row-height: 36px;
 }
 
 /* Base styles */

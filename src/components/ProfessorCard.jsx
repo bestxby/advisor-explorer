@@ -43,45 +43,45 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full text-left p-6 cursor-pointer focus:outline-none group"
+        className="w-full text-left p-4 cursor-pointer focus:outline-none group"
         aria-expanded={expanded}
       >
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
-            <div className="flex flex-wrap items-center gap-3 mb-3">
-              <h3 className="text-2xl font-bold text-gray-900 font-heading group-hover:text-primary transition-colors duration-200">
+            <div className="flex flex-wrap items-center gap-2 mb-1.5">
+              <h3 className="text-lg font-bold text-gray-900 font-heading group-hover:text-primary transition-colors duration-200">
                 {professor.name}
               </h3>
-              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full ${colors.bg} ${colors.text} ${colors.border} border`}>
+              <span className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full ${colors.bg} ${colors.text} ${colors.border} border`}>
                 <span className={`w-1.5 h-1.5 rounded-full ${colors.dot}`} />
                 {professor.university} · {professor.department}
               </span>
             </div>
-            <p className="text-gray-600 text-sm leading-relaxed line-clamp-2">{professor.tagline}</p>
+            <p className="text-gray-500 text-xs leading-relaxed line-clamp-1">{professor.tagline}</p>
           </div>
 
           <div className={`
-            flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center
+            flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center
             transition-all duration-300 ease-out
             ${expanded
-              ? 'bg-primary text-white rotate-180 shadow-md'
+              ? 'bg-primary text-white rotate-180 shadow-sm'
               : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
             }
           `}>
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
             </svg>
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-wrap gap-1.5 mt-2">
           {professor.realDirections.slice(0, 3).map(dir => (
-            <span key={dir} className="inline-flex items-center px-3 py-1 bg-gray-50 text-gray-600 text-xs font-medium rounded-lg border border-gray-100 hover:bg-gray-100 transition-colors duration-150">
+            <span key={dir} className="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-600 text-xs rounded border border-gray-100">
               {dir}
             </span>
           ))}
           {professor.realDirections.length > 3 && (
-            <span className="inline-flex items-center px-3 py-1 bg-gray-50 text-gray-400 text-xs rounded-lg border border-gray-100">
+            <span className="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-400 text-xs rounded border border-gray-100">
               +{professor.realDirections.length - 3}
             </span>
           )}
