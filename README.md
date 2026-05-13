@@ -1,16 +1,47 @@
-# React + Vite
+# Advisor Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interactive React dashboard for comparing Tsinghua and Peking University computer architecture research directions, advisors, job-market trade-offs, and personalized direction matches.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Vite
+- React
+- Tailwind CSS
+- GSAP ScrollTrigger
 
-## React Compiler
+## Scripts
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+npm run lint
+npm run build
+npm run preview
+```
 
-## Expanding the ESLint configuration
+The app is configured with `base: '/advisor-explorer/'` for GitHub Pages deployment.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+
+```text
+src/
+  components/   UI sections and reusable cards
+  data/         JSON data for advisors, directions, and quiz rules
+  hooks/        scroll animation behavior
+```
+
+## Interaction Notes
+
+- The main content tabs support mouse and keyboard navigation.
+- Use Left/Right, Home, and End while focused on the tab list to switch panels.
+- Direction rows can be expanded with click, Enter, or Space.
+- Direction comparison and quiz panels are lazy-loaded after their tabs are opened.
+
+## Verification
+
+Before publishing changes, run:
+
+```bash
+npm run lint
+npm run build
+```

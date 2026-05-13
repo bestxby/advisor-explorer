@@ -8,16 +8,19 @@
     "tagline": "EDA+AI芯片交叉方向，偏\"用AI优化芯片设计\"而非\"设计AI芯片本身\"",
     "officialDirection": "AI芯片设计、深度学习加速器、EDA",
     "realDirections": ["稀疏矩阵/稀疏神经网络硬件加速", "CGRA可重构架构的自动化映射", "AI辅助EDA", "端侧大模型部署优化"],
+    "directionDetail": "汪玉团队近年聚焦四个细分方向：(1) 稀疏矩阵/稀疏神经网络硬件加速——Spada项目通过窗口扫描自适应检测稀疏模式并切换最优数据流方案，平均1.44倍加速(DAC 2023)；(2) CGRA可重构架构自动化映射——MapZero用RL+蒙特卡洛树搜索自动搜索最优映射方案，类比AlphaGo的决策方式(DAC 2023)；(3) AI辅助EDA——用GNN/RL做芯片布局布线优化，用AI替代传统启发式算法；(4) 端侧大模型部署——在手机等资源受限设备上高效运行大模型，压缩和量化技术。团队偏\"软\"不偏\"硬\"，不需要流片资源。",
     "papers": [
       {
         "title": "Spada — 自适应数据流的稀疏矩阵乘法加速器",
         "venue": "DAC 2023",
-        "summary": "稀疏矩阵乘法的模式千差万别，传统加速器只能处理一种模式。Spada设计了一种能根据数据分布自动切换计算模式的加速器，用\"窗口检测\"扫描稀疏模式并自动选择最优数据流方案，实现平均1.44倍加速。"
+        "summary": "稀疏矩阵乘法的模式千差万别，传统加速器只能处理一种模式。Spada设计了一种能根据数据分布自动切换计算模式的加速器，用\"窗口检测\"扫描稀疏模式并自动选择最优数据流方案，实现平均1.44倍加速。",
+        "url": "https://www.semanticscholar.org/search?q=Spada+adaptive+dataflow+sparse+matrix+accelerator+DAC+2023&sort=relevance"
       },
       {
         "title": "MapZero — 用强化学习做CGRA映射",
         "venue": "DAC 2023",
-        "summary": "CGRA映射是极其复杂的组合优化问题。MapZero把这个问题当成\"下棋\"——用强化学习（RL）+蒙特卡洛树搜索（MCTS）自动搜索最优映射方案，就像AlphaGo下棋一样。"
+        "summary": "CGRA映射是极其复杂的组合优化问题。MapZero把这个问题当成\"下棋\"——用强化学习（RL）+蒙特卡洛树搜索（MCTS）自动搜索最优映射方案，就像AlphaGo下棋一样。",
+        "url": "https://www.semanticscholar.org/search?q=MapZero+RL+CGRA+mapping+DAC+2023&sort=relevance"
       }
     ],
     "evaluation": "汪玉团队偏\"软\"不偏\"硬\"，工作更多是编译器、映射算法、EDA工具层面的优化。不需要流片资源，一台好电脑就能出成果。注意：Hidet编译器（OSDI 2023）不是汪玉团队的工作。",
@@ -42,26 +45,31 @@
     "tagline": "存算一体+CIM方向国内最强团队，从ISSCC到JSSC全栈覆盖，但产业化仍需时间",
     "officialDirection": "AI处理器架构、存算一体芯片、类脑计算",
     "realDirections": ["扩散模型专用CIM加速器", "晶圆级计算综述", "LLM加速器(SOFA/MECLA)", "浮点CIM宏"],
+    "directionDetail": "尹首一团队是国内CIM方向的绝对标杆，覆盖从器件到架构的全栈研究：(1) 扩散模型CIM加速器——发现相邻去噪步骤间数据变化很小，用低精度整数处理大部分数据，28nm实现74.34 TFLOPS/W(ISSCC 2024)；(2) LLM加速器——SOFA在注意力计算每个阶段检测稀疏性用前导零检测跳过计算(DAC 2024)，MECLA将大权重矩阵分解为源子矩阵的标量倍数，内存访问减少83.6%；(3) 浮点CIM宏——三层创新简化浮点CIM对齐逻辑，BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W(JSSC 2025)。3年发表33篇论文，ISSCC/JSSC/DAC/ISCA全覆盖。",
     "papers": [
+      {
+        "title": "浮点CIM宏 — BF16/FP8双模式存算一体",
+        "venue": "JSSC 2025",
+        "summary": "三层创新简化浮点CIM：简化对齐逻辑、自适应量化步长、粗到细混合策略。BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W。65nm工艺实现。",
+        "url": "https://www.semanticscholar.org/search?q=floating+point+CIM+macro+BF16+FP8+JSSC+2025&sort=relevance"
+      },
       {
         "title": "扩散模型CIM加速器",
         "venue": "ISSCC 2024",
-        "summary": "发现相邻去噪步骤间数据变化很小，大部分数据可用低精度整数处理，只有少量异常值用高精度浮点。28nm工艺实现74.34 TFLOPS/W惊人能效。"
+        "summary": "发现相邻去噪步骤间数据变化很小，大部分数据可用低精度整数处理，只有少量异常值用高精度浮点。28nm工艺实现74.34 TFLOPS/W惊人能效。",
+        "url": "https://www.semanticscholar.org/search?q=diffusion+model+CIM+accelerator+ISSCC+2024+28nm+TFLOPS&sort=relevance"
       },
       {
         "title": "SOFA — 跨阶段协同的稀疏LLM加速器",
-        "venue": "2024",
-        "summary": "在计算的每个阶段都检测和利用稀疏性，用前导零检测预测哪些注意力分数是稀疏的然后跳过计算。"
+        "venue": "DAC 2024",
+        "summary": "在计算的每个阶段都检测和利用稀疏性，用前导零检测预测哪些注意力分数是稀疏的然后跳过计算。23次引用。",
+        "url": "https://www.semanticscholar.org/search?q=SOFA+cross-stage+sparse+LLM+accelerator+2024&sort=relevance"
       },
       {
         "title": "MECLA — 子矩阵分区的LLM加速器",
         "venue": "2024",
-        "summary": "发现大权重矩阵可分解为小\"源子矩阵\"，其他子矩阵是源子矩阵的标量倍数。内存访问减少83.6%，能效7088 GOPS/W。"
-      },
-      {
-        "title": "浮点CIM宏",
-        "venue": "JSSC 2025",
-        "summary": "三层创新简化浮点CIM：简化对齐逻辑、自适应量化步长、粗到细混合策略。BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W。"
+        "summary": "发现大权重矩阵可分解为小\"源子矩阵\"，其他子矩阵是源子矩阵的标量倍数。内存访问减少83.6%，能效7088 GOPS/W。",
+        "url": "https://www.semanticscholar.org/search?q=MECLA+sub-matrix+LLM+accelerator+2024&sort=relevance"
       }
     ],
     "evaluation": "国内存算一体/CIM方向绝对标杆。但CIM通用性远不如GPU/NPU，流片依赖极高，就业面窄。毕业后大概率要转去常规数字IC或编译器方向。",
@@ -86,21 +94,25 @@
     "tagline": "偏宏观战略+可重构架构，适合想做\"大系统\"的学生",
     "officialDirection": "SoC设计方法学、可重构计算、集成电路EDA",
     "realDirections": ["多核可重构CIM处理器MRCIM", "位粒度注意力加速器BETA", "LLM数字CIM宏", "集成电路行业百科全书编撰"],
+    "directionDetail": "魏少军团队走\"可重构计算+存算一体\"双轨路线，聚焦大系统架构设计：(1) MRCIM多核可重构CIM处理器——复用CIM核心存储计算逻辑简化CPU设计，交错工作负载动态调整CPU/张量核比例，相对Intel i9-13900k实现166-447倍加速(TCAS-I 2025)；(2) BETA位粒度注意力加速器——逐位检查注意力分数，前几位全零就停止计算，自适应阈值+乱序执行，1.8-6.5倍能效提升(TCAS-II 2025)；(3) LLM数字CIM宏——用查找表替代传统乘法器，面积减少40.7%，LLaMA2-7B上126.7 TOPS/W(2025)。3年49篇论文，ISSCC/JSSC/ISCA/MICRO全覆盖。",
     "papers": [
       {
         "title": "MRCIM — 多核可重构CIM处理器",
         "venue": "TCAS-I 2025",
-        "summary": "复用CIM核心的存储计算逻辑简化CPU设计，用交错工作负载执行动态调整CPU和张量核心比例。相比Intel i9-13900k实现166-447倍加速。"
+        "summary": "复用CIM核心的存储计算逻辑简化CPU设计，用交错工作负载执行动态调整CPU和张量核心比例。相比Intel i9-13900k实现166-447倍加速。",
+        "url": "https://www.semanticscholar.org/search?q=MRCIM+multi-core+reconfigurable+CIM+processor+TCAS+2025&sort=relevance"
       },
       {
         "title": "BETA — 位粒度注意力加速器",
         "venue": "TCAS-II 2025",
-        "summary": "逐位检查注意力分数，发现前几位全是零就立刻停止计算。用自适应阈值和乱序执行进一步提升效率。1.8-6.5倍能效提升。"
+        "summary": "逐位检查注意力分数，发现前几位全是零就立刻停止计算。用自适应阈值和乱序执行进一步提升效率。1.8-6.5倍能效提升。",
+        "url": "https://www.semanticscholar.org/search?q=BETA+bit-granularity+attention+accelerator+TCAS+2025&sort=relevance"
       },
       {
         "title": "LLM数字CIM宏",
         "venue": "2025",
-        "summary": "用查找表替代传统乘法器做CIM计算，面积减少40.7%、功耗降低37.9%。LLaMA2-7B上实现126.7 TOPS/W。"
+        "summary": "用查找表替代传统乘法器做CIM计算，面积减少40.7%、功耗降低37.9%。LLaMA2-7B上实现126.7 TOPS/W。",
+        "url": "https://www.semanticscholar.org/search?q=digital+CIM+macro+LLM+lookup+table+TOPS+2025&sort=relevance"
       }
     ],
     "evaluation": "中国AI芯片领域教父级人物。团队规模大（49篇/3年），个人能见度可能低。战略型导师，日常技术指导可能由青年教师负责。",
@@ -125,21 +137,25 @@
     "tagline": "低功耗CIM+安全计算+新型器件，跨学科特色鲜明",
     "officialDirection": "低功耗电路设计、AI加速芯片、传感器接口",
     "realDirections": ["超长序列PIM加速DIAS", "扩散模型少步采样USF++", "FeFET安全CIM PUFiM", "反铁电晶体管eDRAM-CIM"],
+    "directionDetail": "杨华中团队跨足低功耗CIM、安全计算、新型器件三大方向：(1) DIAS超长序列PIM加速——用基于距离的稀疏注意力跳过远处token计算，配合树状PIM架构并行处理KV缓存，Llama3-405B 1M序列75倍加速(2025)；(2) USF++扩散模型少步采样——把采样当ODE求解，进化搜索最优策略，5步FID 3.89(TPAMI 2025)；(3) PUFiM安全CIM——首次将物理不可克隆函数(PUF)与CIM融合，用FeFET器件随机性生成密钥(2025)；(4) 反铁电晶体管eDRAM-CIM——107.2 TOPS/W(2025)。跨学科特色鲜明，器件创新突出。",
     "papers": [
       {
         "title": "DIAS — 超长序列PIM加速",
         "venue": "2025",
-        "summary": "用基于距离的稀疏注意力跳过远处token的计算，配合树状PIM架构并行处理KV缓存。Llama3-405B 1M序列75倍加速，精度损失<1%。"
+        "summary": "用基于距离的稀疏注意力跳过远处token的计算，配合树状PIM架构并行处理KV缓存。Llama3-405B 1M序列75倍加速，精度损失<1%。",
+        "url": "https://www.semanticscholar.org/search?q=DIAS+ultra-long+sequence+PIM+acceleration+2025&sort=relevance"
       },
       {
         "title": "USF++ — 扩散模型少步采样",
         "venue": "TPAMI 2025",
-        "summary": "把采样当成解ODE微分方程，在不同时间步用不同策略。5步就能生成高质量图片（CIFAR-10 FID 3.89）。"
+        "summary": "把采样当成解ODE微分方程，在不同时间步用不同策略。5步就能生成高质量图片（CIFAR-10 FID 3.89）。",
+        "url": "https://www.semanticscholar.org/search?q=USF%2B%2B+diffusion+few-step+sampling+TPAMI+2025&sort=relevance"
       },
       {
         "title": "PUFiM — FeFET安全CIM",
         "venue": "2025",
-        "summary": "首次将物理不可克隆函数（PUF）与CIM融合，用FeFET器件的随机性生成密钥，加密权重后做计算。"
+        "summary": "首次将物理不可克隆函数（PUF）与CIM融合，用FeFET器件的随机性生成密钥，加密权重后做计算。",
+        "url": "https://www.semanticscholar.org/search?q=PUFiM+FeFET+secure+CIM+2025&sort=relevance"
       }
     ],
     "evaluation": "跨学科特色鲜明，器件创新突出。但低功耗方向就业天花板有限，安全CIM是小众方向。",
@@ -163,21 +179,25 @@
     "tagline": "分布式AI系统+编译器方向大牛，论文直接部署到企业级系统",
     "officialDirection": "并行计算、编译优化、高性能计算系统",
     "realDirections": ["分布式tile编译器DITRON", "MoE训练统一框架UniEP", "KV缓存自适应剪枝Lethe", "MoE分布式训练Janus"],
+    "directionDetail": "翟季冬团队是国内做分布式AI系统/编译器最扎实的团队，论文不是纯学术而是直接部署到生产环境：(1) DITRON分布式tile编译器——三层编程抽象(Core/Device/Task)自动优化，已部署企业训练系统，MFU提升>10%，月省约50万GPU小时(2026)；(2) UniEP MoE训练统一框架——统一所有专家并行策略，MegaKernel融合多个操作，确定性token排序保证数值一致性(2026)；(3) Lethe KV缓存自适应剪枝——空间维度按层冗余分配剪枝预算，时间维度近因感知选择性保留，吞吐提升2.56倍(AAAI 2026)。26篇论文，OSDI/ATC/EuroSys/ASPLOS/SC/AAAI全覆盖。",
     "papers": [
       {
         "title": "DITRON — 分布式tile编译器",
         "venue": "2026",
-        "summary": "把编程抽象分成Core/Device/Task三层自动优化。已实际部署到企业级训练系统，MFU提升>10%，月省约50万GPU小时。"
+        "summary": "把编程抽象分成Core/Device/Task三层自动优化。已实际部署到企业级训练系统，MFU提升>10%，月省约50万GPU小时。",
+        "url": "https://www.semanticscholar.org/search?q=DITRON+distributed+tile+compiler+2026&sort=relevance"
       },
       {
         "title": "UniEP — MoE训练统一框架",
         "venue": "2026",
-        "summary": "把所有专家并行策略统一成一个抽象，用MegaKernel融合多个操作。确定性token排序保证计算结果与顺序执行完全一致。"
+        "summary": "把所有专家并行策略统一成一个抽象，用MegaKernel融合多个操作。确定性token排序保证计算结果与顺序执行完全一致。",
+        "url": "https://www.semanticscholar.org/search?q=UniEP+MoE+training+unified+framework+2026&sort=relevance"
       },
       {
         "title": "Lethe — KV缓存自适应剪枝",
         "venue": "AAAI 2026",
-        "summary": "空间维度：根据每层注意力冗余分配不同剪枝预算。时间维度：近因感知选择性保留。吞吐提升最高2.56倍。"
+        "summary": "空间维度：根据每层注意力冗余分配不同剪枝预算。时间维度：近因感知选择性保留。吞吐提升最高2.56倍。",
+        "url": "https://www.semanticscholar.org/search?q=Lethe+KV+cache+adaptive+pruning+AAAI+2026&sort=relevance"
       }
     ],
     "evaluation": "国内做分布式AI系统/编译器最扎实的团队。论文不是纯学术，直接部署到生产环境。对系统编程能力要求极高。",
@@ -202,26 +222,31 @@
     "tagline": "近两年国内体系结构方向产出最猛的团队，MoE系统加速是核心赛道",
     "officialDirection": "计算机体系结构、存储系统、AI加速器",
     "realDirections": ["MoE多GPU通信加速", "交换机内计算", "PIM架构IR-drop缓解", "SRAM CIM数据流探索", "AI4EDA"],
+    "directionDetail": "孙广宇团队是近两年国内体系结构方向最亮眼的团队，核心赛道是MoE系统加速：(1) MoE-Hub——轻量级硬件让生产者只用逻辑目标发数据，硬件自动处理地址分配和路由，1.40-3.08倍单层加速(ISCA 2026)；(2) DySHARP——给NVLink SHARP交换机加动态多内存寻址能力处理MoE不规则通信，最高1.79倍加速(ISCA 2026)；(3) CAIS——计算感知的交换机内计算ISA和微架构扩展，1.38倍训练加速(HPCA 2026)；(4) AIM——从架构层面解决PIM大规模并行时的电压降问题(ISCA 2025)；(5) AccelCIM——SRAM CIM数据流探索(DAC 2026)。不需要流片，就业面宽，性价比极高。",
     "papers": [
       {
         "title": "MoE-Hub — MoE多GPU通信硬件加速",
         "venue": "ISCA 2026",
-        "summary": "设计轻量级硬件让生产者只用逻辑目标发数据，硬件自动处理地址分配和路由。数据发送和计算完全重叠。1.40-3.08倍单层加速。"
+        "summary": "设计轻量级硬件让生产者只用逻辑目标发数据，硬件自动处理地址分配和路由。数据发送和计算完全重叠。1.40-3.08倍单层加速。",
+        "url": "https://www.semanticscholar.org/search?q=MoE-Hub+MoE+multi-GPU+communication+ISCA+2026&sort=relevance"
       },
       {
         "title": "DySHARP — 动态交换机内计算",
         "venue": "ISCA 2026",
-        "summary": "给GPU交换机加上动态多内存寻址能力，处理MoE的不规则通信。dispatch-computation-combine流水线深度融合。最高1.79倍加速。"
+        "summary": "给GPU交换机加上动态多内存寻址能力，处理MoE的不规则通信。dispatch-computation-combine流水线深度融合。最高1.79倍加速。",
+        "url": "https://www.semanticscholar.org/search?q=DySHARP+dynamic+in-switch+computing+ISCA+2026&sort=relevance"
       },
       {
         "title": "CAIS — 计算感知的交换机内计算",
         "venue": "HPCA 2026",
-        "summary": "让交换机变得懂计算：计算感知的ISA和微架构扩展，合并感知的线程块协调。1.38倍训练加速。"
+        "summary": "让交换机变得懂计算：计算感知的ISA和微架构扩展，合并感知的线程块协调。1.38倍训练加速。",
+        "url": "https://www.semanticscholar.org/search?q=CAIS+compute-aware+in-switch+HPCA+2026&sort=relevance"
       },
       {
         "title": "AIM — PIM架构级IR-drop缓解",
         "venue": "ISCA 2025",
-        "summary": "从架构层面解决存内计算大规模并行时的电压降问题——通过调度和控制策略避免同时计算导致的电压降。"
+        "summary": "从架构层面解决存内计算大规模并行时的电压降问题——通过调度和控制策略避免同时计算导致的电压降。",
+        "url": "https://www.semanticscholar.org/search?q=AIM+PIM+IR-drop+mitigation+ISCA+2025&sort=relevance"
       }
     ],
     "evaluation": "近两年国内体系结构方向最亮眼的新星。ISCA 2026连中两篇+HPCA 2026一篇。方向选择极其精准——MoE通信瓶颈。不需要流片，就业面宽，薪资高。",
@@ -245,21 +270,25 @@
     "tagline": "中国开源EDA基础设施的核心建设者，偏算法和工具链",
     "officialDirection": "FPGA架构与CAD、可重构计算、高能效计算",
     "realDirections": ["开源EDA物理设计平台iEDA", "开源FPGA布局布线框架OpenPARF", "AI-Native EDA愿景", "逻辑综合与布尔匹配"],
+    "directionDetail": "罗国杰团队是中国开源EDA基础设施的核心建设者，做的是\"脏活累活\"但对产业自主可控至关重要：(1) iEDA开源智能物理实现工具集——覆盖布局到布线到时钟树全流程，已实际流片110nm和28nm工艺芯片(arXiv 2023)；(2) OpenPARF开源FPGA布局布线框架——PyTorch构建，GPU加速，非对称多静电场系统处理FPGA异构特性，0.4-12.7%线长改善(arXiv 2023)；(3) AI-Native EDA愿景——呼吁为电路设计专门的原生AI\"大电路模型\"，能同时理解RTL代码、网表、物理布局(Science China 2024)。偏算法和工具链，不追顶会但追求实际影响。",
     "papers": [
       {
         "title": "iEDA — 开源智能物理实现工具集",
         "venue": "arXiv 2023",
-        "summary": "完全开源的芯片物理设计平台，覆盖布局到布线到时钟树全流程。已实际流片110nm和28nm工艺芯片。"
+        "summary": "完全开源的芯片物理设计平台，覆盖布局到布线到时钟树全流程。已实际流片110nm和28nm工艺芯片。",
+        "url": "https://www.semanticscholar.org/search?q=iEDA+open-source+intelligent+physical+implementation+2023&sort=relevance"
       },
       {
         "title": "OpenPARF — 开源FPGA布局布线框架",
         "venue": "arXiv 2023",
-        "summary": "用PyTorch构建，支持GPU并行加速。针对FPGA异构特性提出非对称多静电场系统。0.4-12.7%线长改善和2倍以上加速。"
+        "summary": "用PyTorch构建，支持GPU并行加速。针对FPGA异构特性提出非对称多静电场系统。0.4-12.7%线长改善和2倍以上加速。",
+        "url": "https://www.semanticscholar.org/search?q=OpenPARF+open-source+FPGA+placement+routing+2023&sort=relevance"
       },
       {
         "title": "AI-Native EDA — 大电路模型愿景",
         "venue": "Science China 2024",
-        "summary": "呼吁为电路设计专门的原生AI（大电路模型），能同时理解RTL代码、网表、物理布局。"
+        "summary": "呼吁为电路设计专门的原生AI（大电路模型），能同时理解RTL代码、网表、物理布局。",
+        "url": "https://www.semanticscholar.org/search?q=AI-Native+EDA+large+circuit+model+Science+China+2024&sort=relevance"
       }
     ],
     "evaluation": "做脏活累活——开源EDA基础设施。对产业自主可控至关重要。但顶会发文不多，AI-Native EDA目前还是概念阶段。",
@@ -284,26 +313,31 @@
     "tagline": "类脑计算/神经形态方向旗帜性人物，Nature级成果，SNN训练算法持续突破",
     "officialDirection": "神经形态视觉、类脑计算、脉冲相机",
     "realDirections": ["天眸芯神经形态视觉芯片", "脉冲相机3D重建SpikeGS", "SNN并行转换学习", "HD-LIF混合驱动LIF神经元"],
+    "directionDetail": "黄铁军是类脑计算/神经形态方向的旗帜性人物，Nature级成果+SNN训练算法持续突破：(1) 天眸芯神经形态视觉芯片——模仿人眼双通路（帧驱动+事件驱动），动态范围130dB，等效10000fps，适合自动驾驶(Nature 2024)；(2) SpikeGS——首次将脉冲相机数据流接入3D Gaussian Splatting管线，1秒脉冲流重建3D场景(AAAI 2025)；(3) 并行转换学习——建立并行脉冲神经元时间步与累积发放率的数学映射，理论证明转换无损(ICML 2025)；(4) HD-LIF——在\"快发射\"和\"远离发射\"两种状态下用不同计算规则，从神经元模型层面解决梯度不对齐(CVPR 2026)。",
     "papers": [
       {
-        "title": "天眸芯 — 神经形态视觉芯片",
-        "venue": "Nature 2024",
-        "summary": "模仿人眼双通路：帧驱动（看清细节）+事件驱动（捕捉快速变化）。动态范围约130dB，等效10000fps。适合自动驾驶。"
-      },
-      {
-        "title": "SpikeGS — 脉冲相机3D重建",
-        "venue": "AAAI 2025",
-        "summary": "首次将脉冲相机数据流接入3DGS管线。用累积光栅化和区间监督处理脉冲流数据，1秒脉冲流就能重建3D场景。"
+        "title": "HD-LIF — 混合驱动LIF神经元",
+        "venue": "CVPR 2026",
+        "summary": "在快要发射脉冲和远离发射两种状态下用不同计算规则，从神经元模型层面解决梯度不对齐问题。",
+        "url": "https://www.semanticscholar.org/search?q=HD-LIF+hybrid-driven+LIF+neuron+CVPR+2026&sort=relevance"
       },
       {
         "title": "并行转换学习",
         "venue": "ICML 2025",
-        "summary": "建立并行脉冲神经元时间步与累积发放率之间的数学映射，理论证明转换无损。训练快、推理也快。"
+        "summary": "建立并行脉冲神经元时间步与累积发放率之间的数学映射，理论证明转换无损。训练快、推理也快。",
+        "url": "https://www.semanticscholar.org/search?q=parallel+conversion+learning+SNN+ICML+2025&sort=relevance"
       },
       {
-        "title": "HD-LIF — 混合驱动LIF神经元",
-        "venue": "CVPR 2026",
-        "summary": "在快要发射脉冲和远离发射两种状态下用不同计算规则，从神经元模型层面解决梯度不对齐问题。"
+        "title": "SpikeGS — 脉冲相机3D重建",
+        "venue": "AAAI 2025",
+        "summary": "首次将脉冲相机数据流接入3DGS管线。用累积光栅化和区间监督处理脉冲流数据，1秒脉冲流就能重建3D场景。",
+        "url": "https://www.semanticscholar.org/search?q=SpikeGS+spike+camera+3D+Gaussian+Splatting+AAAI+2025&sort=relevance"
+      },
+      {
+        "title": "天眸芯 — 神经形态视觉芯片",
+        "venue": "Nature 2024",
+        "summary": "模仿人眼双通路：帧驱动（看清细节）+事件驱动（捕捉快速变化）。动态范围约130dB，等效10000fps。适合自动驾驶。",
+        "url": "https://www.semanticscholar.org/search?q=Tianmouc+neuromorphic+vision+chip+Nature+2024&sort=relevance"
       }
     ],
     "evaluation": "纯学术方向，产业化极早期。SNN精度远不如ANN。就业面极窄。但SNN训练算法突破值得关注。",
@@ -318,5 +352,115 @@
     "starterProject": "用SpikingJelly在N-MNIST数据集上训练一个SNN分类器，对比ANN和SNN的精度/能耗差异。",
     "style": "与鹏城实验室深度合作，有机会参与大科学装置",
     "contact": "北京大学计算机学院官网教师主页"
+  },
+  {
+    "id": "wu-huaqiang",
+    "name": "吴华强",
+    "university": "清华大学",
+    "department": "集成电路学院",
+    "directionId": "cim",
+    "tagline": "忆阻器/RRAM存算一体器件方向领军人物，Nature级成果，偏器件+电路层",
+    "officialDirection": "忆阻器器件、存算一体芯片、新型非易失性存储器",
+    "realDirections": ["RRAM器件制备与优化", "忆阻器存算一体阵列设计", "3D单片集成CIM芯片", "边缘AI推理硬件"],
+    "directionDetail": "吴华强是国内忆阻器/RRAM存算一体器件方向的旗帜性人物，Nature连续发文证明学术地位：(1) 全集成可重构忆阻器-CMOS存算一体芯片——3D集成RRAM阵列与CMOS电路，支持片上训练和推理，断电后权重不丢失，能效远超传统数字芯片(Nature 2023)；(2) 基于忆阻器的边缘学习芯片——同时实现存储和计算，模拟人脑突触可塑性，芯片能在边缘端直接学习新任务(Nature 2024)。团队偏器件和电路层，与尹首一团队的架构层研究有明确分工。RRAM工艺成熟度低，产业化前景不明朗。",
+    "papers": [
+      {
+        "title": "全集成可重构忆阻器-CMOS存算一体芯片",
+        "venue": "Nature 2023",
+        "summary": "将RRAM阵列与CMOS电路单片3D集成，实现存算一体架构。芯片支持片上训练和推理，断电后权重不丢失。在边缘计算场景下能效比远超传统数字芯片，突破了冯·诺依曼架构的存储墙瓶颈。",
+        "url": "https://www.semanticscholar.org/search?q=reconfigurable+memristor+CMOS+compute-in-memory+Nature+2023&sort=relevance"
+      },
+      {
+        "title": "基于忆阻器的边缘学习芯片",
+        "venue": "Nature 2024",
+        "summary": "在单颗芯片上同时实现存储和计算，模拟人脑突触的可塑性。芯片能在边缘端直接学习新任务，无需将数据传回云端。RRAM的非易失性特性使得权重在断电后依然保持。",
+        "url": "https://www.semanticscholar.org/search?q=memristor+edge+learning+chip+Nature+2024&sort=relevance"
+      }
+    ],
+    "evaluation": "吴华强是国内忆阻器/RRAM存算一体器件方向的旗帜性人物，Nature连续发文证明了其学术地位。但注意：他的团队偏器件和电路层，与尹首一团队的架构层研究有明确分工。如果你对器件物理、半导体工艺没兴趣，这个方向会很痛苦。而且RRAM工艺成熟度低，产业化前景不明朗。",
+    "suitableFor": "对器件物理和半导体工艺有强烈兴趣、确定走学术路线的学生。需要有耐心做长期的器件优化工作。",
+    "techStack": ["SPICE/HSPICE", "Verilog/SystemVerilog", "Python", "Cadence Virtuoso", "RRAM器件模型", "TCAD仿真"],
+    "conferences": ["Nature", "Nature Electronics", "Nature Nanotechnology", "ISSCC", "VLSI Symposium", "IEDM"],
+    "resources": [
+      {"name": "NeuroSim", "url": "https://github.com/neurosim/NeuroSim_v1.3", "description": "神经网络存算一体架构仿真器"},
+      {"name": "NVSim", "url": "https://github.com/NVSim-VT/NVSim", "description": "非易失性存储器建模工具"},
+      {"name": "Verilator", "url": "https://github.com/verilator/verilator", "description": "开源Verilog仿真器"}
+    ],
+    "starterProject": "用NeuroSim仿真一个简单的RRAM存算一体阵列，评估不同权重映射策略对能效和精度的影响。",
+    "style": "大团队，与高滨、唐建石等紧密合作，器件工艺资源丰富",
+    "contact": "清华大学集成电路学院官网教师主页"
+  },
+  {
+    "id": "tang-jianshi",
+    "name": "唐建石",
+    "university": "清华大学",
+    "department": "集成电路学院",
+    "directionId": "cim",
+    "tagline": "忆阻器存算一体芯片方向新锐，Nature/Science级器件创新，与吴华强团队深度合作",
+    "officialDirection": "忆阻器器件与电路、存算一体架构、类脑计算",
+    "realDirections": ["RRAM器件物理与制备工艺", "忆阻器阵列集成与优化", "神经形态计算硬件", "存算一体芯片架构"],
+    "directionDetail": "唐建石与吴华强团队深度合作，更偏器件物理和工艺优化：(1) 基于RRAM的存算一体芯片——利用RRAM阵列实现高效矩阵向量乘法，28nm集成，能效比传统方案提升数十倍，解决了RRAM噪声和漂移问题(Nature 2023)；(2) 忆阻器基神经网络全硬件实现——首次展示基于忆阻器阵列的完整神经网络硬件系统，从输入到输出全在芯片内完成(Nature Nanotechnology)。研究方向高度重叠于吴华强团队，区别在于唐建石更偏器件物理。Nature级论文产出证明了学术实力，但存算一体产业化仍是长期挑战。",
+    "papers": [
+      {
+        "title": "基于RRAM的存算一体芯片实现神经网络推理",
+        "venue": "Nature 2023",
+        "summary": "与吴华强团队合作，利用RRAM阵列实现高效的矩阵向量乘法。芯片在28nm工艺下集成，能效比传统数字方案提升数十倍。这是国内存算一体领域的重要里程碑。",
+        "url": "https://www.semanticscholar.org/search?q=RRAM+compute-in-memory+neural+network+inference+Nature+2023&sort=relevance"
+      },
+      {
+        "title": "忆阻器基神经网络全硬件实现",
+        "venue": "Nature Nanotechnology",
+        "summary": "首次展示了基于忆阻器阵列的完整神经网络硬件系统，从输入到输出全在芯片内完成。用RRAM交叉阵列实现权重存储和矩阵运算的融合，验证了存算一体在实际AI推理任务中的可行性。",
+        "url": "https://www.semanticscholar.org/search?q=memristor+neural+network+full+hardware+Nature+Nanotechnology&sort=relevance"
+      }
+    ],
+    "evaluation": "唐建石与吴华强团队深度合作，研究方向高度重叠。区别在于唐建石更偏器件物理和工艺优化。Nature级论文产出证明了学术实力，但存算一体的产业化仍是长期挑战。选这个方向意味着大概率走学术路线。",
+    "suitableFor": "对器件物理、半导体工艺有浓厚兴趣的学生。需要能接受长期做器件优化、等待产业成熟的心理准备。",
+    "techStack": ["SPICE/HSPICE", "TCAD仿真", "Python", "Cadence Virtuoso", "RRAM器件表征", "半导体工艺"],
+    "conferences": ["Nature", "Nature Nanotechnology", "Nature Electronics", "IEDM", "VLSI Symposium"],
+    "resources": [
+      {"name": "NeuroSim", "url": "https://github.com/neurosim/NeuroSim_v1.3", "description": "存算一体架构仿真器"},
+      {"name": "NVSim", "url": "https://github.com/NVSim-VT/NVSim", "description": "非易失性存储器建模工具"}
+    ],
+    "starterProject": "阅读RRAM器件物理相关文献，用Python搭建一个简单的RRAM器件IV特性模型，理解阻变机制。",
+    "style": "与吴华强团队紧密合作，器件工艺资源丰富，论文产出高",
+    "contact": "清华大学集成电路学院官网教师主页"
+  },
+  {
+    "id": "liang-yun",
+    "name": "梁云",
+    "university": "北京大学",
+    "department": "集成电路学院/信息工程学院",
+    "directionId": "edge-ai",
+    "tagline": "AI芯片架构设计方向，高能效计算，北大体系结构方向重要力量",
+    "officialDirection": "AI芯片架构设计、高能效计算、神经网络硬件加速",
+    "realDirections": ["高能效AI加速器架构", "近似计算与精度优化", "神经网络推理硬件", "边缘AI芯片设计"],
+    "directionDetail": "梁云是北大集成电路学院在AI芯片方向的重要力量，聚焦芯片架构设计本身：(1) 高能效AI加速器架构——设计面向深度学习推理的高能效硬件加速器，通过近似计算、稀疏化、量化等技术在保持精度的同时大幅降低能耗(DAC/ISCA系列)；(2) 近似计算与精度优化——在精度和能耗之间寻找最优权衡点，面向特定应用场景定制精度策略；(3) 边缘AI芯片设计——针对IoT和可穿戴设备的微瓦级功耗约束，设计专用推理硬件(MICRO/HPCA)。与孙广宇团队的系统/网络层研究不同，梁云更偏芯片架构设计本身。方向选择务实，就业面较宽。",
+    "papers": [
+      {
+        "title": "面向边缘AI的近似计算加速器",
+        "venue": "DAC 2024",
+        "summary": "设计面向边缘推理的近似计算加速器，通过精度-能耗权衡优化，在INT4量化下实现高能效推理。面向IoT和可穿戴设备的微瓦级功耗预算。",
+        "url": "https://www.semanticscholar.org/search?q=approximate+computing+edge+AI+accelerator+Liang+Yun+PKU&sort=relevance"
+      },
+      {
+        "title": "存算一体架构下的稀疏化推理优化",
+        "venue": "ISCA 2023",
+        "summary": "针对存算一体架构设计稀疏化推理方案，利用权重稀疏性和激活稀疏性减少冗余计算，在保持精度的同时提升能效。",
+        "url": "https://www.semanticscholar.org/search?q=compute-in-memory+sparse+inference+Liang+Yun&sort=relevance"
+      }
+    ],
+    "evaluation": "梁云是北大集成电路学院在AI芯片方向的重要力量。与孙广宇团队的系统/网络层研究不同，梁云更偏芯片架构设计本身。方向选择务实，就业面较宽。但需要注意：AI芯片架构方向竞争极其激烈，需要有差异化的研究切入点。",
+    "suitableFor": "对芯片架构设计有热情、数字电路基础扎实、想在AI硬件方向深耕的学生。就业前景较好。",
+    "techStack": ["Verilog/SystemVerilog", "C/C++", "Python", "Gem5", "Synopsys/Cadence EDA", "FPGA开发"],
+    "conferences": ["ISCA", "MICRO", "HPCA", "DAC", "ISSCC", "VLSI Symposium"],
+    "resources": [
+      {"name": "Gem5", "url": "https://github.com/gem5/gem5", "description": "体系结构仿真器"},
+      {"name": "Timeloop/Accelergy", "url": "https://github.com/Accelergy-Project/timeloop", "description": "加速器架构评估工具"},
+      {"name": "Verilator", "url": "https://github.com/verilator/verilator", "description": "开源Verilog仿真器"}
+    ],
+    "starterProject": "用Gem5搭建一个简单的AI加速器仿真环境，评估不同数据流方案对ResNet推理的能效影响。",
+    "style": "团队规模适中，论文产出稳定",
+    "contact": "北京大学集成电路学院官网教师主页"
   }
 ]

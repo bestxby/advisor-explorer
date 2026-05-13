@@ -1,15 +1,4 @@
 export default function DirectionDetail({ direction }) {
-  const getHeatColor = (heat) => {
-    const colors = {
-      '极高': 'bg-red-100 text-red-700 border-red-200',
-      '高': 'bg-orange-100 text-orange-700 border-orange-200',
-      '中高': 'bg-yellow-100 text-yellow-700 border-yellow-200',
-      '中': 'bg-green-100 text-green-700 border-green-200',
-      '低': 'bg-gray-100 text-gray-600 border-gray-200',
-    };
-    return colors[heat] || colors['中'];
-  };
-
   return (
     <div className="bg-gradient-to-br from-gray-50 to-white p-8 border-t border-gray-100">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">

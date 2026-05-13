@@ -12,6 +12,12 @@ dist
 dist-ssr
 *.local
 
+# Screenshots
+screenshot*.png
+
+# Internal dev specs
+docs/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

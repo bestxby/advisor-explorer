@@ -1,5 +1,26 @@
-import { useState, Fragment } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import DirectionDetail from './DirectionDetail';
+
+const HEAT_ORDER = { '极高': 5, '高': 4, '中高': 3, '中': 2, '低': 1 };
+const HEAT_STYLES = {
+  '极高': 'bg-red-50 text-red-700 border-red-200',
+  '高': 'bg-orange-50 text-orange-700 border-orange-200',
+  '中高': 'bg-amber-50 text-amber-700 border-amber-200',
+  '中': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  '低': 'bg-gray-50 text-gray-600 border-gray-200',
+};
+
+function getSalaryNum(salaryCeiling) {
+  const match = String(salaryCeiling || '').match(/(\d+)/);
+  return match ? Number.parseInt(match[1], 10) : 0;
+}
+
+const sortFunctions = {
+  recommendation: (a, b) => b.recommendation - a.recommendation,
+  difficulty: (a, b) => b.difficulty - a.difficulty,
+  salary: (a, b) => getSalaryNum(b.salaryCeiling) - getSalaryNum(a.salaryCeiling),
+  competition: (a, b) => (HEAT_ORDER[b.competitionHeat] || 0) - (HEAT_ORDER[a.competitionHeat] || 0),
+};
 
 function DifficultyDots({ level, max = 5 }) {
   return (
@@ -37,33 +58,21 @@ function RecommendationBadge({ level }) {
 export default function DirectionTable({ directions, highlightedDirection, sortBy }) {
   const [expandedId, setExpandedId] = useState(null);
 
-  const sortFunctions = {
-    recommendation: (a, b) => b.recommendation - a.recommendation,
-    difficulty: (a, b) => b.difficulty - a.difficulty,
-    salary: (a, b) => {
-      const getSalaryNum = (s) => {
-        const match = s.match(/(\d+)/);
-        return match ? parseInt(match[1]) : 0;
-      };
-      return getSalaryNum(b.salaryCeiling) - getSalaryNum(a.salaryCeiling);
-    },
-    competition: (a, b) => {
-      const heatOrder = { '极高': 5, '高': 4, '中高': 3, '中': 2, '低': 1 };
-      return (heatOrder[b.competitionHeat] || 0) - (heatOrder[a.competitionHeat] || 0);
-    },
+  const sorted = useMemo(() => (
+    [...directions].sort(sortFunctions[sortBy] || sortFunctions.recommendation)
+  ), [directions, sortBy]);
+
+  const getHeatStyle = heat => HEAT_STYLES[heat] || HEAT_STYLES['中'];
+
+  const toggleDirection = id => {
+    setExpandedId(current => (current === id ? null : id));
   };
 
-  const sorted = [...directions].sort(sortFunctions[sortBy] || sortFunctions.recommendation);
-
-  const getHeatStyle = (heat) => {
-    const styles = {
-      '极高': 'bg-red-50 text-red-700 border-red-200',
-      '高': 'bg-orange-50 text-orange-700 border-orange-200',
-      '中高': 'bg-amber-50 text-amber-700 border-amber-200',
-      '中': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-      '低': 'bg-gray-50 text-gray-600 border-gray-200',
-    };
-    return styles[heat] || styles['中'];
+  const handleDirectionKeyDown = (event, id) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      toggleDirection(id);
+    }
   };
 
   return (
@@ -73,6 +82,11 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
         {sorted.map(d => (
           <div
             key={d.id}
+            data-animate="direction-row"
+            role="button"
+            tabIndex={0}
+            aria-expanded={expandedId === d.id}
+            aria-controls={`direction-detail-mobile-${d.id}`}
             className={`
               rounded-xl border-2 transition-all duration-200 cursor-pointer
               ${highlightedDirection === d.id
@@ -80,7 +94,8 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                 : 'border-gray-100 hover:border-gray-200 hover:shadow-sm'
               }
             `}
-            onClick={() => setExpandedId(expandedId === d.id ? null : d.id)}
+            onClick={() => toggleDirection(d.id)}
+            onKeyDown={event => handleDirectionKeyDown(event, d.id)}
           >
             <div className="p-5">
               <div className="flex items-start justify-between gap-3 mb-3">
@@ -124,7 +139,9 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
             </div>
 
             {expandedId === d.id && (
-              <DirectionDetail direction={d} />
+              <div id={`direction-detail-mobile-${d.id}`}>
+                <DirectionDetail direction={d} />
+              </div>
             )}
           </div>
         ))}
@@ -147,7 +164,13 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
             {sorted.map(d => (
               <Fragment key={d.id}>
                 <tr
-                  onClick={() => setExpandedId(expandedId === d.id ? null : d.id)}
+                  data-animate="direction-row"
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={expandedId === d.id}
+                  aria-controls={`direction-detail-desktop-${d.id}`}
+                  onClick={() => toggleDirection(d.id)}
+                  onKeyDown={event => handleDirectionKeyDown(event, d.id)}
                   className={`
                     cursor-pointer transition-all duration-200
                     ${highlightedDirection === d.id
@@ -187,7 +210,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                 </tr>
                 {expandedId === d.id && (
                   <tr>
-                    <td colSpan="6" className="p-0">
+                    <td id={`direction-detail-desktop-${d.id}`} colSpan="6" className="p-0">
                       <DirectionDetail direction={d} />
                     </td>
                   </tr>

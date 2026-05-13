@@ -1,19 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function QuizSection({ quiz, onResult }) {
   const [currentQ, setCurrentQ] = useState(0);
   const [answers, setAnswers] = useState([]);
   const [result, setResult] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
+  const answerDelayRef = useRef(null);
+
+  useEffect(() => () => {
+    if (answerDelayRef.current) {
+      window.clearTimeout(answerDelayRef.current);
+    }
+  }, []);
 
   const handleAnswer = (tag) => {
+    if (selectedOption) return;
+
     setSelectedOption(tag);
 
     // Brief delay for visual feedback before transitioning
-    setTimeout(() => {
+    answerDelayRef.current = window.setTimeout(() => {
       const newAnswers = [...answers, tag];
       setAnswers(newAnswers);
       setSelectedOption(null);
+      answerDelayRef.current = null;
 
       if (currentQ < quiz.questions.length - 1) {
         setCurrentQ(currentQ + 1);
@@ -41,6 +51,10 @@ export default function QuizSection({ quiz, onResult }) {
   };
 
   const reset = () => {
+    if (answerDelayRef.current) {
+      window.clearTimeout(answerDelayRef.current);
+      answerDelayRef.current = null;
+    }
     setCurrentQ(0);
     setAnswers([]);
     setResult(null);

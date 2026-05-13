@@ -12,18 +12,18 @@ export default function ProfessorCard({ professor, isHighlighted }) {
     }
   }, [expanded]);
 
-  const directionColors = {
-    'ai-compiler': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', dot: 'bg-purple-500' },
-    'cim': { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', dot: 'bg-red-500' },
-    'fpga-eda': { bg: 'bg-emerald-50', text: 'text-emerald-700', border: 'border-emerald-200', dot: 'bg-emerald-500' },
-    'llm-system': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', dot: 'bg-blue-500' },
-    'riscv': { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', dot: 'bg-orange-500' },
-    'neuromorphic': { bg: 'bg-pink-50', text: 'text-pink-700', border: 'border-pink-200', dot: 'bg-pink-500' },
-    'edge-ai': { bg: 'bg-teal-50', text: 'text-teal-700', border: 'border-teal-200', dot: 'bg-teal-500' },
-    'distributed': { bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200', dot: 'bg-cyan-500' },
+  const collegeColors = {
+    '清华大学 · 电子工程系': { bg: 'bg-blue-50', text: 'text-blue-700', border: 'border-blue-200', dot: 'bg-blue-500' },
+    '清华大学 · 集成电路学院': { bg: 'bg-indigo-50', text: 'text-indigo-700', border: 'border-indigo-200', dot: 'bg-indigo-500' },
+    '清华大学 · 计算机系': { bg: 'bg-cyan-50', text: 'text-cyan-700', border: 'border-cyan-200', dot: 'bg-cyan-500' },
+    '北京大学 · 计算机学院/集成电路学院': { bg: 'bg-red-50', text: 'text-red-700', border: 'border-red-200', dot: 'bg-red-500' },
+    '北京大学 · CECA（高能效计算与应用中心）': { bg: 'bg-purple-50', text: 'text-purple-700', border: 'border-purple-200', dot: 'bg-purple-500' },
+    '北京大学 · 计算机学院 + 鹏城实验室': { bg: 'bg-rose-50', text: 'text-rose-700', border: 'border-rose-200', dot: 'bg-rose-500' },
+    '北京大学 · 集成电路学院/信息工程学院': { bg: 'bg-orange-50', text: 'text-orange-700', border: 'border-orange-200', dot: 'bg-orange-500' },
   };
 
-  const colors = directionColors[professor.directionId] || { bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200', dot: 'bg-gray-500' };
+  const collegeKey = `${professor.university} · ${professor.department}`;
+  const colors = collegeColors[collegeKey] || { bg: 'bg-gray-50', text: 'text-gray-700', border: 'border-gray-200', dot: 'bg-gray-500' };
 
   return (
     <div
@@ -94,6 +94,24 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         style={{ maxHeight: expanded ? `${contentHeight}px` : '0px' }}
       >
         <div ref={contentRef} className="px-6 pb-6 border-t border-gray-100 pt-6 space-y-8">
+          {/* Direction Detail */}
+          {professor.directionDetail && (
+          <section>
+            <div className="flex items-center gap-2 mb-4">
+              <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
+                </svg>
+              </div>
+              <h4 className="font-semibold text-gray-900 text-lg font-heading">研究方向详解</h4>
+            </div>
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+              <p className="text-sm text-gray-700 leading-relaxed">{professor.directionDetail}</p>
+            </div>
+          </section>
+          )}
+
           {/* Papers */}
           <section>
             <div className="flex items-center gap-2 mb-4">
@@ -106,18 +124,24 @@ export default function ProfessorCard({ professor, isHighlighted }) {
             </div>
             <div className="grid gap-4">
               {professor.papers.map((paper, i) => (
-                <div
+                <a
                   key={i}
-                  className="group/paper bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-200"
+                  href={paper.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group/paper bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-200 cursor-pointer block"
                 >
                   <div className="flex flex-wrap items-start gap-3 mb-3">
-                    <h5 className="font-semibold text-gray-900 text-sm leading-snug flex-1 min-w-0">{paper.title}</h5>
+                    <h5 className="font-semibold text-gray-900 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">{paper.title}</h5>
                     <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 text-blue-700 rounded-md">
                       {paper.venue}
                     </span>
+                    <svg className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 opacity-0 group-hover/paper:opacity-100 transition-opacity duration-200 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                    </svg>
                   </div>
                   <p className="text-sm text-gray-600 leading-relaxed">{paper.summary}</p>
-                </div>
+                </a>
               ))}
             </div>
           </section>
