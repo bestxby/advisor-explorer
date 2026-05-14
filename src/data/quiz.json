@@ -1,8 +1,17 @@
 {
+  "dimensionWeights": {
+    "0": 0.20,
+    "1": 0.15,
+    "2": 0.25,
+    "3": 0.10,
+    "4": 0.20,
+    "5": 0.10
+  },
   "questions": [
     {
       "id": 1,
       "text": "你更享受哪种工作状态？",
+      "dimension": 0,
       "options": [
         {"label": "A", "text": "花一整天调试C++代码，找到一个性能瓶颈然后优化掉", "tag": "code"},
         {"label": "B", "text": "用示波器/逻辑分析仪看波形，调通一个硬件模块", "tag": "circuit"},
@@ -11,16 +20,18 @@
     },
     {
       "id": 2,
-      "text": "你对数学推导（优化理论/矩阵分析/概率论）的态度？",
+      "text": "你对数学和抽象理论的态度？",
+      "dimension": 1,
       "options": [
-        {"label": "A", "text": "喜欢，觉得数学很美", "tag": "math-love"},
-        {"label": "B", "text": "能忍受，用到就学", "tag": "math-ok"},
-        {"label": "C", "text": "讨厌，只想写代码/画电路", "tag": "math-hate"}
+        {"label": "A", "text": "喜欢推导公式，觉得数学很美", "tag": "math-love"},
+        {"label": "B", "text": "能忍受，用到就学，够用就行", "tag": "math-ok"},
+        {"label": "C", "text": "讨厌，只想写代码或画电路", "tag": "math-hate"}
       ]
     },
     {
       "id": 3,
       "text": "你的核心目标是什么？",
+      "dimension": 2,
       "options": [
         {"label": "A", "text": "毕业拿最高薪（50万+）", "tag": "salary"},
         {"label": "B", "text": "稳定就业，不要太卷", "tag": "stable"},
@@ -29,36 +40,102 @@
     },
     {
       "id": 4,
-      "text": "你能接受的\"不确定性\"程度？",
+      "text": "你能接受的不确定性程度？",
+      "dimension": 3,
       "options": [
-        {"label": "A", "text": "低（想走确定能成功的路）", "tag": "low-risk"},
-        {"label": "B", "text": "中（愿意承担一定风险）", "tag": "mid-risk"},
-        {"label": "C", "text": "高（愿意赌一把前沿方向）", "tag": "high-risk"}
+        {"label": "A", "text": "低——想走确定能成功的路", "tag": "low-risk"},
+        {"label": "B", "text": "中——愿意承担一定风险换取更高回报", "tag": "mid-risk"},
+        {"label": "C", "text": "高——愿意赌一把前沿方向", "tag": "high-risk"}
       ]
     },
     {
       "id": 5,
       "text": "你目前最擅长什么？",
+      "dimension": 4,
       "options": [
         {"label": "A", "text": "C++/Python编程，算法能力强", "tag": "coding"},
         {"label": "B", "text": "数字电路，Verilog写过一点", "tag": "digital"},
         {"label": "C", "text": "模拟电路，半导体物理学得好", "tag": "analog"},
         {"label": "D", "text": "什么都还行，没特别突出", "tag": "general"}
       ]
+    },
+    {
+      "id": 6,
+      "text": "你更想在哪一层做创新？",
+      "dimension": 5,
+      "options": [
+        {"label": "A", "text": "算法层——设计新的模型/训练方法", "tag": "algo-level"},
+        {"label": "B", "text": "系统层——让大规模计算跑得更快更稳", "tag": "sys-level"},
+        {"label": "C", "text": "硬件层——设计芯片/电路本身", "tag": "hw-level"}
+      ]
     }
   ],
-  "matchingRules": [
-    {"tags": ["code", "math-love", "salary", "low-risk", "coding"], "direction": "ai-compiler", "professors": ["wang-yu", "zhai-jidong"]},
-    {"tags": ["code", "math-ok", "salary", "low-risk", "coding"], "direction": "distributed", "professors": ["zhai-jidong"]},
-    {"tags": ["code", "math-ok", "salary", "mid-risk", "coding"], "direction": "llm-system", "professors": ["sun-guangyu"]},
-    {"tags": ["circuit", "math-ok", "stable", "mid-risk", "digital"], "direction": "riscv", "professors": ["wei-shaojun", "sun-guangyu"]},
-    {"tags": ["circuit", "math-ok", "academic", "high-risk", "analog"], "direction": "cim", "professors": ["yin-shouyi", "wu-huaqiang", "tang-jianshi"]},
-    {"tags": ["circuit", "math-ok", "stable", "low-risk", "analog"], "direction": "edge-ai", "professors": ["yang-huazhong", "liang-yun"]},
-    {"tags": ["mixed", "math-ok", "stable", "low-risk", "digital"], "direction": "fpga-eda", "professors": ["luo-guojie"]},
-    {"tags": ["mixed", "math-ok", "salary", "mid-risk", "coding"], "direction": "llm-system", "professors": ["sun-guangyu"]},
-    {"tags": ["code", "math-hate", "salary", "low-risk", "coding"], "direction": "distributed", "professors": ["zhai-jidong"]},
-    {"tags": ["circuit", "math-ok", "academic", "high-risk", "analog"], "direction": "neuromorphic", "professors": ["huang-tiejun"]}
-  ],
+  "directionProfiles": {
+    "ai-compiler": {
+      "positive": {
+        "code": 1.0, "salary": 0.8, "coding": 1.0, "math-love": 0.7, "low-risk": 0.5, "algo-level": 0.8, "sys-level": 0.6
+      },
+      "negative": {
+        "math-hate": -0.6, "circuit": -0.3, "analog": -0.5
+      }
+    },
+    "cim": {
+      "positive": {
+        "circuit": 1.0, "academic": 0.9, "analog": 1.0, "high-risk": 0.8, "hw-level": 0.8, "math-love": 0.5
+      },
+      "negative": {
+        "salary": -0.5, "code": -0.3, "coding": -0.4
+      }
+    },
+    "fpga-eda": {
+      "positive": {
+        "mixed": 0.8, "circuit": 0.5, "digital": 1.0, "stable": 0.7, "coding": 0.6, "sys-level": 0.6, "hw-level": 0.5
+      },
+      "negative": {
+        "high-risk": -0.3, "analog": -0.2
+      }
+    },
+    "llm-system": {
+      "positive": {
+        "code": 0.8, "mixed": 0.5, "salary": 0.9, "coding": 0.8, "math-ok": 0.4, "mid-risk": 0.6, "sys-level": 0.9, "algo-level": 0.5
+      },
+      "negative": {
+        "circuit": -0.3, "analog": -0.4
+      }
+    },
+    "riscv": {
+      "positive": {
+        "circuit": 0.8, "stable": 0.6, "digital": 1.0, "low-risk": 0.5, "mid-risk": 0.4, "hw-level": 0.9
+      },
+      "negative": {
+        "math-hate": -0.3, "analog": -0.2
+      }
+    },
+    "neuromorphic": {
+      "positive": {
+        "circuit": 0.8, "academic": 1.0, "analog": 0.7, "digital": 0.5, "high-risk": 0.9, "math-love": 0.6, "hw-level": 0.7, "algo-level": 0.5
+      },
+      "negative": {
+        "salary": -0.6, "stable": -0.5
+      }
+    },
+    "edge-ai": {
+      "positive": {
+        "circuit": 0.8, "stable": 0.8, "analog": 0.9, "digital": 0.6, "low-risk": 0.6, "hw-level": 0.8
+      },
+      "negative": {
+        "high-risk": -0.4, "math-hate": -0.2
+      }
+    },
+    "distributed": {
+      "positive": {
+        "code": 1.0, "salary": 0.8, "coding": 1.0, "math-ok": 0.4, "low-risk": 0.4, "mid-risk": 0.5, "sys-level": 1.0
+      },
+      "negative": {
+        "circuit": -0.4, "analog": -0.5
+      }
+    }
+  },
   "defaultRecommendation": {
     "direction": "llm-system",
     "professors": ["sun-guangyu"],

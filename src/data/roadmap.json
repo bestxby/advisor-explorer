@@ -1,0 +1,343 @@
+{
+  "ai-compiler": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "打基础",
+        "tasks": [
+          {"text": "修编译原理、计算机体系结构、操作系统三门核心课", "priority": "high"},
+          {"text": "跟 LLVM Tutorial 走一遍，理解 IR/Pass/后端代码生成", "priority": "high"},
+          {"text": "读 TVM 论文 (OSDI 2018)，跑通 TVM 官方 Tutorial", "priority": "medium"},
+          {"text": "刷 LeetCode 中等题 50+ (C++/Python)，练算法思维", "priority": "medium"}
+        ],
+        "milestone": "能独立写一个简单的 LLVM Pass，能用 TVM 编译一个模型到 CPU/GPU"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组实习",
+        "tasks": [
+          {"text": "联系导师进组，参与算子融合/自动调优/内存优化子课题", "priority": "high"},
+          {"text": "精读 MLIR 论文，理解 Dialect/渐进 Lowering 设计哲学", "priority": "high"},
+          {"text": "复现 1-2 篇顶会论文 (DAC/ICCAD/PLDI)，积累实验经验", "priority": "medium"},
+          {"text": "了解稀疏编译、张量编译前沿进展", "priority": "low"}
+        ],
+        "milestone": "完成一个可复现的编译器优化实验，有初步的科研成果"
+      },
+      {
+        "period": "研一",
+        "subtitle": "深入突破",
+        "tasks": [
+          {"text": "选定细分方向：稀疏编译 / 自动调优 / 后端代码生成 / AI辅助EDA", "priority": "high"},
+          {"text": "独立完成一个完整课题，投稿 DAC/ICCAD/PLDI/CGO", "priority": "high"},
+          {"text": "参与开源项目贡献 (TVM/MLIR/XLA)，建立技术影响力", "priority": "medium"},
+          {"text": "暑期实习：华为海思/字节跳动/NVIDIA 编译器团队", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇顶会，在编译器社区有一定知名度"
+      }
+    ],
+    "resources": [
+      {"name": "LLVM Tutorial", "url": "https://llvm.org/docs/tutorial/"},
+      {"name": "TVM 入门", "url": "https://tvm.apache.org/docs/tutorial/"},
+      {"name": "MLIR 官方文档", "url": "https://mlir.llvm.org/"},
+      {"name": "《编译原理》(龙书)", "note": "经典教材，重点看前8章"}
+    ]
+  },
+  "cim": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "器件+架构双基",
+        "tasks": [
+          {"text": "修半导体物理与器件、模拟集成电路设计、数字集成电路设计", "priority": "high"},
+          {"text": "了解 RRAM/PCM/Memristor 器件原理和 SPICE 建模", "priority": "high"},
+          {"text": "读 ISSCC/VLSI 近 3 年存算一体论文，建立领域认知", "priority": "medium"},
+          {"text": "学 Python + SPICE 仿真工具 (HSPICE/Spectre)", "priority": "medium"}
+        ],
+        "milestone": "能用 SPICE 搭一个简单的 RRAM 交叉阵列仿真"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做器件仿真",
+        "tasks": [
+          {"text": "进组参与 RRAM 器件级仿真或架构级评估项目", "priority": "high"},
+          {"text": "精读 2-3 篇 ISSCC/JSSC 存算一体论文并复现", "priority": "high"},
+          {"text": "学习混合信号电路设计方法", "priority": "medium"},
+          {"text": "关注亿铸科技/知存科技等产业动态", "priority": "low"}
+        ],
+        "milestone": "完成一个器件-架构协同仿真的完整项目"
+      },
+      {
+        "period": "研一",
+        "subtitle": "电路-架构协同设计",
+        "tasks": [
+          {"text": "深入电路-架构协同优化，做跨层设计", "priority": "high"},
+          {"text": "投稿 ISSCC/VLSI/JSSC/CICC 等电路顶会/顶刊", "priority": "high"},
+          {"text": "参加学术会议，建立学术人脉", "priority": "medium"},
+          {"text": "如考虑转行，开始积累 AI/数字方向技能", "priority": "low"}
+        ],
+        "milestone": "至少投稿 1 篇电路/架构顶会，明确学术or转行方向"
+      }
+    ],
+    "resources": [
+      {"name": "《半导体物理》(刘恩科)", "note": "经典教材"},
+      {"name": "RRAM 交叉阵列仿真教程", "note": "SPICE 建模入门"},
+      {"name": "ISSCC 近年存算一体 Session", "note": "每年 2 月，关注 Session 14/15"}
+    ]
+  },
+  "fpga-eda": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "算法+硬件双基",
+        "tasks": [
+          {"text": "修数字集成电路设计、计算机体系结构、数据结构与算法", "priority": "high"},
+          {"text": "学 Vivado/Quartus，用 Verilog 做 1-2 个 FPGA 项目", "priority": "high"},
+          {"text": "了解 HLS (Vitis HLS) 基本流程", "priority": "medium"},
+          {"text": "刷算法题 (图论/组合优化)，布局布线本质是组合优化", "priority": "medium"}
+        ],
+        "milestone": "能独立完成一个 FPGA 加速器项目 (如 CNN 加速器)"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做 EDA 研究",
+        "tasks": [
+          {"text": "进组参与布局布线算法或 HLS 优化课题", "priority": "high"},
+          {"text": "精读 DAC/ICCAD 近年 EDA 论文，理解研究范式", "priority": "high"},
+          {"text": "学 GNN/RL 在 EDA 中的应用 (AI-Native EDA)", "priority": "medium"},
+          {"text": "了解华大九天/紫光同创等国产 EDA 产业", "priority": "low"}
+        ],
+        "milestone": "完成一个 EDA 算法改进实验，有初步结果"
+      },
+      {
+        "period": "研一",
+        "subtitle": "深耕 EDA 算法",
+        "tasks": [
+          {"text": "选定细分方向：布局布线 / 逻辑综合 / HLS / AI-Native EDA", "priority": "high"},
+          {"text": "独立完成课题，投稿 DAC/ICCAD/FPGA/TCAD", "priority": "high"},
+          {"text": "暑期实习：AMD/Xilinx 或华大九天", "priority": "medium"},
+          {"text": "参与开源 EDA 项目 (OpenROAD/Yosys)", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇 EDA 顶会，积累工业界实习经验"
+      }
+    ],
+    "resources": [
+      {"name": "Vivado 入门教程", "note": "Xilinx 官方"},
+      {"name": "Vitis HLS Tutorial", "note": "HLS 入门"},
+      {"name": "OpenROAD", "url": "https://openroad.dev/", "note": "开源 EDA 平台"},
+      {"name": "《EDA 方法学》", "note": "布局布线算法基础"}
+    ]
+  },
+  "llm-system": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "体系结构+GPU编程",
+        "tasks": [
+          {"text": "修计算机体系结构、操作系统、数字集成电路设计", "priority": "high"},
+          {"text": "学 CUDA 编程入门，写 1-2 个 GPU kernel (矩阵乘/卷积)", "priority": "high"},
+          {"text": "了解 GPU 内存层次 (HBM/L2/Shared Memory)", "priority": "medium"},
+          {"text": "读 Megatron-LM / DeepSpeed 论文，理解大模型并行策略", "priority": "medium"}
+        ],
+        "milestone": "能写 CUDA kernel，理解数据并行/模型并行/流水线并行"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做大模型系统",
+        "tasks": [
+          {"text": "进组参与大模型训练/推理系统优化课题", "priority": "high"},
+          {"text": "精读 HBM/CXL/PIM 相关论文，理解存储墙问题", "priority": "high"},
+          {"text": "用 Gem5/GPGPU-Sim 搭系统级仿真", "priority": "medium"},
+          {"text": "了解 MoE/稀疏激活等模型架构创新", "priority": "low"}
+        ],
+        "milestone": "完成一个系统级优化实验 (通信/内存/调度)"
+      },
+      {
+        "period": "研一",
+        "subtitle": "深入存储/通信优化",
+        "tasks": [
+          {"text": "选定细分方向：HBM-PIM / CXL互联 / MoE通信优化 / 训练容错", "priority": "high"},
+          {"text": "独立完成课题，投稿 ISCA/MICRO/HPCA/ASPLOS", "priority": "high"},
+          {"text": "暑期实习：NVIDIA/阿里/字节 大模型基础设施团队", "priority": "medium"},
+          {"text": "参与开源大模型框架贡献 (Megatron/vLLM)", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇体系结构顶会，在大模型系统领域建立口碑"
+      }
+    ],
+    "resources": [
+      {"name": "CUDA Programming Guide", "url": "https://docs.nvidia.com/cuda/"},
+      {"name": "Megatron-LM", "url": "https://github.com/NVIDIA/Megatron-LM"},
+      {"name": "vLLM", "url": "https://github.com/vllm-project/vllm"},
+      {"name": "Gem5", "url": "https://www.gem5.org/", "note": "系统级仿真器"}
+    ]
+  },
+  "riscv": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "体系结构+RISC-V入门",
+        "tasks": [
+          {"text": "修计算机体系结构、数字集成电路设计、编译原理", "priority": "high"},
+          {"text": "学 RISC-V 指令集手册 (Volume I)，用 Verilator 跑一个简单核", "priority": "high"},
+          {"text": "了解香山处理器 (XiangShan) 架构", "priority": "medium"},
+          {"text": "刷 CS61C (UC Berkeley) 课程材料", "priority": "medium"}
+        ],
+        "milestone": "能读懂 RISC-V 处理器 RTL 代码，理解流水线设计"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做处理器设计",
+        "tasks": [
+          {"text": "进组参与处理器核设计或 AI 扩展指令集课题", "priority": "high"},
+          {"text": "精读 ISCA/MICRO 近年处理器论文", "priority": "high"},
+          {"text": "学 Chisel/Scala (如果组里用 Chisel)", "priority": "medium"},
+          {"text": "关注 RISC-V 生态 (芯来/赛昉/平头哥)", "priority": "low"}
+        ],
+        "milestone": "完成一个处理器子模块设计 (如分支预测器/缓存控制器)"
+      },
+      {
+        "period": "研一",
+        "subtitle": "高性能处理器设计",
+        "tasks": [
+          {"text": "选定细分方向：高性能核 / AI扩展指令 / 安全处理器 / 向量扩展", "priority": "high"},
+          {"text": "独立完成课题，投稿 ISCA/MICRO/HPCA/TC", "priority": "high"},
+          {"text": "暑期实习：平头哥/芯来科技/华为海思", "priority": "medium"},
+          {"text": "参与香山开源处理器贡献", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇体系结构顶会，有流片经验更佳"
+      }
+    ],
+    "resources": [
+      {"name": "RISC-V 手册", "url": "https://riscv.org/technical/specifications/"},
+      {"name": "香山处理器", "url": "https://github.com/OpenXiangShan/XiangShan"},
+      {"name": "CS61C", "url": "https://cs61c.org/", "note": "UC Berkeley 体系结构课程"},
+      {"name": "Verilator", "url": "https://www.veripool.org/verilator/"}
+    ]
+  },
+  "neuromorphic": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "ML基础+神经科学入门",
+        "tasks": [
+          {"text": "修机器学习/深度学习、数字集成电路设计、信号与系统", "priority": "high"},
+          {"text": "了解脉冲神经网络 (SNN) 基本原理和 LIF 神经元模型", "priority": "high"},
+          {"text": "读事件相机 (Dynamic Vision Sensor) 相关论文", "priority": "medium"},
+          {"text": "学 PyTorch + SNNTorch/Norse 等 SNN 框架", "priority": "medium"}
+        ],
+        "milestone": "能用 SNN 框架跑通一个简单的分类任务"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做神经形态研究",
+        "tasks": [
+          {"text": "进组参与 SNN 训练/事件相机算法/神经形态芯片课题", "priority": "high"},
+          {"text": "精读 Nature/NeurIPS 近年神经形态计算论文", "priority": "high"},
+          {"text": "了解 Intel Loihi / IBM TrueNorth 等神经形态芯片", "priority": "medium"},
+          {"text": "考虑是否转行 (该方向就业极窄)", "priority": "medium"}
+        ],
+        "milestone": "完成一个 SNN 或事件相机相关的完整实验"
+      },
+      {
+        "period": "研一",
+        "subtitle": "前沿探索",
+        "tasks": [
+          {"text": "深入 SNN 训练算法 / 事件驱动视觉 / 神经形态架构", "priority": "high"},
+          {"text": "投稿 NeurIPS/ICLR/Nature 子刊/ISCAS", "priority": "high"},
+          {"text": "如决定转行，开始积累 AI/数字方向技能和实习", "priority": "medium"},
+          {"text": "参加 Telluride/CEINMS 等神经形态暑期学校", "priority": "low"}
+        ],
+        "milestone": "至少投稿 1 篇高水平论文，明确学术 or 转行路径"
+      }
+    ],
+    "resources": [
+      {"name": "SNNTorch", "url": "https://snntorch.readthedocs.io/"},
+      {"name": "Norse", "url": "https://github.com/norse/norse"},
+      {"name": "事件相机数据集", "url": "https://prophesee.ai/ini-vancouver-2019-dataset/"}
+    ]
+  },
+  "edge-ai": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "模拟+数字双基",
+        "tasks": [
+          {"text": "修模拟集成电路设计、数字集成电路设计、机器学习基础", "priority": "high"},
+          {"text": "学 Cadence Virtuoso 基本操作", "priority": "high"},
+          {"text": "了解低功耗设计技术 (电压调节/近阈值计算/电源门控)", "priority": "medium"},
+          {"text": "读 ISSCC 近年边缘AI芯片论文", "priority": "medium"}
+        ],
+        "milestone": "能用 Virtuoso 设计一个简单的运放或比较器"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做芯片设计",
+        "tasks": [
+          {"text": "进组参与低功耗AI推理芯片或混合信号计算课题", "priority": "high"},
+          {"text": "精读 ISSCC/VLSI 近年边缘AI论文", "priority": "high"},
+          {"text": "学数字后端流程 (综合/布局布线/时序分析)", "priority": "medium"},
+          {"text": "了解地平线/寒武纪等国产边缘AI芯片", "priority": "low"}
+        ],
+        "milestone": "完成一个芯片子模块设计 (如 MAC 阵列/ADC 接口)"
+      },
+      {
+        "period": "研一",
+        "subtitle": "深入混合信号设计",
+        "tasks": [
+          {"text": "选定细分方向：近阈值计算 / 模拟计算 / 存内计算 / 动态电压频率调节", "priority": "high"},
+          {"text": "独立完成课题，投稿 ISSCC/VLSI/JSSC/CICC", "priority": "high"},
+          {"text": "暑期实习：华为海思/地平线/瑞芯微", "priority": "medium"},
+          {"text": "争取流片机会", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇电路顶会，有 tape-out 经验"
+      }
+    ],
+    "resources": [
+      {"name": "《模拟CMOS集成电路设计》(Razavi)", "note": "经典教材"},
+      {"name": "Cadence Virtuoso Tutorial", "note": "EDA 工具入门"},
+      {"name": "ISSCC 近年 Edge AI Session", "note": "每年 2 月"}
+    ]
+  },
+  "distributed": {
+    "phases": [
+      {
+        "period": "大三",
+        "subtitle": "系统编程+分布式基础",
+        "tasks": [
+          {"text": "修操作系统、计算机网络、编译原理", "priority": "high"},
+          {"text": "学 CUDA 编程 + MPI/NCCL 基本用法", "priority": "high"},
+          {"text": "读 MapReduce/Spark/Ray 论文，理解分布式计算范式", "priority": "medium"},
+          {"text": "做 1 个分布式系统小项目 (如 Raft 共识实现)", "priority": "medium"}
+        ],
+        "milestone": "能写 CUDA + MPI 程序，理解分布式系统核心概念"
+      },
+      {
+        "period": "大四",
+        "subtitle": "进组做大模型训练系统",
+        "tasks": [
+          {"text": "进组参与大模型分布式训练/推理系统优化课题", "priority": "high"},
+          {"text": "精读 Megatron-LM/DeepSpeed/Alpa 论文", "priority": "high"},
+          {"text": "学 NCCL/RCCL 通信库源码", "priority": "medium"},
+          {"text": "了解容错机制 (Checkpoint/弹性训练)", "priority": "low"}
+        ],
+        "milestone": "完成一个分布式训练优化实验 (通信/内存/调度)"
+      },
+      {
+        "period": "研一",
+        "subtitle": "系统创新",
+        "tasks": [
+          {"text": "选定细分方向：通信优化 / 内存管理 / 训练调度 / 推理系统", "priority": "high"},
+          {"text": "独立完成课题，投稿 OSDI/SOSP/NSDI/EuroSys/ATC", "priority": "high"},
+          {"text": "暑期实习：字节/阿里/DeepSeek 大模型基础设施团队", "priority": "medium"},
+          {"text": "参与开源框架贡献 (Megatron/vLLM/DeepSpeed)", "priority": "medium"}
+        ],
+        "milestone": "至少投稿 1 篇系统顶会，在大模型系统领域建立影响力"
+      }
+    ],
+    "resources": [
+      {"name": "CUDA Programming Guide", "url": "https://docs.nvidia.com/cuda/"},
+      {"name": "Megatron-LM", "url": "https://github.com/NVIDIA/Megatron-LM"},
+      {"name": "DeepSpeed", "url": "https://github.com/microsoft/DeepSpeed"},
+      {"name": "MIT 6.824", "url": "https://pdos.csail.mit.edu/6.824/", "note": "分布式系统经典课程"}
+    ]
+  }
+}

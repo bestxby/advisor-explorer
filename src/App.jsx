@@ -11,6 +11,7 @@ import './App.css';
 
 const DirectionTable = lazy(() => import('./components/DirectionTable'));
 const QuizSection = lazy(() => import('./components/QuizSection'));
+const RoadmapSection = lazy(() => import('./components/RoadmapSection'));
 
 const TAB_DEFINITIONS = [
   {
@@ -35,100 +36,12 @@ const TAB_DEFINITIONS = [
       </svg>
     ),
   },
-  {
-    id: 'quiz',
-    label: '个性化方向匹配',
-    shortLabel: '匹配',
-    icon: (
-      <svg aria-hidden="true" className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
-      </svg>
-    ),
-  },
 ];
-
-function DeferredPanel({ children, onReady }) {
-  useEffect(() => {
-    onReady();
-  }, [onReady]);
-
-  return children;
-}
 
 function PanelFallback({ label }) {
   return (
     <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-sm text-gray-500">
       {label}
-    </div>
-  );
-}
-
-function TabBar({ activeTab, onTabChange, professorsCount, directionsCount }) {
-  const counts = { professors: professorsCount, directions: directionsCount };
-
-  const handleKeyDown = (event) => {
-    const currentIndex = TAB_DEFINITIONS.findIndex(tab => tab.id === activeTab);
-    let nextIndex = currentIndex;
-
-    if (event.key === 'ArrowRight') nextIndex = (currentIndex + 1) % TAB_DEFINITIONS.length;
-    if (event.key === 'ArrowLeft') nextIndex = (currentIndex - 1 + TAB_DEFINITIONS.length) % TAB_DEFINITIONS.length;
-    if (event.key === 'Home') nextIndex = 0;
-    if (event.key === 'End') nextIndex = TAB_DEFINITIONS.length - 1;
-
-    if (nextIndex !== currentIndex) {
-      event.preventDefault();
-      const nextTabId = TAB_DEFINITIONS[nextIndex].id;
-      onTabChange(nextTabId);
-      window.requestAnimationFrame(() => {
-        document.getElementById(`${nextTabId}-tab`)?.focus();
-      });
-    }
-  };
-
-  return (
-    <div
-      data-animate="tabbar"
-      className="flex gap-1.5 bg-white rounded-xl p-1.5 border border-gray-100 shadow-sm"
-      role="tablist"
-      aria-label="内容视图"
-      onKeyDown={handleKeyDown}
-    >
-      {TAB_DEFINITIONS.map(tab => {
-        const isActive = activeTab === tab.id;
-        const count = counts[tab.countKey];
-        return (
-          <button
-            key={tab.id}
-            id={`${tab.id}-tab`}
-            type="button"
-            onClick={() => onTabChange(tab.id)}
-            className={`
-              flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-lg
-              text-sm font-semibold transition-all duration-200 cursor-pointer
-              ${isActive
-                ? 'bg-primary text-white shadow-md'
-                : 'text-gray-600 hover:bg-gray-50'
-              }
-            `}
-            aria-selected={isActive}
-            aria-controls={`${tab.id}-panel`}
-            role="tab"
-            tabIndex={isActive ? 0 : -1}
-          >
-            {tab.icon}
-            <span className="hidden sm:inline">{tab.label}</span>
-            <span className="sm:hidden">{tab.shortLabel}</span>
-            {count !== undefined && (
-              <span className={`
-                text-xs px-1.5 py-0.5 rounded-full font-bold
-                ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}
-              `}>
-                {count}
-              </span>
-            )}
-          </button>
-        );
-      })}
     </div>
   );
 }
@@ -153,7 +66,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#F5F5F5]">
-      <Header />
+      <Header>
+        <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
+          <QuizSection quiz={quiz} professors={professors} directions={directions} onResult={setQuizResult} />
+        </Suspense>
+      </Header>
 
       <FilterBar
         directions={directions}
@@ -169,13 +86,141 @@ export default function App() {
           <KPISummary professors={professors} directions={directions} />
         </section>
 
+        {/* Quiz Results (shown after quiz completion) */}
+        {quizResult && (
+          <section className="space-y-6">
+            <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 rounded-2xl border-2 border-blue-100 p-8 md:p-10 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-40 h-40 bg-blue-200/30 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl" />
+              <div className="absolute bottom-0 right-0 w-60 h-60 bg-purple-200/30 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl" />
+
+              <div className="relative z-10">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                    <svg className="w-5 h-5 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 font-heading">你的匹配结果</h3>
+                    <p className="text-sm text-gray-500">基于加权维度分析</p>
+                  </div>
+                </div>
+
+                {quizResult.topResults ? (
+                  <div className="grid gap-3 max-w-2xl">
+                    {quizResult.topResults.map((r, i) => (
+                      <div
+                        key={r.direction}
+                        className={`relative bg-white rounded-xl p-4 border-2 transition-all ${
+                          i === 0
+                            ? 'border-primary shadow-md'
+                            : 'border-gray-100 opacity-75'
+                        }`}
+                      >
+                        {i === 0 && (
+                          <div className="absolute -top-2.5 left-4 px-2 py-0.5 bg-primary text-white text-xs font-bold rounded-full">
+                            最佳匹配
+                          </div>
+                        )}
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-3">
+                            <span className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                              i === 0 ? 'bg-primary text-white' : 'bg-gray-100 text-gray-500'
+                            }`}>
+                              {i + 1}
+                            </span>
+                            <span className={`font-bold ${i === 0 ? 'text-primary' : 'text-gray-700'}`}>
+                              {r.directionName}
+                            </span>
+                          </div>
+
+                          <div className="flex items-center gap-2">
+                            <div className="w-20 h-2 bg-gray-100 rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${
+                                  i === 0 ? 'bg-gradient-to-r from-primary to-primary-light' : 'bg-gray-300'
+                                }`}
+                                style={{ width: `${r.score}%` }}
+                              />
+                            </div>
+                            <span className={`text-sm font-bold ${i === 0 ? 'text-primary' : 'text-gray-500'}`}>
+                              {r.score}%
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="bg-white rounded-xl p-4 border-2 border-primary shadow-md inline-block">
+                    <span className="text-xl font-bold text-primary">{quizResult.directionName || quizResult.direction}</span>
+                    <div className="flex flex-wrap items-center gap-2 mt-2">
+                      <span className="text-sm text-gray-500">推荐导师：</span>
+                      {quizResult.professors?.map(p => (
+                        <span key={p} className="inline-flex items-center px-2 py-0.5 bg-primary/10 text-primary text-xs font-semibold rounded-full">
+                          {p}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <Suspense fallback={<PanelFallback label="正在加载路线图..." />}>
+              <RoadmapSection
+                directionId={quizResult.direction}
+                directionName={quizResult.directionName || directions.find(d => d.id === quizResult.direction)?.name || quizResult.direction}
+              />
+            </Suspense>
+          </section>
+        )}
+
         {/* Tab Bar */}
-        <TabBar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          professorsCount={filteredProfessors.length}
-          directionsCount={directions.length}
-        />
+        <div
+          data-animate="tabbar"
+          className="flex gap-1.5 bg-white rounded-xl p-1.5 border border-gray-100 shadow-sm"
+          role="tablist"
+          aria-label="内容视图"
+        >
+          {TAB_DEFINITIONS.map(tab => {
+            const isActive = activeTab === tab.id;
+            const count = tab.countKey === 'professors' ? filteredProfessors.length : tab.countKey === 'directions' ? directions.length : undefined;
+            return (
+              <button
+                key={tab.id}
+                id={`${tab.id}-tab`}
+                type="button"
+                onClick={() => setActiveTab(tab.id)}
+                className={`
+                  flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-lg
+                  text-sm font-semibold transition-all duration-200 cursor-pointer
+                  ${isActive
+                    ? 'bg-primary text-white shadow-md'
+                    : 'text-gray-600 hover:bg-gray-50'
+                  }
+                `}
+                aria-selected={isActive}
+                aria-controls={`${tab.id}-panel`}
+                role="tab"
+                tabIndex={isActive ? 0 : -1}
+              >
+                {tab.icon}
+                <span className="hidden sm:inline">{tab.label}</span>
+                <span className="sm:hidden">{tab.shortLabel}</span>
+                {count !== undefined && (
+                  <span className={`
+                    text-xs px-1.5 py-0.5 rounded-full font-bold
+                    ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}
+                  `}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
 
         {/* Tab Content */}
         {activeTab === 'professors' && (
@@ -213,28 +258,11 @@ export default function App() {
             aria-labelledby="directions-tab"
           >
             <Suspense fallback={<PanelFallback label="正在加载方向对比..." />}>
-              <DeferredPanel onReady={handlePanelReady}>
-                <DirectionTable
-                  directions={directions}
-                  highlightedDirection={quizResult?.direction}
-                  sortBy={sortBy}
-                />
-              </DeferredPanel>
-            </Suspense>
-          </div>
-        )}
-
-        {activeTab === 'quiz' && (
-          <div
-            id="quiz-panel"
-            data-animate="quiz"
-            role="tabpanel"
-            aria-labelledby="quiz-tab"
-          >
-            <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
-              <DeferredPanel onReady={handlePanelReady}>
-                <QuizSection quiz={quiz} onResult={setQuizResult} />
-              </DeferredPanel>
+              <DirectionTable
+                directions={directions}
+                highlightedDirection={quizResult?.direction}
+                sortBy={sortBy}
+              />
             </Suspense>
           </div>
         )}
