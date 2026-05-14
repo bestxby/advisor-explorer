@@ -40,6 +40,11 @@ body {
   background: #0f172a;
 }
 
+.dark {
+  --color-surface: #0f172a;
+  --color-surface-raised: #1e293b;
+}
+
 h1,
 h2,
 h3,

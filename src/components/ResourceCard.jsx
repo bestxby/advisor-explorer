@@ -5,10 +5,10 @@ export default function ResourceCard({ name, url, description }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${name}，在新窗口打开`}
-      className="group block bg-white rounded-xl border border-gray-100 p-5 hover:shadow-md hover:border-gray-200 transition-all duration-200 cursor-pointer"
+      className="group block bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-5 hover:shadow-md hover:border-gray-200 dark:hover:border-slate-600 dark:hover:shadow-slate-900/50 transition-all duration-200 cursor-pointer"
     >
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-lg bg-gray-900 flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
+        <div className="w-10 h-10 rounded-lg bg-gray-900 dark:bg-slate-700 flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
           <svg
             aria-hidden="true"
             className="w-5 h-5 text-white"
@@ -20,12 +20,12 @@ export default function ResourceCard({ name, url, description }) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-semibold text-gray-900 text-sm group-hover:text-primary transition-colors duration-200 truncate">
+            <span className="font-semibold text-gray-900 dark:text-slate-100 text-sm group-hover:text-primary transition-colors duration-200 truncate">
               {name}
             </span>
             <svg
               aria-hidden="true"
-              className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="w-3.5 h-3.5 text-gray-400 dark:text-slate-500 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -38,7 +38,9 @@ export default function ResourceCard({ name, url, description }) {
               />
             </svg>
           </div>
-          <p className="text-xs text-gray-500 leading-relaxed line-clamp-2">{description}</p>
+          <p className="text-xs text-gray-500 dark:text-slate-400 leading-relaxed line-clamp-2">
+            {description}
+          </p>
         </div>
       </div>
     </a>

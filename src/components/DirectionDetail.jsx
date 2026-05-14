@@ -1,14 +1,14 @@
 export default function DirectionDetail({ direction }) {
   return (
-    <div className="bg-gradient-to-br from-gray-50 dark:from-slate-700/50 to-white dark:to-slate-800 p-8 border-t border-gray-100 dark:border-slate-700">
+    <div className="bg-gradient-to-br from-gray-50 dark:from-slate-800 to-white dark:to-slate-800 p-8 border-t border-gray-100 dark:border-slate-700">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column */}
         <div className="space-y-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-blue-600"
+                  className="w-4 h-4 text-blue-600 dark:text-blue-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -32,9 +32,9 @@ export default function DirectionDetail({ direction }) {
 
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-red-50 dark:bg-red-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-red-600"
+                  className="w-4 h-4 text-red-600 dark:text-red-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -58,9 +58,9 @@ export default function DirectionDetail({ direction }) {
 
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-emerald-50 dark:bg-emerald-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-emerald-600"
+                  className="w-4 h-4 text-emerald-600 dark:text-emerald-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -87,9 +87,9 @@ export default function DirectionDetail({ direction }) {
         <div className="space-y-6">
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-purple-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-purple-50 dark:bg-purple-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-purple-600"
+                  className="w-4 h-4 text-purple-600 dark:text-purple-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -110,7 +110,7 @@ export default function DirectionDetail({ direction }) {
               {direction.courses.map((c) => (
                 <span
                   key={c}
-                  className="inline-flex items-center px-3 py-1.5 bg-purple-50 text-purple-700 text-xs font-medium rounded-lg border border-purple-100"
+                  className="inline-flex items-center px-3 py-1.5 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-medium rounded-lg border border-purple-100 dark:border-purple-800"
                 >
                   {c}
                 </span>
@@ -120,9 +120,9 @@ export default function DirectionDetail({ direction }) {
 
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-blue-600"
+                  className="w-4 h-4 text-blue-600 dark:text-blue-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -151,9 +151,9 @@ export default function DirectionDetail({ direction }) {
 
           <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 rounded-lg bg-orange-50 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-lg bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-orange-600"
+                  className="w-4 h-4 text-orange-600 dark:text-orange-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -216,9 +216,9 @@ export default function DirectionDetail({ direction }) {
                 <span
                   className={`text-xs px-2 py-0.5 rounded-full ${
                     job.count === '较多' || job.count === '丰富'
-                      ? 'bg-emerald-50 text-emerald-700'
+                      ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400'
                       : job.count === '中等' || job.count === '增长快'
-                        ? 'bg-blue-50 text-blue-700'
+                        ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400'
                         : 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400'
                   }`}
                 >
@@ -233,7 +233,7 @@ export default function DirectionDetail({ direction }) {
         <div className="hidden lg:block overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-700/50 to-gray-100 dark:to-slate-700">
+              <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-800 to-gray-100 dark:to-slate-700/50">
                 <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                   公司
                 </th>
@@ -263,9 +263,9 @@ export default function DirectionDetail({ direction }) {
                     <span
                       className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium ${
                         job.count === '较多' || job.count === '丰富'
-                          ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
+                          ? 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800'
                           : job.count === '中等' || job.count === '增长快'
-                            ? 'bg-blue-50 text-blue-700 border border-blue-100'
+                            ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border border-blue-100 dark:border-blue-800'
                             : 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 border border-gray-100 dark:border-slate-700'
                       }`}
                     >

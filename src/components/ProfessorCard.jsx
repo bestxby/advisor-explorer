@@ -14,45 +14,45 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
   const collegeColors = {
     '清华大学 · 电子工程系': {
-      bg: 'bg-blue-50',
-      text: 'text-blue-700',
-      border: 'border-blue-200',
+      bg: 'bg-blue-50 dark:bg-blue-900/30',
+      text: 'text-blue-700 dark:text-blue-400',
+      border: 'border-blue-200 dark:border-blue-800',
       dot: 'bg-blue-500',
     },
     '清华大学 · 集成电路学院': {
-      bg: 'bg-indigo-50',
-      text: 'text-indigo-700',
-      border: 'border-indigo-200',
+      bg: 'bg-indigo-50 dark:bg-indigo-900/30',
+      text: 'text-indigo-700 dark:text-indigo-400',
+      border: 'border-indigo-200 dark:border-indigo-800',
       dot: 'bg-indigo-500',
     },
     '清华大学 · 计算机系': {
-      bg: 'bg-cyan-50',
-      text: 'text-cyan-700',
-      border: 'border-cyan-200',
+      bg: 'bg-cyan-50 dark:bg-cyan-900/30',
+      text: 'text-cyan-700 dark:text-cyan-400',
+      border: 'border-cyan-200 dark:border-cyan-800',
       dot: 'bg-cyan-500',
     },
     '北京大学 · 计算机学院/集成电路学院': {
-      bg: 'bg-red-50',
-      text: 'text-red-700',
-      border: 'border-red-200',
+      bg: 'bg-red-50 dark:bg-red-900/30',
+      text: 'text-red-700 dark:text-red-400',
+      border: 'border-red-200 dark:border-red-800',
       dot: 'bg-red-500',
     },
     '北京大学 · CECA（高能效计算与应用中心）': {
-      bg: 'bg-purple-50',
-      text: 'text-purple-700',
-      border: 'border-purple-200',
+      bg: 'bg-purple-50 dark:bg-purple-900/30',
+      text: 'text-purple-700 dark:text-purple-400',
+      border: 'border-purple-200 dark:border-purple-800',
       dot: 'bg-purple-500',
     },
     '北京大学 · 计算机学院 + 鹏城实验室': {
-      bg: 'bg-rose-50',
-      text: 'text-rose-700',
-      border: 'border-rose-200',
+      bg: 'bg-rose-50 dark:bg-rose-900/30',
+      text: 'text-rose-700 dark:text-rose-400',
+      border: 'border-rose-200 dark:border-rose-800',
       dot: 'bg-rose-500',
     },
     '北京大学 · 集成电路学院/信息工程学院': {
-      bg: 'bg-orange-50',
-      text: 'text-orange-700',
-      border: 'border-orange-200',
+      bg: 'bg-orange-50 dark:bg-orange-900/30',
+      text: 'text-orange-700 dark:text-orange-400',
+      border: 'border-orange-200 dark:border-orange-800',
       dot: 'bg-orange-500',
     },
   };
@@ -158,9 +158,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {professor.directionDetail && (
             <section>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-green-50 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-green-50 dark:bg-green-900/30 flex items-center justify-center">
                   <svg
-                    className="w-4 h-4 text-green-600"
+                    className="w-4 h-4 text-green-600 dark:text-green-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -189,9 +189,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Papers */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-blue-600"
+                  className="w-4 h-4 text-blue-600 dark:text-blue-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -221,7 +221,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                     <h5 className="font-semibold text-gray-900 dark:text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
                       {paper.title}
                     </h5>
-                    <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 text-blue-700 rounded-md">
+                    <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 rounded-md">
                       {paper.venue}
                     </span>
                     <svg
@@ -249,11 +249,11 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Evaluation */}
           <section className="relative">
             <div className="absolute -left-3 top-0 bottom-0 w-1 bg-gradient-to-b from-amber-400 to-orange-400 rounded-full" />
-            <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-6 border border-amber-100">
+            <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl p-6 border border-amber-100 dark:border-amber-800/50">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center">
                   <svg
-                    className="w-4 h-4 text-amber-600"
+                    className="w-4 h-4 text-amber-600 dark:text-amber-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -273,7 +273,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
               <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed mb-4">
                 {professor.evaluation}
               </p>
-              <div className="flex items-start gap-2 bg-white/60 dark:bg-white/10 rounded-lg p-3 border border-amber-200">
+              <div className="flex items-start gap-2 bg-white/60 dark:bg-slate-800/60 rounded-lg p-3 border border-amber-200 dark:border-amber-700/50">
                 <svg
                   className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0"
                   fill="none"
@@ -287,7 +287,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                     d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
                   />
                 </svg>
-                <p className="text-sm text-amber-800 font-medium">
+                <p className="text-sm text-amber-800 dark:text-amber-300 font-medium">
                   适合谁：{professor.suitableFor}
                 </p>
               </div>
@@ -297,9 +297,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Tech Stack */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-indigo-50 flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center">
                 <svg
-                  className="w-4 h-4 text-indigo-600"
+                  className="w-4 h-4 text-indigo-600 dark:text-indigo-400"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -325,7 +325,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   {professor.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-800 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-100 shadow-sm dark:shadow-slate-900/50"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-700 text-indigo-700 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-100 dark:border-indigo-800 shadow-sm dark:shadow-slate-900/50"
                     >
                       {tech}
                     </span>
@@ -340,7 +340,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   {professor.conferences.map((conf) => (
                     <span
                       key={conf}
-                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-800 text-emerald-700 text-xs font-semibold rounded-lg border border-emerald-100 shadow-sm dark:shadow-slate-900/50"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-700 text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-100 dark:border-emerald-800 shadow-sm dark:shadow-slate-900/50"
                     >
                       {conf}
                     </span>
@@ -376,11 +376,11 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Starter Project */}
           <section className="relative">
             <div className="absolute -left-3 top-0 bottom-0 w-1 bg-gradient-to-b from-emerald-400 to-teal-400 rounded-full" />
-            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl p-6 border border-emerald-100">
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-xl p-6 border border-emerald-100 dark:border-emerald-800/50">
               <div className="flex items-center gap-2 mb-3">
-                <div className="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-lg bg-emerald-100 dark:bg-emerald-900/30 flex items-center justify-center">
                   <svg
-                    className="w-4 h-4 text-emerald-600"
+                    className="w-4 h-4 text-emerald-600 dark:text-emerald-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

@@ -6,7 +6,7 @@ export default function FilterBar({
   onSortChange,
 }) {
   return (
-    <div className="bg-white/80 backdrop-blur-md border-b border-border sticky top-0 z-20 shadow-sm dark:shadow-slate-900/50">
+    <div className="bg-white/80 dark:bg-slate-800/90 backdrop-blur-md border-b border-border dark:border-slate-700 sticky top-0 z-20 shadow-sm dark:shadow-slate-900/50">
       <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center gap-6">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2 text-gray-500 dark:text-slate-400">
@@ -32,9 +32,9 @@ export default function FilterBar({
             id="direction-filter"
             value={selectedDirection}
             onChange={(e) => onDirectionChange(e.target.value)}
-            className="border border-gray-200 dark:border-slate-600 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-slate-800 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 appearance-none pr-10"
+            className="border border-gray-200 dark:border-slate-600 rounded-lg px-4 py-2.5 text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-slate-700 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-slate-500 appearance-none pr-10"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%239CA3AF'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'right 12px center',
             }}
@@ -72,9 +72,9 @@ export default function FilterBar({
             id="direction-sort"
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="border border-gray-200 dark:border-slate-600 rounded-lg px-4 py-2.5 text-sm bg-white dark:bg-slate-800 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 appearance-none pr-10"
+            className="border border-gray-200 dark:border-slate-600 rounded-lg px-4 py-2.5 text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-slate-700 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-slate-500 appearance-none pr-10"
             style={{
-              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%236B7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%239CA3AF'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'right 12px center',
             }}

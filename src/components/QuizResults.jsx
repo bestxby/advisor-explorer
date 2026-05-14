@@ -16,9 +16,9 @@ export default function QuizResults({ quizResult, directions }) {
 
   return (
     <section ref={exportRef} className="space-y-6">
-      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-800 dark:via-slate-800 dark:to-slate-800 rounded-2xl border-2 border-blue-100 p-8 md:p-10 relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-40 h-40 bg-blue-200/30 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl" />
-        <div className="absolute bottom-0 right-0 w-60 h-60 bg-purple-200/30 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl" />
+      <div className="bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-slate-700/60 dark:via-indigo-950/30 dark:to-purple-950/30 rounded-2xl border-2 border-blue-100 dark:border-slate-600 p-8 md:p-10 relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-40 h-40 bg-blue-200/30 dark:bg-blue-500/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-2xl" />
+        <div className="absolute bottom-0 right-0 w-60 h-60 bg-purple-200/30 dark:bg-purple-500/10 rounded-full translate-x-1/3 translate-y-1/3 blur-2xl" />
 
         <div className="relative z-10">
           <div className="flex items-center justify-between mb-6">

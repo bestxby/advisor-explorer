@@ -2,10 +2,10 @@ import { Fragment, useMemo, useState } from 'react';
 import DirectionDetail from './DirectionDetail';
 import { HEAT_ORDER } from '../constants';
 const HEAT_STYLES = {
-  极高: 'bg-red-50 text-red-700 border-red-200',
-  高: 'bg-orange-50 text-orange-700 border-orange-200',
-  中高: 'bg-amber-50 text-amber-700 border-amber-200',
-  中: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  极高: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
+  高: 'bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
+  中高: 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
+  中: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
   低: 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
 };
 
@@ -45,11 +45,11 @@ function DifficultyDots({ level, max = 5 }) {
 
 function RecommendationBadge({ level }) {
   const colors = {
-    5: 'bg-emerald-100 text-emerald-700 border-emerald-200',
-    4: 'bg-blue-100 text-blue-700 border-blue-200',
+    5: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
+    4: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800',
     3: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
-    2: 'bg-orange-100 text-orange-700 border-orange-200',
-    1: 'bg-red-100 text-red-700 border-red-200',
+    2: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
+    1: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
   };
 
   return (
@@ -179,7 +179,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-700/50 to-gray-100 dark:to-slate-700 border-b border-gray-200 dark:border-slate-600">
+            <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-800 to-gray-100 dark:to-slate-700/50 border-b border-gray-200 dark:border-slate-600">
               <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 方向
               </th>

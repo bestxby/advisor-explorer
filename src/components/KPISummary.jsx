@@ -2,12 +2,16 @@ import { useMemo } from 'react';
 
 function KPICard({ icon, label, value, sub, color = 'primary' }) {
   const colorMap = {
-    primary: 'bg-primary/10 text-primary border-primary/20',
-    emerald: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-    amber: 'bg-amber-50 text-amber-700 border-amber-200',
-    purple: 'bg-purple-50 text-purple-700 border-purple-200',
-    rose: 'bg-rose-50 text-rose-700 border-rose-200',
-    cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200',
+    primary:
+      'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:text-blue-400 dark:border-primary/30',
+    emerald:
+      'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800',
+    amber:
+      'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
+    purple:
+      'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-800',
+    rose: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800',
+    cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-400 dark:border-cyan-800',
   };
 
   return (

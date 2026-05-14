@@ -2,8 +2,9 @@ import { useState } from 'react';
 import roadmapData from '../data/roadmap.json';
 
 const PRIORITY_STYLES = {
-  high: 'bg-red-50 text-red-700 border-red-200',
-  medium: 'bg-amber-50 text-amber-700 border-amber-200',
+  high: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
+  medium:
+    'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
   low: 'bg-gray-50 dark:bg-slate-700/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-slate-600',
 };
 
@@ -16,24 +17,24 @@ const PRIORITY_LABELS = {
 const PHASE_COLORS = [
   {
     bg: 'bg-blue-500',
-    light: 'bg-blue-100',
-    text: 'text-blue-700',
-    border: 'border-blue-200',
-    ring: 'ring-blue-100',
+    light: 'bg-blue-100 dark:bg-blue-900/30',
+    text: 'text-blue-700 dark:text-blue-400',
+    border: 'border-blue-200 dark:border-blue-800',
+    ring: 'ring-blue-100 dark:ring-blue-900/50',
   },
   {
     bg: 'bg-indigo-500',
-    light: 'bg-indigo-100',
-    text: 'text-indigo-700',
-    border: 'border-indigo-200',
-    ring: 'ring-indigo-100',
+    light: 'bg-indigo-100 dark:bg-indigo-900/30',
+    text: 'text-indigo-700 dark:text-indigo-400',
+    border: 'border-indigo-200 dark:border-indigo-800',
+    ring: 'ring-indigo-100 dark:ring-indigo-900/50',
   },
   {
     bg: 'bg-purple-500',
-    light: 'bg-purple-100',
-    text: 'text-purple-700',
-    border: 'border-purple-200',
-    ring: 'ring-purple-100',
+    light: 'bg-purple-100 dark:bg-purple-900/30',
+    text: 'text-purple-700 dark:text-purple-400',
+    border: 'border-purple-200 dark:border-purple-800',
+    ring: 'ring-purple-100 dark:ring-purple-900/50',
   },
 ];
 
@@ -47,9 +48,9 @@ export default function RoadmapSection({ directionId, directionName }) {
     <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
       <div className="p-8 md:p-10">
         <div className="flex items-center gap-3 mb-2">
-          <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
+          <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center">
             <svg
-              className="w-5 h-5 text-indigo-600"
+              className="w-5 h-5 text-indigo-600 dark:text-indigo-400"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

@@ -64,7 +64,7 @@ const TAB_DEFINITIONS = [
 
 function PanelFallback({ label }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-sm text-gray-500">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-8 text-center text-sm text-gray-500 dark:text-slate-400">
       {label}
     </div>
   );
@@ -93,7 +93,7 @@ export default function App() {
   }, [selectedDirection]);
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen bg-surface dark:bg-slate-900">
       <Header>
         <ErrorBoundary fallbackMessage="问卷加载失败">
           <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
@@ -129,7 +129,7 @@ export default function App() {
         {/* Tab Bar */}
         <div
           data-animate="tabbar"
-          className="flex gap-1.5 bg-white rounded-xl p-1.5 border border-gray-100 shadow-sm"
+          className="flex gap-1.5 bg-white dark:bg-slate-800 rounded-xl p-1.5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50"
           role="tablist"
           aria-label="内容视图"
         >
@@ -150,7 +150,7 @@ export default function App() {
                 className={`
                   flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-lg
                   text-sm font-semibold transition-all duration-200 cursor-pointer
-                  ${isActive ? 'bg-primary text-white shadow-md' : 'text-gray-600 hover:bg-gray-50'}
+                  ${isActive ? 'bg-primary text-white shadow-md' : 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700'}
                 `}
                 aria-selected={isActive}
                 aria-controls={`${tab.id}-panel`}
@@ -164,7 +164,7 @@ export default function App() {
                   <span
                     className={`
                     text-xs px-1.5 py-0.5 rounded-full font-bold
-                    ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-500'}
+                    ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'}
                   `}
                   >
                     {count}
@@ -194,9 +194,9 @@ export default function App() {
                 </div>
               ))}
               {filteredProfessors.length === 0 && (
-                <div className="text-center py-10 bg-white rounded-xl border border-gray-100">
+                <div className="text-center py-10 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
                   <svg
-                    className="w-10 h-10 text-gray-300 mx-auto mb-3"
+                    className="w-10 h-10 text-gray-300 dark:text-slate-600 mx-auto mb-3"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -208,7 +208,7 @@ export default function App() {
                       d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
                     />
                   </svg>
-                  <p className="text-gray-500 text-sm">该方向暂无导师数据</p>
+                  <p className="text-gray-500 dark:text-slate-400 text-sm">该方向暂无导师数据</p>
                 </div>
               )}
             </div>
