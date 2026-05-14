@@ -4,7 +4,7 @@ export default function Header({ children, kpiSection }) {
   return (
     <header
       data-animate="header"
-      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white py-8 px-8 md:px-10 relative overflow-hidden"
+      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white h-[55vh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
     >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
