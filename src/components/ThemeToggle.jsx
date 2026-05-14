@@ -2,7 +2,6 @@ import { useTheme } from '../context/useTheme';
 
 const THEMES = [
   { value: 'light', label: '亮色', icon: '☀' },
-  { value: 'system', label: '跟随系统', icon: '◉' },
   { value: 'dark', label: '暗色', icon: '☾' },
 ];
 
@@ -10,7 +9,7 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="inline-flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/20">
+    <div className="w-fit inline-flex items-center gap-1 bg-white/10 backdrop-blur-sm rounded-full p-1 border border-white/20">
       {THEMES.map(({ value, label, icon }) => (
         <button
           key={value}

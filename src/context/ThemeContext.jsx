@@ -8,22 +8,15 @@ function getInitialTheme() {
   } catch {
     // Ignore
   }
-  return 'system';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 }
 
 function applyTheme(theme) {
   const root = document.documentElement;
   if (theme === 'dark') {
     root.classList.add('dark');
-  } else if (theme === 'light') {
-    root.classList.remove('dark');
   } else {
-    // system
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      root.classList.add('dark');
-    } else {
-      root.classList.remove('dark');
-    }
+    root.classList.remove('dark');
   }
 }
 
@@ -39,13 +32,25 @@ export default function ThemeProvider({ children }) {
     }
   }, [theme]);
 
+  // Follow system changes only when user has never set a preference
   useEffect(() => {
-    if (theme !== 'system') return;
+    let hasStored = false;
+    try {
+      hasStored = !!localStorage.getItem('advisor-explorer-theme');
+    } catch {
+      // Ignore
+    }
+    if (hasStored) return;
+
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
-    const handler = () => applyTheme('system');
+    const handler = (e) => {
+      const next = e.matches ? 'dark' : 'light';
+      setTheme(next);
+      applyTheme(next);
+    };
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
-  }, [theme]);
+  }, []);
 
   return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
 }
