@@ -263,7 +263,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
       <div className="p-8 md:p-10">
         {/* Progress indicator */}
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 flex-wrap">
             {quiz.questions.map((_, i) => (
               <div
                 key={i}

@@ -4,7 +4,7 @@ export default function Header({ children, kpiSection }) {
   return (
     <header
       data-animate="header"
-      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white min-h-[55vh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
+      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white min-h-[55vh] flex flex-col justify-center px-8 md:px-10 relative"
     >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
@@ -17,9 +17,9 @@ export default function Header({ children, kpiSection }) {
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6 items-center">
           {/* Left column: brand content */}
-          <div className="md:col-span-1 flex flex-col gap-3">
+          <div className="md:col-span-2 flex flex-col gap-3">
             {/* Theme toggle - above title */}
             <ThemeToggle />
 
@@ -130,7 +130,7 @@ export default function Header({ children, kpiSection }) {
               ].map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
+                  className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
                 >
                   {icon}
                   {label}
@@ -140,8 +140,8 @@ export default function Header({ children, kpiSection }) {
           </div>
 
           {/* Right column: quiz questionnaire */}
-          <div className="md:col-span-1">
-            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 overflow-hidden">
+          <div className="md:col-span-3">
+            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 h-full flex flex-col overflow-hidden">
               {children}
             </div>
           </div>

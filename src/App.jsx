@@ -171,7 +171,7 @@ export default function App() {
           <ErrorBoundary fallbackMessage="导师列表加载失败">
             <div
               id="professors-panel"
-              className="grid gap-3"
+              className="grid grid-cols-1 md:grid-cols-2 gap-3"
               data-animate="professor-list"
               role="tabpanel"
               aria-labelledby="professors-tab"
