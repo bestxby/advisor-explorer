@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { QUIZ_ANSWER_DELAY_MS } from '../constants';
+import ExportButton from './ExportButton';
 
 export default function QuizSection({ quiz, professors, directions, onResult }) {
   const [currentQ, setCurrentQ] = useState(0);
@@ -7,6 +8,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const [results, setResults] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const answerDelayRef = useRef(null);
+  const exportRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -125,49 +127,114 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           </p>
         </div>
 
-        <div className="p-6 md:p-8 text-center">
-          <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-            <svg
-              className="w-6 h-6 text-emerald-600"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-              />
-            </svg>
+        <div ref={exportRef} className="p-6 md:p-8">
+          {/* Header */}
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
+                <svg
+                  className="w-5 h-5 text-emerald-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100">匹配完成</h3>
+                <p className="text-sm text-gray-500 dark:text-slate-400">
+                  最佳方向：{top.directionName}，匹配度 {top.score}%
+                </p>
+              </div>
+            </div>
+            <ExportButton targetRef={exportRef} filename="advisor-explorer-result" />
           </div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">匹配完成</h3>
-          <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">
-            你的最佳方向是 <span className="font-semibold text-primary">{top.directionName}</span>
-            ，匹配度 {top.score}%
-          </p>
-          <p className="text-xs text-gray-400 dark:text-slate-500 mb-4">
-            详细结果和路线图展示在下方
-          </p>
-          <button
-            onClick={reset}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
-          >
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
+
+          {/* Ranked results */}
+          <div className="grid gap-3">
+            {results.map((r, i) => (
+              <div
+                key={r.direction}
+                className={`relative rounded-xl p-4 border-2 transition-all ${
+                  i === 0
+                    ? 'border-primary bg-primary/5 shadow-md'
+                    : 'border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-700/50 opacity-75'
+                }`}
+              >
+                {i === 0 && (
+                  <div className="absolute -top-2.5 left-4 px-2 py-0.5 bg-primary text-white text-xs font-bold rounded-full">
+                    最佳匹配
+                  </div>
+                )}
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span
+                      className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
+                        i === 0
+                          ? 'bg-primary text-white'
+                          : 'bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-slate-400'
+                      }`}
+                    >
+                      {i + 1}
+                    </span>
+                    <span
+                      className={`font-bold ${i === 0 ? 'text-primary' : 'text-gray-700 dark:text-slate-300'}`}
+                    >
+                      {r.directionName}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <div className="w-20 h-2 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${
+                          i === 0
+                            ? 'bg-gradient-to-r from-primary to-primary-light'
+                            : 'bg-gray-300 dark:bg-slate-500'
+                        }`}
+                        style={{ width: `${r.score}%` }}
+                      />
+                    </div>
+                    <span
+                      className={`text-sm font-bold ${i === 0 ? 'text-primary' : 'text-gray-500 dark:text-slate-400'}`}
+                    >
+                      {r.score}%
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Reset button */}
+          <div className="mt-4 text-center">
+            <button
+              onClick={reset}
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"
-              />
-            </svg>
-            重新测试
-          </button>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"
+                />
+              </svg>
+              重新测试
+            </button>
+          </div>
         </div>
       </div>
     );

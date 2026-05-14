@@ -3,7 +3,6 @@ import Header from './components/Header';
 import FilterBar from './components/FilterBar';
 import KPISummary from './components/KPISummary';
 import ProfessorCard from './components/ProfessorCard';
-import QuizResults from './components/QuizResults';
 import Footer from './components/Footer';
 import ErrorBoundary from './components/ErrorBoundary';
 import useScrollAnimations from './hooks/useScrollAnimations';
@@ -14,6 +13,7 @@ import quiz from './data/quiz.json';
 
 const DirectionTable = lazy(() => import('./components/DirectionTable'));
 const QuizSection = lazy(() => import('./components/QuizSection'));
+const RoadmapSection = lazy(() => import('./components/RoadmapSection'));
 
 const TAB_DEFINITIONS = [
   {
@@ -94,7 +94,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-surface dark:bg-slate-900">
-      <Header>
+      <Header kpiSection={<KPISummary professors={professors} directions={directions} />}>
         <ErrorBoundary fallbackMessage="问卷加载失败">
           <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
             <QuizSection
@@ -117,16 +117,6 @@ export default function App() {
       />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
-        <section>
-          <KPISummary professors={professors} directions={directions} />
-        </section>
-
-        {quizResult && (
-          <ErrorBoundary fallbackMessage="匹配结果加载失败">
-            <QuizResults quizResult={quizResult} directions={directions} />
-          </ErrorBoundary>
-        )}
-
         {/* Tab Bar */}
         <div
           data-animate="tabbar"
@@ -232,6 +222,22 @@ export default function App() {
                 />
               </Suspense>
             </div>
+          </ErrorBoundary>
+        )}
+
+        {/* Roadmap — shown when quiz is completed */}
+        {quizResult && (
+          <ErrorBoundary fallbackMessage="路线图加载失败">
+            <Suspense fallback={<PanelFallback label="正在加载路线图..." />}>
+              <RoadmapSection
+                directionId={quizResult.direction}
+                directionName={
+                  quizResult.directionName ||
+                  directions.find((d) => d.id === quizResult.direction)?.name ||
+                  quizResult.direction
+                }
+              />
+            </Suspense>
           </ErrorBoundary>
         )}
       </main>

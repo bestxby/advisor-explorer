@@ -55,8 +55,7 @@
       "options": [
         { "label": "A", "text": "C++/Python编程，算法能力强", "tag": "coding" },
         { "label": "B", "text": "数字电路，Verilog写过一点", "tag": "digital" },
-        { "label": "C", "text": "模拟电路，半导体物理学得好", "tag": "analog" },
-        { "label": "D", "text": "什么都还行，没特别突出", "tag": "general" }
+        { "label": "C", "text": "模拟电路，半导体物理学得好", "tag": "analog" }
       ]
     },
     {

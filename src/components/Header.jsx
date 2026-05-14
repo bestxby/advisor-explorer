@@ -1,6 +1,6 @@
 import ThemeToggle from './ThemeToggle';
 
-export default function Header({ children }) {
+export default function Header({ children, kpiSection }) {
   return (
     <header
       data-animate="header"
@@ -146,6 +146,9 @@ export default function Header({ children }) {
             </div>
           </div>
         </div>
+
+        {/* KPI 概览 */}
+        {kpiSection && <div className="mt-6">{kpiSection}</div>}
       </div>
     </header>
   );
