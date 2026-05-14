@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { HEADER_VIEWPORT_THRESHOLD } from '../constants';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,7 +24,7 @@ function animateOnScroll(el, fromVars, toVars) {
   } else {
     ScrollTrigger.create({
       trigger: el,
-      start: 'top 92%',
+      start: `top ${HEADER_VIEWPORT_THRESHOLD}%`,
       onEnter: () => tween.play(),
     });
   }
@@ -43,31 +44,40 @@ export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
 
         const kpiCards = queryAll(SELECTORS.kpi);
         if (kpiCards.length > 0) {
-          gsap.fromTo(kpiCards,
+          gsap.fromTo(
+            kpiCards,
             { y: 30, opacity: 0 },
             {
-              y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power2.out',
+              y: 0,
+              opacity: 1,
+              duration: 0.6,
+              stagger: 0.08,
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: kpiCards[0].parentElement,
                 start: 'top 85%',
                 toggleActions: 'play none none none',
               },
-            }
+            },
           );
         }
 
         const tabBar = document.querySelector(SELECTORS.tabbar);
         if (tabBar) {
-          gsap.fromTo(tabBar,
+          gsap.fromTo(
+            tabBar,
             { y: 20, opacity: 0 },
             {
-              y: 0, opacity: 1, duration: 0.5, ease: 'power2.out',
+              y: 0,
+              opacity: 1,
+              duration: 0.5,
+              ease: 'power2.out',
               scrollTrigger: {
                 trigger: tabBar,
                 start: 'top 90%',
                 toggleActions: 'play none none none',
               },
-            }
+            },
           );
         }
       }
@@ -76,9 +86,10 @@ export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
       if (activeTab === 'quiz') {
         const quizEl = document.querySelector(SELECTORS.quiz);
         if (quizEl) {
-          animateOnScroll(quizEl,
+          animateOnScroll(
+            quizEl,
             { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' }
+            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
           );
         }
       }

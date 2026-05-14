@@ -19,10 +19,25 @@
     "outlook": "蓝海，正在爆发。大模型时代每家公司部署推理都需要编译器/算子优化人才",
     "risk35": "中低。编译器是硬核技术壁垒，经验积累有价值",
     "jobs": [
-      {"company": "华为海思/昇腾", "role": "AI编译器开发、算子优化工程师", "salary": "40-60万", "count": "较多"},
-      {"company": "NVIDIA中国", "role": "CUDA编译器/DL Compiler Engineer", "salary": "50-80万", "count": "少"},
-      {"company": "字节跳动", "role": "AI推理优化、模型部署工程师", "salary": "40-70万", "count": "较多"},
-      {"company": "平头哥", "role": "芯片编译器开发", "salary": "40-60万", "count": "中等"}
+      {
+        "company": "华为海思/昇腾",
+        "role": "AI编译器开发、算子优化工程师",
+        "salary": "40-60万",
+        "count": "较多"
+      },
+      {
+        "company": "NVIDIA中国",
+        "role": "CUDA编译器/DL Compiler Engineer",
+        "salary": "50-80万",
+        "count": "少"
+      },
+      {
+        "company": "字节跳动",
+        "role": "AI推理优化、模型部署工程师",
+        "salary": "40-70万",
+        "count": "较多"
+      },
+      { "company": "平头哥", "role": "芯片编译器开发", "salary": "40-60万", "count": "中等" }
     ]
   },
   {
@@ -45,9 +60,19 @@
     "outlook": "论文繁荣，产业缓慢。RRAM工艺不成熟、良率低",
     "risk35": "方向本身不适用——因为大概率要转行",
     "jobs": [
-      {"company": "知存科技/亿铸科技", "role": "存算一体芯片设计", "salary": "30-50万", "count": "极少"},
-      {"company": "中芯国际/华虹", "role": "工艺集成工程师", "salary": "25-40万", "count": "少"},
-      {"company": "华为海思（前瞻）", "role": "新型计算架构研究员", "salary": "40-60万", "count": "极少"}
+      {
+        "company": "知存科技/亿铸科技",
+        "role": "存算一体芯片设计",
+        "salary": "30-50万",
+        "count": "极少"
+      },
+      { "company": "中芯国际/华虹", "role": "工艺集成工程师", "salary": "25-40万", "count": "少" },
+      {
+        "company": "华为海思（前瞻）",
+        "role": "新型计算架构研究员",
+        "salary": "40-60万",
+        "count": "极少"
+      }
     ]
   },
   {
@@ -70,9 +95,14 @@
     "outlook": "稳定但不爆发。AI-Native EDA是新方向，长期有想象空间",
     "risk35": "低。EDA是硬核算法壁垒，经验积累型",
     "jobs": [
-      {"company": "AMD/Xilinx", "role": "FPGA CAD工程师、HLS工具开发", "salary": "40-60万", "count": "少"},
-      {"company": "华为海思", "role": "芯片EDA工程师", "salary": "40-60万", "count": "中等"},
-      {"company": "华大九天", "role": "EDA算法工程师", "salary": "25-40万", "count": "中等"}
+      {
+        "company": "AMD/Xilinx",
+        "role": "FPGA CAD工程师、HLS工具开发",
+        "salary": "40-60万",
+        "count": "少"
+      },
+      { "company": "华为海思", "role": "芯片EDA工程师", "salary": "40-60万", "count": "中等" },
+      { "company": "华大九天", "role": "EDA算法工程师", "salary": "25-40万", "count": "中等" }
     ]
   },
   {
@@ -95,9 +125,14 @@
     "outlook": "极度火热，黄金赛道。HBM、CXL是工业界最热门的基础设施方向",
     "risk35": "中低。存储系统是高壁垒方向，经验价值高",
     "jobs": [
-      {"company": "NVIDIA", "role": "存储系统架构师", "salary": "60-100万", "count": "少"},
-      {"company": "华为海思", "role": "存储控制器IP设计", "salary": "40-60万", "count": "较多"},
-      {"company": "阿里/字节", "role": "大模型训练系统优化", "salary": "50-80万", "count": "增长快"}
+      { "company": "NVIDIA", "role": "存储系统架构师", "salary": "60-100万", "count": "少" },
+      { "company": "华为海思", "role": "存储控制器IP设计", "salary": "40-60万", "count": "较多" },
+      {
+        "company": "阿里/字节",
+        "role": "大模型训练系统优化",
+        "salary": "50-80万",
+        "count": "增长快"
+      }
     ]
   },
   {
@@ -120,9 +155,9 @@
     "outlook": "政策驱动+产业需求双热。短期更多在IoT/嵌入式/边缘AI场景落地",
     "risk35": "中低。处理器设计是经验密集型",
     "jobs": [
-      {"company": "平头哥", "role": "RISC-V处理器设计", "salary": "40-70万", "count": "中等"},
-      {"company": "芯来科技", "role": "RISC-V IP核设计", "salary": "30-50万", "count": "少"},
-      {"company": "华为海思", "role": "指令集架构师", "salary": "40-60万", "count": "中等"}
+      { "company": "平头哥", "role": "RISC-V处理器设计", "salary": "40-70万", "count": "中等" },
+      { "company": "芯来科技", "role": "RISC-V IP核设计", "salary": "30-50万", "count": "少" },
+      { "company": "华为海思", "role": "指令集架构师", "salary": "40-60万", "count": "中等" }
     ]
   },
   {
@@ -145,8 +180,13 @@
     "outlook": "学术前沿，产业极早期。SNN精度远不如ANN",
     "risk35": "纯学术方向，大概率要转行",
     "jobs": [
-      {"company": "鹏城实验室/高校", "role": "研究员", "salary": "25-40万", "count": "极少"},
-      {"company": "自动驾驶公司", "role": "事件相机算法工程师", "salary": "30-50万", "count": "极少"}
+      { "company": "鹏城实验室/高校", "role": "研究员", "salary": "25-40万", "count": "极少" },
+      {
+        "company": "自动驾驶公司",
+        "role": "事件相机算法工程师",
+        "salary": "30-50万",
+        "count": "极少"
+      }
     ]
   },
   {
@@ -169,9 +209,19 @@
     "outlook": "稳定增长。边缘AI是长期趋势，但市场碎片化",
     "risk35": "低。模拟/混合信号设计是越老越值钱的方向",
     "jobs": [
-      {"company": "华为海思", "role": "低功耗芯片设计", "salary": "40-60万", "count": "中等"},
-      {"company": "地平线/黑芝麻", "role": "边缘AI芯片设计", "salary": "35-50万", "count": "中等"},
-      {"company": "瑞芯微/全志科技", "role": "嵌入式AI SoC设计", "salary": "25-40万", "count": "较多"}
+      { "company": "华为海思", "role": "低功耗芯片设计", "salary": "40-60万", "count": "中等" },
+      {
+        "company": "地平线/黑芝麻",
+        "role": "边缘AI芯片设计",
+        "salary": "35-50万",
+        "count": "中等"
+      },
+      {
+        "company": "瑞芯微/全志科技",
+        "role": "嵌入式AI SoC设计",
+        "salary": "25-40万",
+        "count": "较多"
+      }
     ]
   },
   {
@@ -194,9 +244,14 @@
     "outlook": "极度火热。大模型训练/推理系统是最热门方向之一",
     "risk35": "中。系统方向技术壁垒高，但互联网公司年龄文化偏年轻",
     "jobs": [
-      {"company": "字节跳动", "role": "大模型训练系统工程师", "salary": "50-80万", "count": "较多"},
-      {"company": "阿里/百度", "role": "AI基础设施工程师", "salary": "45-70万", "count": "较多"},
-      {"company": "华为昇腾", "role": "AI框架开发工程师", "salary": "40-60万", "count": "较多"}
+      {
+        "company": "字节跳动",
+        "role": "大模型训练系统工程师",
+        "salary": "50-80万",
+        "count": "较多"
+      },
+      { "company": "阿里/百度", "role": "AI基础设施工程师", "salary": "45-70万", "count": "较多" },
+      { "company": "华为昇腾", "role": "AI框架开发工程师", "salary": "40-60万", "count": "较多" }
     ]
   }
 ]
