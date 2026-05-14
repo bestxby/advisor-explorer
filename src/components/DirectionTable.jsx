@@ -6,7 +6,7 @@ const HEAT_STYLES = {
   高: 'bg-orange-50 text-orange-700 border-orange-200',
   中高: 'bg-amber-50 text-amber-700 border-amber-200',
   中: 'bg-emerald-50 text-emerald-700 border-emerald-200',
-  低: 'bg-gray-50 text-gray-600 border-gray-200',
+  低: 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
 };
 
 function getSalaryNum(salaryCeiling) {
@@ -35,7 +35,7 @@ function DifficultyDots({ level, max = 5 }) {
                 : level >= 3
                   ? 'bg-orange-400'
                   : 'bg-emerald-400'
-              : 'bg-gray-200'
+              : 'bg-gray-200 dark:bg-slate-600'
           }`}
         />
       ))}
@@ -47,7 +47,7 @@ function RecommendationBadge({ level }) {
   const colors = {
     5: 'bg-emerald-100 text-emerald-700 border-emerald-200',
     4: 'bg-blue-100 text-blue-700 border-blue-200',
-    3: 'bg-gray-100 text-gray-600 border-gray-200',
+    3: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
     2: 'bg-orange-100 text-orange-700 border-orange-200',
     1: 'bg-red-100 text-red-700 border-red-200',
   };
@@ -83,7 +83,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
       {/* Mobile cards view */}
       <div className="grid grid-cols-1 gap-4 p-4 lg:hidden">
         {sorted.map((d) => (
@@ -99,7 +99,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
               ${
                 highlightedDirection === d.id
                   ? 'border-primary shadow-md ring-4 ring-primary/10'
-                  : 'border-gray-100 hover:border-gray-200 hover:shadow-sm'
+                  : 'border-gray-100 dark:border-slate-700 hover:border-gray-200 dark:hover:border-slate-600 hover:shadow-sm dark:hover:shadow-slate-900/50'
               }
             `}
             onClick={() => toggleDirection(d.id)}
@@ -108,14 +108,18 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
             <div className="p-5">
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div>
-                  <span className="text-xs font-bold text-gray-400 mb-1 block">{d.code}</span>
-                  <h3 className="font-bold text-gray-900 font-heading text-lg">{d.name}</h3>
+                  <span className="text-xs font-bold text-gray-400 dark:text-slate-500 mb-1 block">
+                    {d.code}
+                  </span>
+                  <h3 className="font-bold text-gray-900 dark:text-slate-100 font-heading text-lg">
+                    {d.name}
+                  </h3>
                 </div>
                 <div
                   className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     expandedId === d.id
                       ? 'bg-primary text-white rotate-180'
-                      : 'bg-gray-100 text-gray-500'
+                      : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'
                   }`}
                 >
                   <svg
@@ -132,24 +136,28 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
 
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div>
-                  <span className="text-xs text-gray-500 block mb-1">难度</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block mb-1">难度</span>
                   <DifficultyDots level={d.difficulty} />
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block mb-1">推荐</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block mb-1">推荐</span>
                   <RecommendationBadge level={d.recommendation} />
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block mb-1">就业面</span>
-                  <span className="font-medium text-gray-900">{d.jobMarket}</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block mb-1">
+                    就业面
+                  </span>
+                  <span className="font-medium text-gray-900 dark:text-slate-100">
+                    {d.jobMarket}
+                  </span>
                 </div>
                 <div>
-                  <span className="text-xs text-gray-500 block mb-1">薪资</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400 block mb-1">薪资</span>
                   <span className="font-medium text-primary">{d.salaryCeiling}</span>
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-gray-100">
+              <div className="mt-3 pt-3 border-t border-gray-100 dark:border-slate-700">
                 <span
                   className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getHeatStyle(d.competitionHeat)}`}
                 >
@@ -171,28 +179,28 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-50 to-gray-100 border-b border-gray-200">
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+            <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-700/50 to-gray-100 dark:to-slate-700 border-b border-gray-200 dark:border-slate-600">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 方向
               </th>
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 难度
               </th>
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 就业面
               </th>
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 薪资天花板
               </th>
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 竞争热度
               </th>
-              <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 推荐
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-50">
+          <tbody className="divide-y divide-gray-50 dark:divide-slate-700">
             {sorted.map((d) => (
               <Fragment key={d.id}>
                 <tr
@@ -208,7 +216,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                     ${
                       highlightedDirection === d.id
                         ? 'bg-primary/5 hover:bg-primary/10'
-                        : 'bg-white hover:bg-gray-50'
+                        : 'bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700/50'
                     }
                   `}
                 >
@@ -218,10 +226,10 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                         <div className="w-1 h-10 bg-primary rounded-full" />
                       )}
                       <div>
-                        <span className="font-bold text-gray-900 font-heading">
+                        <span className="font-bold text-gray-900 dark:text-slate-100 font-heading">
                           {d.code}. {d.name}
                         </span>
-                        <p className="text-xs text-gray-500 mt-1 line-clamp-1">
+                        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 line-clamp-1">
                           {d.otherTeams.split('、').slice(0, 2).join('、')}等
                         </p>
                       </div>
@@ -231,7 +239,9 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                     <DifficultyDots level={d.difficulty} />
                   </td>
                   <td className="p-4">
-                    <span className="font-medium text-gray-700">{d.jobMarket}</span>
+                    <span className="font-medium text-gray-700 dark:text-slate-300">
+                      {d.jobMarket}
+                    </span>
                   </td>
                   <td className="p-4">
                     <span className="font-semibold text-primary">{d.salaryCeiling}</span>

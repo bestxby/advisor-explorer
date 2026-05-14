@@ -1,10 +1,10 @@
 export default function DirectionDetail({ direction }) {
   return (
-    <div className="bg-gradient-to-br from-gray-50 to-white p-8 border-t border-gray-100">
+    <div className="bg-gradient-to-br from-gray-50 dark:from-slate-700/50 to-white dark:to-slate-800 p-8 border-t border-gray-100 dark:border-slate-700">
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Left column */}
         <div className="space-y-6">
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
                 <svg
@@ -21,12 +21,16 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">日常在干什么</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                日常在干什么
+              </h4>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">{direction.dailyWork}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+              {direction.dailyWork}
+            </p>
           </div>
 
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-red-50 flex items-center justify-center">
                 <svg
@@ -43,12 +47,16 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">核心痛点</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                核心痛点
+              </h4>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">{direction.corePainPoint}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+              {direction.corePainPoint}
+            </p>
           </div>
 
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-emerald-50 flex items-center justify-center">
                 <svg
@@ -65,15 +73,19 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">你的护城河</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                你的护城河
+              </h4>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">{direction.moat}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+              {direction.moat}
+            </p>
           </div>
         </div>
 
         {/* Right column */}
         <div className="space-y-6">
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-purple-50 flex items-center justify-center">
                 <svg
@@ -90,7 +102,9 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">大三必须啃透的课</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                大三必须啃透的课
+              </h4>
             </div>
             <div className="flex flex-wrap gap-2">
               {direction.courses.map((c) => (
@@ -104,7 +118,7 @@ export default function DirectionDetail({ direction }) {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-blue-50 flex items-center justify-center">
                 <svg
@@ -126,12 +140,16 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">真实前景</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                真实前景
+              </h4>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">{direction.outlook}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+              {direction.outlook}
+            </p>
           </div>
 
-          <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+          <div className="bg-white dark:bg-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
             <div className="flex items-center gap-2 mb-3">
               <div className="w-7 h-7 rounded-lg bg-orange-50 flex items-center justify-center">
                 <svg
@@ -148,9 +166,13 @@ export default function DirectionDetail({ direction }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 font-heading">35岁风险</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 font-heading">
+                35岁风险
+              </h4>
             </div>
-            <p className="text-sm text-gray-600 leading-relaxed">{direction.risk35}</p>
+            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+              {direction.risk35}
+            </p>
           </div>
         </div>
       </div>
@@ -173,15 +195,22 @@ export default function DirectionDetail({ direction }) {
               />
             </svg>
           </div>
-          <h4 className="font-semibold text-gray-900 text-lg font-heading">对口岗位</h4>
+          <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+            对口岗位
+          </h4>
         </div>
 
         {/* Mobile card view */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 lg:hidden">
           {direction.jobs.map((job, i) => (
-            <div key={i} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-              <p className="font-semibold text-gray-900 text-sm mb-2">{job.company}</p>
-              <p className="text-xs text-gray-600 mb-3">{job.role}</p>
+            <div
+              key={i}
+              className="bg-white dark:bg-slate-800 rounded-xl p-4 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50"
+            >
+              <p className="font-semibold text-gray-900 dark:text-slate-100 text-sm mb-2">
+                {job.company}
+              </p>
+              <p className="text-xs text-gray-600 dark:text-slate-400 mb-3">{job.role}</p>
               <div className="flex items-center justify-between">
                 <span className="text-sm font-bold text-primary">{job.salary}</span>
                 <span
@@ -190,7 +219,7 @@ export default function DirectionDetail({ direction }) {
                       ? 'bg-emerald-50 text-emerald-700'
                       : job.count === '中等' || job.count === '增长快'
                         ? 'bg-blue-50 text-blue-700'
-                        : 'bg-gray-50 text-gray-600'
+                        : 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400'
                   }`}
                 >
                   {job.count}
@@ -201,29 +230,34 @@ export default function DirectionDetail({ direction }) {
         </div>
 
         {/* Desktop table view */}
-        <div className="hidden lg:block overflow-hidden rounded-xl border border-gray-100 shadow-sm">
+        <div className="hidden lg:block overflow-hidden rounded-xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50">
           <table className="w-full text-sm">
             <thead>
-              <tr className="bg-gradient-to-r from-gray-50 to-gray-100">
-                <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+              <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-700/50 to-gray-100 dark:to-slate-700">
+                <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                   公司
                 </th>
-                <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+                <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                   岗位
                 </th>
-                <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+                <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                   薪资
                 </th>
-                <th className="text-left p-4 font-semibold text-gray-700 text-xs uppercase tracking-wider">
+                <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                   岗位数量
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-gray-50 dark:divide-slate-700">
               {direction.jobs.map((job, i) => (
-                <tr key={i} className="bg-white hover:bg-gray-50 transition-colors duration-150">
-                  <td className="p-4 font-medium text-gray-900">{job.company}</td>
-                  <td className="p-4 text-gray-600">{job.role}</td>
+                <tr
+                  key={i}
+                  className="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700/50 transition-colors duration-150"
+                >
+                  <td className="p-4 font-medium text-gray-900 dark:text-slate-100">
+                    {job.company}
+                  </td>
+                  <td className="p-4 text-gray-600 dark:text-slate-400">{job.role}</td>
                   <td className="p-4 font-semibold text-primary">{job.salary}</td>
                   <td className="p-4">
                     <span
@@ -232,7 +266,7 @@ export default function DirectionDetail({ direction }) {
                           ? 'bg-emerald-50 text-emerald-700 border border-emerald-100'
                           : job.count === '中等' || job.count === '增长快'
                             ? 'bg-blue-50 text-blue-700 border border-blue-100'
-                            : 'bg-gray-50 text-gray-600 border border-gray-100'
+                            : 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 border border-gray-100 dark:border-slate-700'
                       }`}
                     >
                       {job.count}

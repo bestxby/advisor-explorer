@@ -1,11 +1,13 @@
-import { lazy, Suspense, useMemo, useState } from 'react';
+import { lazy, Suspense, useCallback, useMemo, useState } from 'react';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
 import KPISummary from './components/KPISummary';
 import ProfessorCard from './components/ProfessorCard';
 import QuizResults from './components/QuizResults';
 import Footer from './components/Footer';
+import ErrorBoundary from './components/ErrorBoundary';
 import useScrollAnimations from './hooks/useScrollAnimations';
+import { loadQuizResult, saveQuizResult, clearQuizResult } from './utils/storage';
 import professors from './data/professors.json';
 import directions from './data/directions.json';
 import quiz from './data/quiz.json';
@@ -71,7 +73,16 @@ function PanelFallback({ label }) {
 export default function App() {
   const [selectedDirection, setSelectedDirection] = useState('all');
   const [sortBy, setSortBy] = useState('recommendation');
-  const [quizResult, setQuizResult] = useState(null);
+  const [quizResult, setQuizResult] = useState(() => loadQuizResult());
+
+  const handleQuizResult = useCallback((result) => {
+    setQuizResult(result);
+    if (result) {
+      saveQuizResult(result);
+    } else {
+      clearQuizResult();
+    }
+  }, []);
   const [activeTab, setActiveTab] = useState('professors');
 
   useScrollAnimations({ activeTab });
@@ -84,14 +95,16 @@ export default function App() {
   return (
     <div className="min-h-screen bg-surface">
       <Header>
-        <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
-          <QuizSection
-            quiz={quiz}
-            professors={professors}
-            directions={directions}
-            onResult={setQuizResult}
-          />
-        </Suspense>
+        <ErrorBoundary fallbackMessage="问卷加载失败">
+          <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
+            <QuizSection
+              quiz={quiz}
+              professors={professors}
+              directions={directions}
+              onResult={handleQuizResult}
+            />
+          </Suspense>
+        </ErrorBoundary>
       </Header>
 
       <FilterBar
@@ -107,7 +120,11 @@ export default function App() {
           <KPISummary professors={professors} directions={directions} />
         </section>
 
-        {quizResult && <QuizResults quizResult={quizResult} directions={directions} />}
+        {quizResult && (
+          <ErrorBoundary fallbackMessage="匹配结果加载失败">
+            <QuizResults quizResult={quizResult} directions={directions} />
+          </ErrorBoundary>
+        )}
 
         {/* Tab Bar */}
         <div
@@ -160,57 +177,61 @@ export default function App() {
 
         {/* Tab Content */}
         {activeTab === 'professors' && (
-          <div
-            id="professors-panel"
-            className="grid gap-3"
-            data-animate="professor-list"
-            role="tabpanel"
-            aria-labelledby="professors-tab"
-          >
-            {filteredProfessors.map((p) => (
-              <div key={p.id} data-animate="professor-card">
-                <ProfessorCard
-                  professor={p}
-                  isHighlighted={quizResult?.professors?.includes(p.id)}
-                />
-              </div>
-            ))}
-            {filteredProfessors.length === 0 && (
-              <div className="text-center py-10 bg-white rounded-xl border border-gray-100">
-                <svg
-                  className="w-10 h-10 text-gray-300 mx-auto mb-3"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+          <ErrorBoundary fallbackMessage="导师列表加载失败">
+            <div
+              id="professors-panel"
+              className="grid gap-3"
+              data-animate="professor-list"
+              role="tabpanel"
+              aria-labelledby="professors-tab"
+            >
+              {filteredProfessors.map((p) => (
+                <div key={p.id} data-animate="professor-card">
+                  <ProfessorCard
+                    professor={p}
+                    isHighlighted={quizResult?.professors?.includes(p.id)}
                   />
-                </svg>
-                <p className="text-gray-500 text-sm">该方向暂无导师数据</p>
-              </div>
-            )}
-          </div>
+                </div>
+              ))}
+              {filteredProfessors.length === 0 && (
+                <div className="text-center py-10 bg-white rounded-xl border border-gray-100">
+                  <svg
+                    className="w-10 h-10 text-gray-300 mx-auto mb-3"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+                    />
+                  </svg>
+                  <p className="text-gray-500 text-sm">该方向暂无导师数据</p>
+                </div>
+              )}
+            </div>
+          </ErrorBoundary>
         )}
 
         {activeTab === 'directions' && (
-          <div
-            id="directions-panel"
-            data-animate="directions"
-            role="tabpanel"
-            aria-labelledby="directions-tab"
-          >
-            <Suspense fallback={<PanelFallback label="正在加载方向对比..." />}>
-              <DirectionTable
-                directions={directions}
-                highlightedDirection={quizResult?.direction}
-                sortBy={sortBy}
-              />
-            </Suspense>
-          </div>
+          <ErrorBoundary fallbackMessage="方向对比加载失败">
+            <div
+              id="directions-panel"
+              data-animate="directions"
+              role="tabpanel"
+              aria-labelledby="directions-tab"
+            >
+              <Suspense fallback={<PanelFallback label="正在加载方向对比..." />}>
+                <DirectionTable
+                  directions={directions}
+                  highlightedDirection={quizResult?.direction}
+                  sortBy={sortBy}
+                />
+              </Suspense>
+            </div>
+          </ErrorBoundary>
         )}
       </main>
 

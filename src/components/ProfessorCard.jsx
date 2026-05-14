@@ -59,10 +59,10 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
   const collegeKey = `${professor.university} · ${professor.department}`;
   const colors = collegeColors[collegeKey] || {
-    bg: 'bg-gray-50',
-    text: 'text-gray-700',
-    border: 'border-gray-200',
-    dot: 'bg-gray-500',
+    bg: 'bg-gray-50 dark:bg-slate-700/50',
+    text: 'text-gray-700 dark:text-slate-300',
+    border: 'border-gray-200 dark:border-slate-600',
+    dot: 'bg-gray-500 dark:bg-slate-400',
   };
 
   return (
@@ -72,9 +72,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         ${
           isHighlighted
             ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10'
-            : 'border-gray-100 hover:border-gray-200 hover:shadow-md'
+            : 'border-gray-100 dark:border-slate-700 hover:border-gray-200 dark:hover:border-slate-600 hover:shadow-md dark:shadow-slate-900/50'
         }
-        bg-white overflow-hidden
+        bg-white dark:bg-slate-800 overflow-hidden
       `}
     >
       {/* Highlight indicator */}
@@ -90,7 +90,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1.5">
-              <h3 className="text-lg font-bold text-gray-900 font-heading group-hover:text-primary transition-colors duration-200">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 font-heading group-hover:text-primary transition-colors duration-200">
                 {professor.name}
               </h3>
               <span
@@ -100,7 +100,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                 {professor.university} · {professor.department}
               </span>
             </div>
-            <p className="text-gray-500 text-xs leading-relaxed line-clamp-1">
+            <p className="text-gray-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-1">
               {professor.tagline}
             </p>
           </div>
@@ -111,8 +111,8 @@ export default function ProfessorCard({ professor, isHighlighted }) {
             transition-all duration-300 ease-out
             ${
               expanded
-                ? 'bg-primary text-white rotate-180 shadow-sm'
-                : 'bg-gray-100 text-gray-500 group-hover:bg-gray-200'
+                ? 'bg-primary text-white rotate-180 shadow-sm dark:shadow-slate-900/50'
+                : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-slate-600'
             }
           `}
           >
@@ -132,13 +132,13 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {professor.realDirections.slice(0, 3).map((dir) => (
             <span
               key={dir}
-              className="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-600 text-xs rounded border border-gray-100"
+              className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 text-xs rounded border border-gray-100 dark:border-slate-700"
             >
               {dir}
             </span>
           ))}
           {professor.realDirections.length > 3 && (
-            <span className="inline-flex items-center px-2 py-0.5 bg-gray-50 text-gray-400 text-xs rounded border border-gray-100">
+            <span className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-slate-700/50 text-gray-400 dark:text-slate-500 text-xs rounded border border-gray-100 dark:border-slate-700">
               +{professor.realDirections.length - 3}
             </span>
           )}
@@ -150,7 +150,10 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         className="overflow-hidden transition-all duration-300 ease-out"
         style={{ maxHeight: expanded ? `${contentHeight}px` : '0px' }}
       >
-        <div ref={contentRef} className="px-6 pb-6 border-t border-gray-100 pt-6 space-y-8">
+        <div
+          ref={contentRef}
+          className="px-6 pb-6 border-t border-gray-100 dark:border-slate-700 pt-6 space-y-8"
+        >
           {/* Direction Detail */}
           {professor.directionDetail && (
             <section>
@@ -171,10 +174,14 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
                   </svg>
                 </div>
-                <h4 className="font-semibold text-gray-900 text-lg font-heading">研究方向详解</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                  研究方向详解
+                </h4>
               </div>
               <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
-                <p className="text-sm text-gray-700 leading-relaxed">{professor.directionDetail}</p>
+                <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed">
+                  {professor.directionDetail}
+                </p>
               </div>
             </section>
           )}
@@ -197,7 +204,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 text-lg font-heading">代表性论文解读</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                代表性论文解读
+              </h4>
             </div>
             <div className="grid gap-4">
               {professor.papers.map((paper, i) => (
@@ -206,17 +215,17 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   href={paper.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/paper bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 border border-gray-100 hover:border-blue-200 hover:shadow-sm transition-all duration-200 cursor-pointer block"
+                  className="group/paper bg-gradient-to-br from-gray-50 dark:from-slate-700/50 to-white dark:to-slate-800 rounded-xl p-5 border border-gray-100 dark:border-slate-700 hover:border-blue-200 hover:shadow-sm dark:hover:shadow-slate-900/50 transition-all duration-200 cursor-pointer block"
                 >
                   <div className="flex flex-wrap items-start gap-3 mb-3">
-                    <h5 className="font-semibold text-gray-900 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
+                    <h5 className="font-semibold text-gray-900 dark:text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
                       {paper.title}
                     </h5>
                     <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 text-blue-700 rounded-md">
                       {paper.venue}
                     </span>
                     <svg
-                      className="w-3.5 h-3.5 text-gray-400 flex-shrink-0 opacity-0 group-hover/paper:opacity-100 transition-opacity duration-200 mt-0.5"
+                      className="w-3.5 h-3.5 text-gray-400 dark:text-slate-500 flex-shrink-0 opacity-0 group-hover/paper:opacity-100 transition-opacity duration-200 mt-0.5"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -229,7 +238,9 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                       />
                     </svg>
                   </div>
-                  <p className="text-sm text-gray-600 leading-relaxed">{paper.summary}</p>
+                  <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+                    {paper.summary}
+                  </p>
                 </a>
               ))}
             </div>
@@ -255,10 +266,14 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                     />
                   </svg>
                 </div>
-                <h4 className="font-semibold text-gray-900 text-lg font-heading">方向犀利评价</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                  方向犀利评价
+                </h4>
               </div>
-              <p className="text-sm text-gray-700 leading-relaxed mb-4">{professor.evaluation}</p>
-              <div className="flex items-start gap-2 bg-white/60 rounded-lg p-3 border border-amber-200">
+              <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed mb-4">
+                {professor.evaluation}
+              </p>
+              <div className="flex items-start gap-2 bg-white/60 dark:bg-white/10 rounded-lg p-3 border border-amber-200">
                 <svg
                   className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0"
                   fill="none"
@@ -297,33 +312,35 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 text-lg font-heading">技术栈与入门资源</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                技术栈与入门资源
+              </h4>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              <div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-5 border border-gray-100 dark:border-slate-700">
+                <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                   核心技术栈
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {professor.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="inline-flex items-center px-3 py-1.5 bg-white text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-100 shadow-sm"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-800 text-indigo-700 text-xs font-semibold rounded-lg border border-indigo-100 shadow-sm dark:shadow-slate-900/50"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
-                <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">
+              <div className="bg-gray-50 dark:bg-slate-700/50 rounded-xl p-5 border border-gray-100 dark:border-slate-700">
+                <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                   顶会/顶刊
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {professor.conferences.map((conf) => (
                     <span
                       key={conf}
-                      className="inline-flex items-center px-3 py-1.5 bg-white text-emerald-700 text-xs font-semibold rounded-lg border border-emerald-100 shadow-sm"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-slate-800 text-emerald-700 text-xs font-semibold rounded-lg border border-emerald-100 shadow-sm dark:shadow-slate-900/50"
                     >
                       {conf}
                     </span>
@@ -336,12 +353,18 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Resources */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center">
-                <svg className="w-4 h-4 text-gray-700" fill="currentColor" viewBox="0 0 24 24">
+              <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-slate-700 flex items-center justify-center">
+                <svg
+                  className="w-4 h-4 text-gray-700 dark:text-slate-300"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
                 </svg>
               </div>
-              <h4 className="font-semibold text-gray-900 text-lg font-heading">推荐开源项目</h4>
+              <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                推荐开源项目
+              </h4>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {professor.resources.map((res) => (
@@ -370,14 +393,18 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                     />
                   </svg>
                 </div>
-                <h4 className="font-semibold text-gray-900 text-lg font-heading">大三入门项目</h4>
+                <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+                  大三入门项目
+                </h4>
               </div>
-              <p className="text-sm text-gray-700 leading-relaxed">{professor.starterProject}</p>
+              <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed">
+                {professor.starterProject}
+              </p>
             </div>
           </section>
 
           {/* Meta */}
-          <div className="flex flex-wrap gap-6 text-sm text-gray-500 pt-4 border-t border-gray-100">
+          <div className="flex flex-wrap gap-6 text-sm text-gray-500 dark:text-slate-400 pt-4 border-t border-gray-100 dark:border-slate-700">
             <div className="flex items-center gap-2">
               <svg
                 className="w-4 h-4"

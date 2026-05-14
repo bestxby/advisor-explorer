@@ -1,3 +1,5 @@
+import ThemeToggle from './ThemeToggle';
+
 export default function Header({ children }) {
   return (
     <header
@@ -19,25 +21,28 @@ export default function Header({ children }) {
           {/* Left column: brand content */}
           <div className="md:col-span-3 flex flex-col gap-3">
             {/* Logo row */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                  />
-                </svg>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth={1.5}
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                    />
+                  </svg>
+                </div>
+                <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
+                  Advisor Explorer
+                </span>
               </div>
-              <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
-                Advisor Explorer
-              </span>
+              <ThemeToggle />
             </div>
 
             {/* Main title */}
@@ -135,7 +140,7 @@ export default function Header({ children }) {
           </div>
 
           {/* Right column: quiz questionnaire */}
-          <div className="md:col-span-2 hidden md:block">
+          <div className="md:col-span-2">
             <p className="text-xs text-white/70 tracking-wider uppercase mb-2">个性化方向匹配</p>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
               {children}

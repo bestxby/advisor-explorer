@@ -4,7 +4,7 @@ import roadmapData from '../data/roadmap.json';
 const PRIORITY_STYLES = {
   high: 'bg-red-50 text-red-700 border-red-200',
   medium: 'bg-amber-50 text-amber-700 border-amber-200',
-  low: 'bg-gray-50 text-gray-500 border-gray-200',
+  low: 'bg-gray-50 dark:bg-slate-700/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-slate-600',
 };
 
 const PRIORITY_LABELS = {
@@ -44,7 +44,7 @@ export default function RoadmapSection({ directionId, directionName }) {
   if (!roadmap) return null;
 
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
       <div className="p-8 md:p-10">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-indigo-100 rounded-xl flex items-center justify-center">
@@ -63,15 +63,19 @@ export default function RoadmapSection({ directionId, directionName }) {
             </svg>
           </div>
           <div>
-            <h3 className="text-xl font-bold text-gray-900 font-heading">行动路线图</h3>
-            <p className="text-sm text-gray-500">针对「{directionName}」方向的个性化时间线</p>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-slate-100 font-heading">
+              行动路线图
+            </h3>
+            <p className="text-sm text-gray-500 dark:text-slate-400">
+              针对「{directionName}」方向的个性化时间线
+            </p>
           </div>
         </div>
 
         {/* Timeline */}
         <div className="mt-8 relative">
           {/* Vertical line */}
-          <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gray-200 hidden md:block" />
+          <div className="absolute left-5 top-0 bottom-0 w-0.5 bg-gray-200 dark:bg-slate-600 hidden md:block" />
 
           <div className="space-y-4">
             {roadmap.phases.map((phase, phaseIdx) => {
@@ -91,7 +95,7 @@ export default function RoadmapSection({ directionId, directionName }) {
                       className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
                         isExpanded
                           ? `${colors.border} ${colors.light}`
-                          : 'border-gray-100 hover:border-gray-200 hover:bg-gray-50'
+                          : 'border-gray-100 dark:border-slate-700 hover:border-gray-200 dark:hover:border-slate-600 hover:bg-gray-50 dark:hover:bg-slate-700/50'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -102,15 +106,17 @@ export default function RoadmapSection({ directionId, directionName }) {
                         </span>
                         <div className="text-left">
                           <span
-                            className={`font-bold text-lg ${isExpanded ? colors.text : 'text-gray-800'}`}
+                            className={`font-bold text-lg ${isExpanded ? colors.text : 'text-gray-800 dark:text-slate-200'}`}
                           >
                             {phase.period}
                           </span>
-                          <span className="text-gray-400 text-sm ml-2">{phase.subtitle}</span>
+                          <span className="text-gray-400 dark:text-slate-500 text-sm ml-2">
+                            {phase.subtitle}
+                          </span>
                         </div>
                       </div>
                       <svg
-                        className={`w-5 h-5 text-gray-400 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                        className={`w-5 h-5 text-gray-400 dark:text-slate-500 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -129,14 +135,14 @@ export default function RoadmapSection({ directionId, directionName }) {
                         {phase.tasks.map((task, taskIdx) => (
                           <div
                             key={taskIdx}
-                            className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 border border-gray-100"
+                            className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-slate-700/50 border border-gray-100 dark:border-slate-700"
                           >
                             <span
                               className={`flex-shrink-0 mt-0.5 px-2 py-0.5 text-xs font-semibold rounded border ${PRIORITY_STYLES[task.priority]}`}
                             >
                               {PRIORITY_LABELS[task.priority]}
                             </span>
-                            <span className="text-gray-700 text-sm leading-relaxed">
+                            <span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed">
                               {task.text}
                             </span>
                           </div>
@@ -165,7 +171,7 @@ export default function RoadmapSection({ directionId, directionName }) {
                             >
                               阶段目标
                             </span>
-                            <p className="text-gray-700 text-sm mt-1 leading-relaxed">
+                            <p className="text-gray-700 dark:text-slate-300 text-sm mt-1 leading-relaxed">
                               {phase.milestone}
                             </p>
                           </div>
@@ -181,15 +187,15 @@ export default function RoadmapSection({ directionId, directionName }) {
 
         {/* Resources */}
         {roadmap.resources && roadmap.resources.length > 0 && (
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <h4 className="text-sm font-bold text-gray-500 uppercase tracking-wide mb-3">
+          <div className="mt-8 pt-6 border-t border-gray-100 dark:border-slate-700">
+            <h4 className="text-sm font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">
               推荐资源
             </h4>
             <div className="flex flex-wrap gap-2">
               {roadmap.resources.map((res, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-slate-700/50 border border-gray-200 dark:border-slate-600 rounded-lg text-sm text-gray-700 dark:text-slate-300"
                 >
                   {res.url ? (
                     <a
@@ -203,7 +209,9 @@ export default function RoadmapSection({ directionId, directionName }) {
                   ) : (
                     <span>{res.name}</span>
                   )}
-                  {res.note && <span className="text-gray-400 text-xs">({res.note})</span>}
+                  {res.note && (
+                    <span className="text-gray-400 dark:text-slate-500 text-xs">({res.note})</span>
+                  )}
                 </span>
               ))}
             </div>

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:is(.dark *));
+
 /* Design Tokens from ui-ux-pro-max — Data-Dense Dashboard */
 @theme {
   --color-primary: #1e40af;
@@ -31,6 +33,11 @@ body {
   background: var(--color-surface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.dark body {
+  color: #e2e8f0;
+  background: #0f172a;
 }
 
 h1,
