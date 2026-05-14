@@ -4,11 +4,19 @@ export default function FilterBar({
   onDirectionChange,
   sortBy,
   onSortChange,
+  activeTab,
 }) {
+  const isProfTab = activeTab === 'professors';
+
   return (
     <div className="bg-white/80 dark:bg-slate-800/90 backdrop-blur-md border-b border-border dark:border-slate-700 sticky top-0 z-20 shadow-sm dark:shadow-slate-900/50">
-      <div className="max-w-6xl mx-auto px-6 py-4 flex flex-wrap items-center gap-6">
-        <div className="flex items-center gap-3">
+      <div className="max-w-6xl mx-auto px-6 min-h-[4rem] flex flex-wrap items-center gap-6">
+        {/* Direction filter — visible on professors tab */}
+        <div
+          className={`flex items-center gap-3 transition-opacity duration-200 ${
+            isProfTab ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'
+          }`}
+        >
           <div className="flex items-center gap-2 text-gray-500 dark:text-slate-400">
             <svg
               aria-hidden="true"
@@ -48,7 +56,12 @@ export default function FilterBar({
           </select>
         </div>
 
-        <div className="flex items-center gap-3">
+        {/* Sort dropdown — visible on directions tab */}
+        <div
+          className={`flex items-center gap-3 transition-opacity duration-200 ${
+            !isProfTab ? 'opacity-100' : 'opacity-0 pointer-events-none absolute'
+          }`}
+        >
           <div className="flex items-center gap-2 text-gray-500 dark:text-slate-400">
             <svg
               aria-hidden="true"
@@ -86,8 +99,8 @@ export default function FilterBar({
           </select>
         </div>
 
-        {/* Active filter indicator */}
-        {selectedDirection !== 'all' && (
+        {/* Active filter indicator — only on professors tab */}
+        {isProfTab && selectedDirection !== 'all' && (
           <button
             type="button"
             onClick={() => onDirectionChange('all')}

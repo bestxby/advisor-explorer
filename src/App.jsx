@@ -113,6 +113,7 @@ export default function App() {
         onDirectionChange={setSelectedDirection}
         sortBy={sortBy}
         onSortChange={setSortBy}
+        activeTab={activeTab}
       />
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
