@@ -4,12 +4,12 @@ export default function Header({ children }) {
   return (
     <header
       data-animate="header"
-      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light text-white py-8 px-8 md:px-10 relative overflow-hidden"
+      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white py-8 px-8 md:px-10 relative overflow-hidden"
     >
-      {/* Subtle pattern overlay */}
+      {/* Subtle pattern overlay - hidden in dark mode */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 opacity-10"
+        className="absolute inset-0 opacity-10 dark:opacity-0"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
         }}
@@ -20,29 +20,29 @@ export default function Header({ children }) {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
           {/* Left column: brand content */}
           <div className="md:col-span-3 flex flex-col gap-3">
+            {/* Theme toggle - above title */}
+            <ThemeToggle />
+
             {/* Logo row */}
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-white/20 rounded-lg flex items-center justify-center backdrop-blur-sm">
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={1.5}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
-                    />
-                  </svg>
-                </div>
-                <span className="text-sm font-medium text-white/80 tracking-wide uppercase">
-                  Advisor Explorer
-                </span>
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-white/20 dark:bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+                  />
+                </svg>
               </div>
-              <ThemeToggle />
+              <span className="text-sm font-medium text-white/80 dark:text-white/60 tracking-wide uppercase">
+                Advisor Explorer
+              </span>
             </div>
 
             {/* Main title */}
@@ -130,7 +130,7 @@ export default function Header({ children }) {
               ].map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-white/20 hover:bg-white/30 transition-colors duration-200"
+                  className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
                 >
                   {icon}
                   {label}
@@ -141,8 +141,7 @@ export default function Header({ children }) {
 
           {/* Right column: quiz questionnaire */}
           <div className="md:col-span-2">
-            <p className="text-xs text-white/70 tracking-wider uppercase mb-2">个性化方向匹配</p>
-            <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 overflow-hidden">
+            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 overflow-hidden">
               {children}
             </div>
           </div>

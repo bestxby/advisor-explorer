@@ -117,47 +117,58 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   if (results) {
     const top = results[0];
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 p-6 md:p-8 text-center">
-        <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
-          <svg
-            className="w-6 h-6 text-emerald-600"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+        {/* Card header */}
+        <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
+          <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
+            个性化方向匹配
+          </p>
         </div>
-        <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">匹配完成</h3>
-        <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">
-          你的最佳方向是 <span className="font-semibold text-primary">{top.directionName}</span>
-          ，匹配度 {top.score}%
-        </p>
-        <p className="text-xs text-gray-400 dark:text-slate-500 mb-4">详细结果和路线图展示在下方</p>
-        <button
-          onClick={reset}
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
-        >
-          <svg
-            className="w-4 h-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={2}
+
+        <div className="p-6 md:p-8 text-center">
+          <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-6 h-6 text-emerald-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+              />
+            </svg>
+          </div>
+          <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 mb-1">匹配完成</h3>
+          <p className="text-gray-500 dark:text-slate-400 text-sm mb-4">
+            你的最佳方向是 <span className="font-semibold text-primary">{top.directionName}</span>
+            ，匹配度 {top.score}%
+          </p>
+          <p className="text-xs text-gray-400 dark:text-slate-500 mb-4">
+            详细结果和路线图展示在下方
+          </p>
+          <button
+            onClick={reset}
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"
-            />
-          </svg>
-          重新测试
-        </button>
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={2}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182"
+              />
+            </svg>
+            重新测试
+          </button>
+        </div>
       </div>
     );
   }
@@ -167,6 +178,13 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+      {/* Card header */}
+      <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
+        <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
+          个性化方向匹配
+        </p>
+      </div>
+
       {/* Progress bar */}
       <div className="h-1.5 bg-gray-100 dark:bg-slate-700">
         <div
