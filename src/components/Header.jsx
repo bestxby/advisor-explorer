@@ -17,9 +17,9 @@ export default function Header({ children, kpiSection }) {
 
       <div className="max-w-[1440px] mx-auto relative z-10">
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-4 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
           {/* Left column: brand content */}
-          <div className="md:col-span-3 flex flex-col gap-3">
+          <div className="md:col-span-1 flex flex-col gap-3">
             {/* Theme toggle - above title */}
             <ThemeToggle />
 
@@ -140,7 +140,7 @@ export default function Header({ children, kpiSection }) {
           </div>
 
           {/* Right column: quiz questionnaire */}
-          <div className="md:col-span-2">
+          <div className="md:col-span-1">
             <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 overflow-hidden">
               {children}
             </div>
