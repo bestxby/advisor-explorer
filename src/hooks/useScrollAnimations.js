@@ -1,241 +1,149 @@
 import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { HEADER_VIEWPORT_THRESHOLD } from '../constants';
-
-// Fallback: if GSAP animation doesn't fire, clear inline styles after timeout
-function ensureVisible(selector, timeout = 2000) {
-  const els = Array.from(document.querySelectorAll(selector));
-  if (els.length === 0) return undefined;
-  const timer = setTimeout(() => {
-    els.forEach((el) => {
-      if (gsap.getProperty(el, 'opacity') === 0) gsap.set(el, { clearProps: 'all' });
-    });
-  }, timeout);
-  return () => clearTimeout(timer);
-}
-
-gsap.registerPlugin(ScrollTrigger);
 
 const SELECTORS = {
   kpi: '[data-animate="kpi"]',
   tabbar: '[data-animate="tabbar"]',
-  quiz: '[data-animate="quiz"]',
 };
+
+function getPrefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
 
 function queryAll(selector) {
   return Array.from(document.querySelectorAll(selector));
 }
 
-function animateOnScroll(el, fromVars, toVars) {
-  const rect = el.getBoundingClientRect();
-  const inViewport = rect.top < window.innerHeight && rect.bottom > 0;
-  const tween = gsap.fromTo(el, fromVars, { ...toVars, paused: true });
-  if (inViewport) {
-    tween.play();
-  } else {
-    ScrollTrigger.create({
-      trigger: el,
-      start: `top ${HEADER_VIEWPORT_THRESHOLD}%`,
-      onEnter: () => tween.play(),
-    });
-  }
+function prepareElement(el, transform) {
+  el.style.opacity = '0';
+  el.style.transform = transform;
+  el.style.transition = 'opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)';
+  el.style.willChange = 'opacity, transform';
+}
+
+function revealElement(el, delay = 0) {
+  window.setTimeout(() => {
+    el.style.opacity = '1';
+    el.style.transform = 'translate3d(0, 0, 0) scale(1)';
+    el.style.willChange = 'auto';
+  }, delay);
+}
+
+function instantReveal(elements, { transform = 'translate3d(0, 28px, 0)', stagger = 60 } = {}) {
+  elements.forEach((el, i) => {
+    prepareElement(el, transform);
+    revealElement(el, i * stagger + 30);
+  });
+}
+
+function observeReveal(elements, { transform = 'translate3d(0, 28px, 0)', stagger = 60 } = {}) {
+  if (elements.length === 0) return undefined;
+
+  elements.forEach((el) => prepareElement(el, transform));
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const index = elements.indexOf(entry.target);
+        revealElement(entry.target, Math.max(index, 0) * stagger);
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: `0px 0px -${100 - HEADER_VIEWPORT_THRESHOLD}% 0px`, threshold: 0.05 },
+  );
+
+  elements.forEach((el) => observer.observe(el));
+  return () => observer.disconnect();
 }
 
 export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
+    if (getPrefersReducedMotion()) return undefined;
 
     const cleanups = [];
 
-    const ctx = gsap.context(() => {
-      // KPI + TabBar — first load only
-      if (isFirstLoad.current) {
-        isFirstLoad.current = false;
+    if (isFirstLoad.current) {
+      isFirstLoad.current = false;
+      // KPI cards and tab bar: reveal immediately with stagger (no observer)
+      instantReveal(queryAll(SELECTORS.kpi), {
+        transform: 'translate3d(0, 40px, 0) scale(0.96)',
+        stagger: 90,
+      });
+      instantReveal(queryAll(SELECTORS.tabbar), {
+        transform: 'translate3d(0, 20px, 0)',
+        stagger: 0,
+      });
+    }
 
-        const kpiCards = queryAll(SELECTORS.kpi);
-        if (kpiCards.length > 0) {
-          // Spring overshoot for KPI — organic alive feel
-          gsap.fromTo(
-            kpiCards,
-            { y: 40, opacity: 0, scale: 0.92 },
-            {
-              y: 0,
-              opacity: 1,
-              scale: 1,
-              duration: 0.9,
-              stagger: 0.1,
-              ease: 'back.out(1.4)',
-              scrollTrigger: {
-                trigger: kpiCards[0].parentElement,
-                start: 'top 85%',
-                toggleActions: 'play none none none',
-              },
-            },
-          );
-        }
+    if (activeTab === 'professors') {
+      cleanups.push(
+        observeReveal(queryAll('[data-animate="professor-card"]'), {
+          transform: 'translate3d(0, 36px, 0) scale(0.98)',
+          stagger: 70,
+        }),
+      );
+    }
 
-        const tabBar = document.querySelector(SELECTORS.tabbar);
-        if (tabBar) {
-          gsap.fromTo(
-            tabBar,
-            { y: 24, opacity: 0 },
-            {
-              y: 0,
-              opacity: 1,
-              duration: 0.6,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: tabBar,
-                start: 'top 90%',
-                toggleActions: 'play none none none',
-              },
-            },
-          );
-        }
-      }
+    if (activeTab === 'directions') {
+      cleanups.push(
+        observeReveal(queryAll('[data-animate="direction-row"]'), {
+          transform: 'translate3d(0, 22px, 0)',
+          stagger: 35,
+        }),
+      );
+    }
 
-      // Header parallax — Lusion spatial depth: elements move at different speeds
-      const header = document.querySelector('[data-animate="header"]');
+    const header = document.querySelector('[data-animate="header"]');
+    const filterBar = document.querySelector('[data-filterbar]');
+    const contentWrapper = document.getElementById('content-wrapper');
+    let rafId = 0;
+
+    const updateScrollEffects = () => {
+      rafId = 0;
+
       if (header) {
-        const parallaxSlow = header.querySelectorAll('[data-parallax="slow"]');
-        const parallaxMed = header.querySelectorAll('[data-parallax="med"]');
-        const parallaxFast = header.querySelectorAll('[data-parallax="fast"]');
-
-        if (parallaxSlow.length) {
-          gsap.to(parallaxSlow, {
-            y: -60,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: header,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.8,
-            },
-          });
-        }
-        if (parallaxMed.length) {
-          gsap.to(parallaxMed, {
-            y: -120,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: header,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.5,
-            },
-          });
-        }
-        if (parallaxFast.length) {
-          gsap.to(parallaxFast, {
-            y: -180,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: header,
-              start: 'top top',
-              end: 'bottom top',
-              scrub: 0.3,
-            },
-          });
-        }
-      }
-
-      // Lusion-style scroll snap between header and content
-      const contentWrapper = document.getElementById('content-wrapper');
-      if (contentWrapper) {
-        ScrollTrigger.create({
-          trigger: contentWrapper,
-          start: 'top bottom',
-          end: 'top top',
-          snap: {
-            snapTo: [0, 1],
-            duration: { min: 0.6, max: 1.0 },
-            ease: 'power3.inOut',
-            delay: 0.05,
-          },
+        const rect = header.getBoundingClientRect();
+        const progress = Math.min(Math.max(-rect.top / Math.max(rect.height, 1), 0), 1);
+        header.querySelectorAll('[data-parallax="slow"]').forEach((el) => {
+          el.style.transform = `translate3d(0, ${progress * -60}px, 0)`;
+        });
+        header.querySelectorAll('[data-parallax="med"]').forEach((el) => {
+          el.style.transform = `translate3d(0, ${progress * -120}px, 0)`;
+        });
+        header.querySelectorAll('[data-parallax="fast"]').forEach((el) => {
+          el.style.transform = `translate3d(0, ${progress * -180}px, 0)`;
         });
       }
 
-      // Content — professor cards: elastic spring reveal
-      if (activeTab === 'professors') {
-        const cards = queryAll('[data-animate="professor-card"]');
-        if (cards.length > 0) {
-          gsap.set(cards, { y: 48, opacity: 0, scale: 0.95 });
-          cleanups.push(ensureVisible('[data-animate="professor-card"]'));
-          ScrollTrigger.batch(cards, {
-            onEnter: (elements) => {
-              gsap.to(elements, {
-                y: 0,
-                opacity: 1,
-                scale: 1,
-                duration: 0.9,
-                stagger: 0.12,
-                ease: 'elastic.out(1, 0.7)',
-                overwrite: true,
-              });
-            },
-            start: 'top 88%',
-          });
-        }
-      }
-
-      // Content — directions table rows: subtle slide-in
-      if (activeTab === 'directions') {
-        const rows = queryAll('[data-animate="direction-row"]');
-        if (rows.length > 0) {
-          gsap.set(rows, { y: 24, opacity: 0 });
-          cleanups.push(ensureVisible('[data-animate="direction-row"]'));
-          ScrollTrigger.batch(rows, {
-            onEnter: (elements) => {
-              gsap.to(elements, {
-                y: 0,
-                opacity: 1,
-                duration: 0.5,
-                stagger: 0.06,
-                ease: 'power2.out',
-                overwrite: true,
-              });
-            },
-            start: 'top 90%',
-          });
-        }
-      }
-
-      // Content — quiz panel entrance
-      if (activeTab === 'quiz') {
-        const quizEl = document.querySelector(SELECTORS.quiz);
-        if (quizEl) {
-          animateOnScroll(
-            quizEl,
-            { y: 30, opacity: 0 },
-            { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' },
-          );
-        }
-      }
-
-      // FilterBar dynamic depth blur — subtle, based on scroll position
-      const filterBar = document.querySelector('[data-filterbar]');
       if (filterBar && contentWrapper) {
-        ScrollTrigger.create({
-          trigger: contentWrapper,
-          start: 'top 80%',
-          end: 'top 30%',
-          onUpdate: (self) => {
-            const blur = 12 + self.progress * 14; // 12px → 26px
-            filterBar.style.backdropFilter = `blur(${blur}px)`;
-          },
-        });
+        const rect = contentWrapper.getBoundingClientRect();
+        const viewport = window.innerHeight || 1;
+        const progress = Math.min(Math.max((viewport * 0.8 - rect.top) / (viewport * 0.5), 0), 1);
+        filterBar.style.backdropFilter = `blur(${12 + progress * 14}px)`;
       }
+    };
 
-      ScrollTrigger.refresh();
-    });
+    const requestUpdate = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(updateScrollEffects);
+    };
+
+    requestUpdate();
+    window.addEventListener('scroll', requestUpdate, { passive: true });
+    window.addEventListener('resize', requestUpdate, { passive: true });
 
     return () => {
-      ctx.revert();
       cleanups.forEach((fn) => fn?.());
+      window.removeEventListener('scroll', requestUpdate);
+      window.removeEventListener('resize', requestUpdate);
+      if (rafId) window.cancelAnimationFrame(rafId);
     };
   }, [activeTab, refreshKey]);
 }

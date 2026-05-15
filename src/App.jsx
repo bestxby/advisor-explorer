@@ -8,11 +8,13 @@ import BackToTop from './components/BackToTop';
 import ErrorBoundary from './components/ErrorBoundary';
 import useScrollAnimations from './hooks/useScrollAnimations';
 import useCursorGlow from './hooks/useCursorGlow';
+import { useTheme } from './context/useTheme';
 import { loadQuizResult, saveQuizResult, clearQuizResult } from './utils/storage';
 import professors from './data/professors.json';
 import directions from './data/directions.json';
 import quiz from './data/quiz.json';
 
+const ParticleLayer = lazy(() => import('./components/ParticleLayer'));
 const DirectionTable = lazy(() => import('./components/DirectionTable'));
 const QuizSection = lazy(() => import('./components/QuizSection'));
 const RoadmapSection = lazy(() => import('./components/RoadmapSection'));
@@ -62,6 +64,28 @@ const TAB_DEFINITIONS = [
       </svg>
     ),
   },
+  {
+    id: 'roadmap',
+    label: '行动路线图',
+    shortLabel: '路线图',
+    countKey: 'roadmap',
+    icon: (
+      <svg
+        aria-hidden="true"
+        className="w-4 h-4"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        strokeWidth={1.5}
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          d="M9 6.75V15m6-6v8.25m.503 3.498l4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 00-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0z"
+        />
+      </svg>
+    ),
+  },
 ];
 
 function PanelFallback({ label }) {
@@ -73,6 +97,7 @@ function PanelFallback({ label }) {
 }
 
 export default function App() {
+  const { theme } = useTheme();
   const [selectedDirection, setSelectedDirection] = useState('all');
   const [sortBy, setSortBy] = useState('recommendation');
   const [quizResult, setQuizResult] = useState(() => loadQuizResult());
@@ -96,9 +121,16 @@ export default function App() {
   }, [selectedDirection]);
 
   return (
-    <div className="min-h-screen bg-surface dark:bg-[#0c1018]">
+    <div className="min-h-screen bg-surface dark:bg-[#0c1018] overflow-x-hidden">
       {/* Cursor-following ambient glow — Lusion organic alive effect */}
       <div className="cursor-glow-layer" aria-hidden="true" />
+
+      {/* 3D Particle background */}
+      {theme === 'dark' && (
+        <Suspense fallback={null}>
+          <ParticleLayer />
+        </Suspense>
+      )}
       <Header kpiSection={<KPISummary professors={professors} directions={directions} />}>
         <ErrorBoundary fallbackMessage="问卷加载失败">
           <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
@@ -112,7 +144,7 @@ export default function App() {
         </ErrorBoundary>
       </Header>
 
-      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-[#0c1018]">
+      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-[#0c1018] overflow-x-hidden">
         <FilterBar
           directions={directions}
           selectedDirection={selectedDirection}
@@ -124,9 +156,10 @@ export default function App() {
           filteredProfessorsLength={filteredProfessors.length}
           directionsLength={directions.length}
           tabs={TAB_DEFINITIONS}
+          hasQuizResult={!!quizResult}
         />
 
-        <main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
+        <main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10 overflow-hidden">
 
 
         {/* Tab Content */}
@@ -134,7 +167,7 @@ export default function App() {
           <ErrorBoundary fallbackMessage="导师列表加载失败">
             <div
               id="professors-panel"
-              className="grid grid-cols-1 md:grid-cols-2 gap-3"
+              className="grid grid-cols-1 gap-3"
               data-animate="professor-list"
               role="tabpanel"
               aria-labelledby="professors-tab"
@@ -188,20 +221,56 @@ export default function App() {
           </ErrorBoundary>
         )}
 
-        {/* Roadmap — shown when quiz is completed */}
-        {quizResult && (
+        {activeTab === 'roadmap' && quizResult && (
           <ErrorBoundary fallbackMessage="路线图加载失败">
-            <Suspense fallback={<PanelFallback label="正在加载路线图..." />}>
-              <RoadmapSection
-                directionId={quizResult.direction}
-                directionName={
-                  quizResult.directionName ||
-                  directions.find((d) => d.id === quizResult.direction)?.name ||
-                  quizResult.direction
-                }
-              />
-            </Suspense>
+            <div
+              id="roadmap-panel"
+              data-animate="roadmap"
+              role="tabpanel"
+              aria-labelledby="roadmap-tab"
+              className="overflow-hidden"
+            >
+              <Suspense fallback={<PanelFallback label="正在加载路线图..." />}>
+                <RoadmapSection
+                  directionId={quizResult.direction}
+                  directionName={
+                    quizResult.directionName ||
+                    directions.find((d) => d.id === quizResult.direction)?.name ||
+                    quizResult.direction
+                  }
+                />
+              </Suspense>
+            </div>
           </ErrorBoundary>
+        )}
+
+        {activeTab === 'roadmap' && !quizResult && (
+          <div
+            id="roadmap-panel"
+            role="tabpanel"
+            aria-labelledby="roadmap-tab"
+            className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] p-10 text-center"
+          >
+            <svg
+              className="w-12 h-12 text-gray-300 dark:text-[#475569] mx-auto mb-4"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              strokeWidth={1}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
+              />
+            </svg>
+            <p className="text-gray-500 dark:text-slate-400 text-sm font-medium mb-1">
+              完成上方问卷后解锁
+            </p>
+            <p className="text-gray-400 dark:text-slate-500 text-xs">
+              根据你的性格测试结果生成专属行动路线图
+            </p>
+          </div>
         )}
         </main>
 

@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import QuizSection from '../components/QuizSection';
+import { QUIZ_ANSWER_DELAY_MS } from '../constants';
 import quiz from '../data/quiz.json';
 import professors from '../data/professors.json';
 import directions from '../data/directions.json';
@@ -53,13 +54,13 @@ describe('QuizSection', () => {
       const firstOption = quiz.questions[i].options[0];
       const button = await screen.findByText(firstOption.text);
       await user.click(button);
-      // Wait for the answer delay
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((resolve) => setTimeout(resolve, QUIZ_ANSWER_DELAY_MS + 50));
     }
 
     expect(onResult).toHaveBeenCalled();
     const result = onResult.mock.calls[0][0];
     expect(result).toHaveProperty('direction');
     expect(result).toHaveProperty('topResults');
+    expect(result.topResults[0].strengths.length).toBeGreaterThan(0);
   });
 });

@@ -93,25 +93,25 @@ export default function RoadmapSection({ directionId, directionName }) {
                   <div className="md:ml-14">
                     <button
                       onClick={() => setExpandedPhase(isExpanded ? -1 : phaseIdx)}
-                      className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${
+                      className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer min-w-0 ${
                         isExpanded
                           ? `${colors.border} ${colors.light}`
                           : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-[#3d4f6f] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
                       }`}
                     >
-                      <div className="flex items-center gap-3">
+                      <div className="flex items-center gap-3 min-w-0 overflow-hidden">
                         <span
                           className={`w-8 h-8 rounded-lg ${colors.bg} text-white flex items-center justify-center text-sm font-bold`}
                         >
                           {phaseIdx + 1}
                         </span>
-                        <div className="text-left">
+                        <div className="text-left min-w-0">
                           <span
                             className={`font-bold text-lg ${isExpanded ? colors.text : 'text-gray-800 dark:text-slate-200'}`}
                           >
                             {phase.period}
                           </span>
-                          <span className="text-gray-400 dark:text-slate-500 text-sm ml-2">
+                          <span className="text-gray-400 dark:text-slate-500 text-sm ml-2 truncate">
                             {phase.subtitle}
                           </span>
                         </div>
@@ -132,7 +132,7 @@ export default function RoadmapSection({ directionId, directionName }) {
                     </button>
 
                     {isExpanded && (
-                      <div className="mt-3 ml-2 space-y-2 animate-fadeIn">
+                      <div className="mt-3 ml-2 space-y-2 overflow-hidden animate-fadeIn">
                         {phase.tasks.map((task, taskIdx) => (
                           <div
                             key={taskIdx}
@@ -143,7 +143,7 @@ export default function RoadmapSection({ directionId, directionName }) {
                             >
                               {PRIORITY_LABELS[task.priority]}
                             </span>
-                            <span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed">
+                            <span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed break-words">
                               {task.text}
                             </span>
                           </div>

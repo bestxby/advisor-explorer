@@ -17,6 +17,12 @@ function generateMarkdown(results, directions, professors) {
   lines.push('');
   results.forEach((r, i) => {
     lines.push(`${i + 1}. **${r.directionName}** — 匹配度 ${r.score}%`);
+    if (r.strengths?.length) {
+      lines.push(`   - 匹配依据：${r.strengths.map((s) => s.label).join('；')}`);
+    }
+    if (r.cautions?.length) {
+      lines.push(`   - 需要注意：${r.cautions.map((s) => s.label).join('；')}`);
+    }
   });
   lines.push('');
 

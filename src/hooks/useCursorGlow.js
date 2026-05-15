@@ -5,7 +5,9 @@ export default function useCursorGlow() {
   const posRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const prefersReducedMotion =
+      typeof window.matchMedia === 'function' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
 
     const handleMouseMove = (e) => {

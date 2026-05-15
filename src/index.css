@@ -37,6 +37,7 @@ body {
   background: var(--color-surface);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
 .dark body {
@@ -129,7 +130,8 @@ h4 {
 
 /* Scroll behavior */
 html {
-  scroll-behavior: auto;
+  scroll-behavior: smooth;
+  overflow-x: clip;
 }
 
 /* Custom scrollbar */
@@ -172,6 +174,21 @@ html {
 }
 .animate-fadeIn {
   animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes slideQuestion {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-slideQuestion {
+  animation: slideQuestion 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* Lusion-inspired slow reveal */
@@ -243,3 +260,4 @@ html {
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
+

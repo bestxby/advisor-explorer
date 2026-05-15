@@ -1,36 +1,40 @@
 import { useEffect, useRef, useState } from 'react';
-import { gsap } from 'gsap';
+
+function getPrefersReducedMotion() {
+  return (
+    typeof window !== 'undefined' &&
+    typeof window.matchMedia === 'function' &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  );
+}
 
 export default function useCountUp(target, { duration = 1.2, decimals = 0 } = {}) {
   const [display, setDisplay] = useState(0);
-  const proxyRef = useRef({ value: 0 });
+  const rafRef = useRef(null);
+  const prefersReducedMotion = getPrefersReducedMotion();
 
   useEffect(() => {
-    if (typeof target !== 'number' || Number.isNaN(target)) return;
+    if (typeof target !== 'number' || Number.isNaN(target) || prefersReducedMotion) return;
 
-    const prefersReducedMotion =
-      typeof window !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const startedAt = performance.now();
+    const durationMs = duration * 1000;
 
-    if (prefersReducedMotion) {
-      setDisplay(target);
-      return;
-    }
+    const tick = (now) => {
+      const progress = Math.min((now - startedAt) / durationMs, 1);
+      const eased = 1 - (1 - progress) ** 3;
+      setDisplay(Number((target * eased).toFixed(decimals)));
 
-    proxyRef.current.value = 0;
-    gsap.to(proxyRef.current, {
-      value: target,
-      duration,
-      ease: 'power2.out',
-      onUpdate: () => {
-        setDisplay(Number(proxyRef.current.value.toFixed(decimals)));
-      },
-    });
+      if (progress < 1) {
+        rafRef.current = requestAnimationFrame(tick);
+      }
+    };
+
+    rafRef.current = requestAnimationFrame(tick);
 
     return () => {
-      gsap.killTweensOf(proxyRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, [target, duration, decimals]);
+  }, [target, duration, decimals, prefersReducedMotion]);
 
-  return display;
+  return prefersReducedMotion && typeof target === 'number' ? target : display;
 }

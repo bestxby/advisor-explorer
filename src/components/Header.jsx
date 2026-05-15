@@ -11,7 +11,7 @@ export default function Header({ children, kpiSection }) {
       </a>
       <header
         data-animate="header"
-        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#080c14] dark:via-[#0f1d35] dark:to-[#080c14] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
+        className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#080c14] dark:via-[#0f1d35] dark:to-[#080c14] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
       >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
@@ -38,11 +38,13 @@ export default function Header({ children, kpiSection }) {
         }}
       />
 
-      <div className="w-full max-w-[95%] xl:max-w-[1800px] mx-auto relative z-10 py-8">
+      <div className="w-full max-w-full xl:max-w-[1800px] mx-auto relative z-10 py-8">
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-[4.5fr_5.5fr] gap-12 xl:gap-20 items-start">
+        <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,4.5fr)_minmax(0,5.5fr)] gap-12 xl:gap-20 items-start min-w-0">
           {/* Left column: brand content */}
-          <div className="md:col-span-1 flex flex-col gap-5 xl:gap-8 pt-2">
+          <div
+            className="md:col-span-1 flex flex-col gap-5 xl:gap-8 pt-2 min-w-0 w-full"
+          >
             {/* Theme toggle - above title */}
             <ThemeToggle />
 
@@ -69,14 +71,14 @@ export default function Header({ children, kpiSection }) {
             </div>
 
             {/* Main title */}
-            <h1 data-parallax="slow" className="text-[2.75rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.5rem] font-black leading-[1.05] font-heading tracking-tight dark:tracking-[-0.02em]">
+            <h1 data-parallax="slow" className="min-w-0 break-words text-[2.75rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.5rem] font-black leading-[1.05] font-heading tracking-tight dark:tracking-[-0.02em]">
               计算机体系结构
               <br />
               <span className="text-accent-light dark:bg-gradient-to-r dark:from-amber-300 dark:to-orange-400 dark:bg-clip-text dark:text-transparent">方向导航</span>
             </h1>
 
             {/* Badges */}
-            <div data-parallax="fast" className="flex flex-wrap gap-2">
+            <div data-parallax="fast" className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 max-w-full">
               {[
                 {
                   icon: (
@@ -153,17 +155,19 @@ export default function Header({ children, kpiSection }) {
               ].map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-5 py-3.5 min-h-[48px] rounded-full text-base font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
+                  className="inline-flex items-center justify-center sm:justify-start gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-3.5 min-h-[48px] rounded-full text-sm sm:text-base font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200 min-w-0"
                 >
                   {icon}
-                  {label}
+                  <span className="min-w-0 truncate">{label}</span>
                 </span>
               ))}
             </div>
           </div>
 
           {/* Right column: quiz questionnaire */}
-          <div className="md:col-span-1">
+          <div
+            className="md:col-span-1 min-w-0 w-full"
+          >
             <div data-parallax="med" className="bg-white/10 dark:bg-[#131a2b]/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550]/60 h-full flex flex-col overflow-y-auto overflow-x-hidden dark:shadow-[0_0_60px_-12px_rgba(30,64,175,0.12)]">
               {children}
             </div>

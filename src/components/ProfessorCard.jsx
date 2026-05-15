@@ -1,41 +1,28 @@
-import { useState, useRef, useCallback } from 'react';
-import { gsap } from 'gsap';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import ResourceCard from './ResourceCard';
 
 export default function ProfessorCard({ professor, isHighlighted }) {
   const [expanded, setExpanded] = useState(false);
+  const [contentHeight, setContentHeight] = useState(0);
   const contentRef = useRef(null);
   const cardRef = useRef(null);
 
-  // Spring expand/collapse with GSAP
-  const toggleExpanded = useCallback(() => {
-    const willExpand = !expanded;
-    setExpanded(willExpand);
-
+  useEffect(() => {
     if (contentRef.current) {
-      if (willExpand) {
-        // Measure natural height
-        contentRef.current.style.maxHeight = 'none';
-        const h = contentRef.current.scrollHeight;
-        contentRef.current.style.maxHeight = '0px';
-
-        gsap.to(contentRef.current, {
-          maxHeight: h,
-          duration: 0.6,
-          ease: 'elastic.out(1, 0.75)',
-          onComplete: () => {
-            contentRef.current.style.maxHeight = 'none';
-          },
-        });
-      } else {
-        gsap.to(contentRef.current, {
-          maxHeight: 0,
-          duration: 0.4,
-          ease: 'power3.inOut',
-        });
-      }
+      setContentHeight(contentRef.current.scrollHeight);
     }
+
+    const updateHeight = () => {
+      if (contentRef.current) setContentHeight(contentRef.current.scrollHeight);
+    };
+
+    window.addEventListener('resize', updateHeight, { passive: true });
+    return () => window.removeEventListener('resize', updateHeight);
   }, [expanded]);
+
+  const toggleExpanded = useCallback(() => {
+    setExpanded((current) => !current);
+  }, []);
 
   // Card inner glow tracking — Lusion organic hover
   const handleMouseMove = useCallback((e) => {
@@ -180,11 +167,11 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         </div>
       </div>
 
-      {/* Expandable content — GSAP spring controlled */}
+      {/* Expandable content */}
       <div
         ref={contentRef}
-        className="overflow-hidden"
-        style={{ maxHeight: '0px' }}
+        className="overflow-hidden transition-[max-height] duration-500 ease-out"
+        style={{ maxHeight: expanded ? `${contentHeight}px` : '0px' }}
       >
         <div
           className="px-6 pb-6 border-t border-gray-100 dark:border-[#2a3550] pt-6 space-y-8"

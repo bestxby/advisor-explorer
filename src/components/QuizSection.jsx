@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
-import { gsap } from 'gsap';
 import { QUIZ_ANSWER_DELAY_MS } from '../constants';
+import { findTopMatches } from '../utils/matching';
 import ExportButton from './ExportButton';
-
-const prefersReducedMotion = () =>
-  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function QuizSection({ quiz, professors, directions, onResult }) {
   const [currentQ, setCurrentQ] = useState(0);
@@ -12,8 +9,6 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const [results, setResults] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const answerDelayRef = useRef(null);
-  const questionRef = useRef(null);
-  const resultsRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -24,43 +19,11 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
     [],
   );
 
-  // Animate new question in when currentQ changes
-  useEffect(() => {
-    if (questionRef.current && !prefersReducedMotion()) {
-      gsap.fromTo(
-        questionRef.current,
-        { x: 50, opacity: 0 },
-        { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' },
-      );
-    }
-  }, [currentQ]);
-
-  // Animate results in when they appear
-  useEffect(() => {
-    if (results && resultsRef.current && !prefersReducedMotion()) {
-      gsap.fromTo(
-        resultsRef.current,
-        { scale: 0.92, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.4)' },
-      );
-    }
-  }, [results]);
-
   const handleAnswer = useCallback(
     (tag) => {
       if (selectedOption) return;
 
       setSelectedOption(tag);
-
-      // Animate current question out
-      if (questionRef.current && !prefersReducedMotion()) {
-        gsap.to(questionRef.current, {
-          x: -50,
-          opacity: 0,
-          duration: 0.25,
-          ease: 'power2.in',
-        });
-      }
 
       answerDelayRef.current = window.setTimeout(() => {
         const newAnswers = [...answers, tag];
@@ -71,7 +34,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
         if (currentQ < quiz.questions.length - 1) {
           setCurrentQ(currentQ + 1);
         } else {
-          const topMatches = findTopMatches(newAnswers);
+          const topMatches = findTopMatches({ tags: newAnswers, quiz, professors, directions });
           setResults(topMatches);
           onResult({
             direction: topMatches[0]?.direction,
@@ -82,67 +45,8 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
         }
       }, QUIZ_ANSWER_DELAY_MS);
     },
-    [selectedOption, answers, currentQ, quiz, onResult],
+    [selectedOption, answers, currentQ, quiz, professors, directions, onResult],
   );
-
-  const findTopMatches = (tags) => {
-    const { dimensionWeights, directionProfiles, defaultRecommendation } = quiz;
-
-    const scored = Object.entries(directionProfiles).map(([dirId, profile]) => {
-      let rawScore = 0;
-
-      tags.forEach((tag, qIndex) => {
-        const weight = dimensionWeights[String(qIndex)] || 0.2;
-        const tagScore = (profile.positive?.[tag] || 0) + (profile.negative?.[tag] || 0);
-        rawScore += tagScore * weight;
-      });
-
-      return { direction: dirId, rawScore };
-    });
-
-    scored.sort((a, b) => b.rawScore - a.rawScore);
-
-    const maxScore = scored[0]?.rawScore || 0;
-
-    if (maxScore <= 0) {
-      return [
-        {
-          direction: defaultRecommendation.direction,
-          score: 60,
-          professors: defaultRecommendation.professors,
-          reason: defaultRecommendation.reason,
-        },
-      ];
-    }
-
-    const top3 = scored.slice(0, 3).map((item) => ({
-      direction: item.direction,
-      score: Math.max(0, Math.round((item.rawScore / maxScore) * 100)),
-      rawScore: item.rawScore,
-    }));
-
-    if (top3.length === 0) {
-      return [
-        {
-          direction: defaultRecommendation.direction,
-          score: 60,
-          professors: defaultRecommendation.professors,
-          reason: defaultRecommendation.reason,
-        },
-      ];
-    }
-
-    return top3.map((match, i) => {
-      const dir = directions.find((d) => d.id === match.direction);
-      const profs = professors.filter((p) => p.directionId === match.direction).map((p) => p.id);
-      return {
-        ...match,
-        rank: i + 1,
-        directionName: dir?.name || match.direction,
-        professors: profs,
-      };
-    });
-  };
 
   const reset = () => {
     if (answerDelayRef.current) {
@@ -159,7 +63,10 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   if (results) {
     const top = results[0];
     return (
-      <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col">
+      <div
+        className="w-full min-w-0 bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col"
+        style={{ maxWidth: 'calc(100vw - 4rem)' }}
+      >
         {/* Card header */}
         <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
           <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -167,7 +74,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           </p>
         </div>
 
-        <div ref={resultsRef} className="p-6 md:p-8 flex-grow overflow-y-auto rounded-b-2xl">
+        <div className="p-5 sm:p-6 md:p-8 flex-grow overflow-y-auto overflow-x-hidden rounded-b-2xl animate-fadeIn">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -213,8 +120,8 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                   </div>
                 )}
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                  <div className="flex items-center gap-3 min-w-0">
                     <span
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                         i === 0
@@ -225,7 +132,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                       {i + 1}
                     </span>
                     <span
-                      className={`font-bold ${i === 0 ? 'text-primary' : 'text-gray-700 dark:text-slate-300'}`}
+                      className={`font-bold min-w-0 break-words ${i === 0 ? 'text-primary' : 'text-gray-700 dark:text-slate-300'}`}
                     >
                       {r.directionName}
                     </span>
@@ -249,6 +156,40 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                     </span>
                   </div>
                 </div>
+                {(r.strengths?.length > 0 || r.cautions?.length > 0) && (
+                  <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#2a3550] space-y-2">
+                    {r.strengths?.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-xs font-semibold text-gray-500 dark:text-slate-400">
+                          匹配依据
+                        </span>
+                        {r.strengths.map((signal) => (
+                          <span
+                            key={`${r.direction}-${signal.tag}`}
+                            className="inline-flex max-w-full items-center px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-400 border border-emerald-100 dark:border-emerald-800 text-xs"
+                          >
+                            <span className="truncate">{signal.label}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                    {r.cautions?.length > 0 && (
+                      <div className="flex flex-wrap items-center gap-1.5">
+                        <span className="text-xs font-semibold text-gray-500 dark:text-slate-400">
+                          需要注意
+                        </span>
+                        {r.cautions.map((signal) => (
+                          <span
+                            key={`${r.direction}-${signal.tag}`}
+                            className="inline-flex max-w-full items-center px-2 py-0.5 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 border border-amber-100 dark:border-amber-800 text-xs"
+                          >
+                            <span className="truncate">{signal.label}</span>
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -284,7 +225,10 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const progress = (currentQ / quiz.questions.length) * 100;
 
   return (
-    <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col">
+    <div
+      className="w-full min-w-0 bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col"
+      style={{ maxWidth: 'calc(100vw - 4rem)' }}
+    >
       {/* Card header */}
       <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
         <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -300,11 +244,11 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
         />
       </div>
 
-      <div className="p-8 md:p-10 flex flex-col flex-grow overflow-y-auto rounded-b-2xl" aria-live="polite">
+      <div className="p-5 sm:p-8 md:p-10 flex flex-col flex-grow overflow-y-auto overflow-x-hidden rounded-b-2xl" aria-live="polite">
         {/* Progress indicator */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between gap-3 mb-8 min-w-0">
           <div
-            className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1"
+            className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto pb-1"
             role="group"
             aria-label="问卷进度"
           >
@@ -312,7 +256,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
               <div
                 key={i}
                 className={`
-                  flex-shrink-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300
+                  flex-shrink-0 w-8 h-8 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300
                   ${
                     i < currentQ
                       ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-200'
@@ -345,7 +289,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
         </div>
 
         {/* Question — spatial slide transition */}
-        <div ref={questionRef}>
+        <div key={currentQ} className="animate-slideQuestion">
           <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-slate-100 mb-8 font-heading leading-relaxed">
             {question.text}
           </h3>
@@ -365,7 +309,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                   }
                 `}
               >
-                <div className="flex items-start gap-4">
+                <div className="flex items-start gap-4 min-w-0">
                   <span
                     className={`
                     flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold transition-all duration-200
@@ -378,7 +322,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                   >
                     {opt.label}
                   </span>
-                  <span className="text-gray-700 dark:text-slate-300 leading-relaxed pt-2">
+                  <span className="min-w-0 break-words text-gray-700 dark:text-slate-300 leading-relaxed pt-2">
                     {opt.text}
                   </span>
                 </div>

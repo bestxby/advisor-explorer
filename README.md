@@ -6,8 +6,7 @@ Interactive React dashboard for comparing Tsinghua and Peking University compute
 
 - Vite
 - React
-- Tailwind CSS
-- GSAP ScrollTrigger
+- Tailwind CSS v4
 
 ## Scripts
 

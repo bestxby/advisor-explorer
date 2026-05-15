@@ -1,14 +1,21 @@
 import { useEffect, useState } from 'react';
 import { ThemeContext } from './useTheme';
 
+const THEME_KEY = 'advisor-explorer-theme';
+
+function getSystemTheme() {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return 'light';
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
 function getInitialTheme() {
   try {
-    const stored = localStorage.getItem('advisor-explorer-theme');
+    const stored = localStorage.getItem(THEME_KEY);
     if (stored === 'dark' || stored === 'light') return stored;
   } catch {
     // Ignore
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return getSystemTheme();
 }
 
 function applyTheme(theme) {
@@ -26,7 +33,7 @@ export default function ThemeProvider({ children }) {
   useEffect(() => {
     applyTheme(theme);
     try {
-      localStorage.setItem('advisor-explorer-theme', theme);
+      localStorage.setItem(THEME_KEY, theme);
     } catch {
       // Ignore
     }
@@ -36,11 +43,11 @@ export default function ThemeProvider({ children }) {
   useEffect(() => {
     let hasStored = false;
     try {
-      hasStored = !!localStorage.getItem('advisor-explorer-theme');
+      hasStored = !!localStorage.getItem(THEME_KEY);
     } catch {
       // Ignore
     }
-    if (hasStored) return;
+    if (hasStored || typeof window.matchMedia !== 'function') return;
 
     const mq = window.matchMedia('(prefers-color-scheme: dark)');
     const handler = (e) => {
