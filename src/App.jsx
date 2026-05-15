@@ -108,7 +108,7 @@ export default function App() {
         </ErrorBoundary>
       </Header>
 
-      <div className="snap-start min-h-screen bg-surface dark:bg-slate-900">
+      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-slate-900">
         <FilterBar
           directions={directions}
           selectedDirection={selectedDirection}

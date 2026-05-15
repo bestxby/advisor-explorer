@@ -73,10 +73,9 @@ h4 {
   border-radius: 4px;
 }
 
-/* Smooth scroll and snap */
+/* Scroll behavior */
 html {
-  scroll-behavior: smooth;
-  scroll-snap-type: y proximity;
+  scroll-behavior: auto;
 }
 
 /* Custom scrollbar */

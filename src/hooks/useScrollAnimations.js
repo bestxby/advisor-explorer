@@ -96,6 +96,22 @@ export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
         }
       }
 
+      // Apple-style Page Transition Snap (Header <-> Content)
+      const contentWrapper = document.getElementById('content-wrapper');
+      if (contentWrapper) {
+        ScrollTrigger.create({
+          trigger: contentWrapper,
+          start: 'top bottom', // As soon as content enters from the bottom
+          end: 'top top',      // Until content hits the top of the viewport
+          snap: {
+            snapTo: [0, 1],    // Snap exactly to top of header (0) or top of content (1)
+            duration: { min: 0.6, max: 1.0 },
+            ease: 'power3.inOut',
+            delay: 0.05,       // Tiny delay makes the damping feel natural
+          },
+        });
+      }
+
       // Content — professor cards stagger animation
       if (activeTab === 'professors') {
         const cards = queryAll('[data-animate="professor-card"]');
