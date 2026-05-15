@@ -11,7 +11,7 @@ export default function Header({ children, kpiSection }) {
       </a>
       <header
         data-animate="header"
-        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative"
+        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#151d2e] dark:via-[#1e3a5f] dark:to-[#151d2e] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative"
       >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
@@ -148,7 +148,7 @@ export default function Header({ children, kpiSection }) {
 
           {/* Right column: quiz questionnaire */}
           <div className="md:col-span-1">
-            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 h-full flex flex-col overflow-y-auto overflow-x-hidden">
+            <div className="bg-white/10 dark:bg-[#151d2e] backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550] h-full flex flex-col overflow-y-auto overflow-x-hidden">
               {children}
             </div>
           </div>

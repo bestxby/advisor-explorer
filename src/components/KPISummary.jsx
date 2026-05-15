@@ -17,7 +17,7 @@ function KPICard({ icon, label, value, sub, color = 'primary' }) {
   return (
     <div
       data-animate="kpi"
-      className="bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700 p-4 hover:shadow-md hover:border-gray-200 dark:hover:border-slate-600 transition-all duration-200"
+      className="bg-white dark:bg-[#151d2e] rounded-xl border border-gray-100 dark:border-[#2a3550] p-4 hover:shadow-md hover:border-gray-200 dark:hover:border-[#3d4f6f] transition-all duration-200"
     >
       <div className="flex items-start justify-between mb-3">
         <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${colorMap[color]}`}>

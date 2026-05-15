@@ -6,7 +6,7 @@ const HEAT_STYLES = {
   高: 'bg-orange-50 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
   中高: 'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
   中: 'bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
-  低: 'bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
+  低: 'bg-gray-50 dark:bg-[#161d2e]/50 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
 };
 
 function getSalaryNum(salaryCeiling) {
@@ -35,7 +35,7 @@ function DifficultyDots({ level, max = 5 }) {
                 : level >= 3
                   ? 'bg-orange-400'
                   : 'bg-emerald-400'
-              : 'bg-gray-200 dark:bg-slate-600'
+              : 'bg-gray-200 dark:bg-[#2a3550]'
           }`}
         />
       ))}
@@ -47,7 +47,7 @@ function RecommendationBadge({ level }) {
   const colors = {
     5: 'bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 border-emerald-200 dark:border-emerald-800',
     4: 'bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 border-blue-200 dark:border-blue-800',
-    3: 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 border-gray-200 dark:border-slate-600',
+    3: 'bg-gray-100 dark:bg-[#161d2e] text-gray-600 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
     2: 'bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-400 border-orange-200 dark:border-orange-800',
     1: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
   };
@@ -84,7 +84,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
   };
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 overflow-hidden">
       {/* Mobile cards view */}
       <div className="grid grid-cols-1 gap-4 p-4 lg:hidden">
         {sorted.map((d) => (
@@ -100,7 +100,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
               ${
                 highlightedDirection === d.id
                   ? 'border-primary shadow-md ring-4 ring-primary/10'
-                  : 'border-gray-100 dark:border-slate-700 hover:border-gray-200 dark:hover:border-slate-600 hover:shadow-sm dark:hover:shadow-slate-900/50'
+                  : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-[#3d4f6f] hover:shadow-sm dark:hover:shadow-[#0e1320]/50'
               }
             `}
             onClick={() => toggleDirection(d.id)}
@@ -120,7 +120,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                   className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     expandedId === d.id
                       ? 'bg-primary text-white rotate-180'
-                      : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'
+                      : 'bg-gray-100 dark:bg-[#161d2e] text-gray-500 dark:text-slate-400'
                   }`}
                 >
                   <svg
@@ -158,7 +158,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                 </div>
               </div>
 
-              <div className="mt-3 pt-3 border-t border-gray-100 dark:border-slate-700">
+              <div className="mt-3 pt-3 border-t border-gray-100 dark:border-[#2a3550]">
                 <span
                   className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold border ${getHeatStyle(d.competitionHeat)}`}
                 >
@@ -180,7 +180,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
       <div className="hidden lg:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
-            <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-800 to-gray-100 dark:to-slate-700/50 border-b border-gray-200 dark:border-slate-600">
+            <tr className="bg-gradient-to-r from-gray-50 dark:from-slate-800 to-gray-100 dark:to-slate-700/50 border-b border-gray-200 dark:border-[#2a3550]">
               <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
                 方向
               </th>
@@ -217,7 +217,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                     ${
                       highlightedDirection === d.id
                         ? 'bg-primary/5 hover:bg-primary/10'
-                        : 'bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700/50'
+                        : 'bg-white dark:bg-[#151d2e] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
                     }
                   `}
                 >

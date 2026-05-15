@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="border-t border-gray-200 dark:border-slate-600 bg-white dark:bg-slate-800 mt-8">
+    <footer className="border-t border-gray-200 dark:border-[#2a3550] bg-white dark:bg-[#151d2e] mt-8">
       <div className="max-w-6xl mx-auto px-6 py-6">
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-500 dark:text-slate-400">
           <div className="flex items-center gap-2">
@@ -25,7 +25,7 @@ export default function Footer() {
               {['Semantic Scholar', 'arXiv', 'B站', '与非网'].map((source) => (
                 <span
                   key={source}
-                  className="px-2 py-0.5 bg-gray-100 dark:bg-slate-700 rounded text-xs font-medium"
+                  className="px-2 py-0.5 bg-gray-100 dark:bg-[#161d2e] rounded text-xs font-medium"
                 >
                   {source}
                 </span>

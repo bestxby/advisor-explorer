@@ -8,7 +8,6 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const [results, setResults] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const answerDelayRef = useRef(null);
-  const exportRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -119,15 +118,15 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   if (results) {
     const top = results[0];
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden h-[500px] md:h-[580px] flex flex-col">
+      <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 h-[500px] md:h-[580px] flex flex-col">
         {/* Card header */}
-        <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
+        <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
           <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
             个性化方向匹配
           </p>
         </div>
 
-        <div ref={exportRef} className="p-6 md:p-8 flex-grow overflow-y-auto">
+        <div className="p-6 md:p-8 flex-grow overflow-y-auto rounded-b-2xl">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -153,7 +152,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                 </p>
               </div>
             </div>
-            <ExportButton targetRef={exportRef} filename="advisor-explorer-result" />
+            <ExportButton results={results} directions={directions} professors={professors} filename="advisor-explorer-result" />
           </div>
 
           {/* Ranked results */}
@@ -164,7 +163,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                 className={`relative rounded-xl p-4 border-2 transition-all ${
                   i === 0
                     ? 'border-primary bg-primary/5 shadow-md'
-                    : 'border-gray-100 dark:border-slate-700 bg-gray-50 dark:bg-slate-700/50 opacity-75'
+                    : 'border-gray-100 dark:border-[#2a3550] bg-gray-50 dark:bg-[#161d2e]/50 opacity-75'
                 }`}
               >
                 {i === 0 && (
@@ -179,7 +178,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                       className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${
                         i === 0
                           ? 'bg-primary text-white'
-                          : 'bg-gray-200 dark:bg-slate-600 text-gray-500 dark:text-slate-400'
+                          : 'bg-gray-200 dark:bg-[#2a3550] text-gray-500 dark:text-slate-400'
                       }`}
                     >
                       {i + 1}
@@ -192,12 +191,12 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <div className="w-20 h-2 bg-gray-200 dark:bg-slate-600 rounded-full overflow-hidden">
+                    <div className="w-20 h-2 bg-gray-200 dark:bg-[#2a3550] rounded-full overflow-hidden">
                       <div
                         className={`h-full rounded-full ${
                           i === 0
                             ? 'bg-gradient-to-r from-primary to-primary-light'
-                            : 'bg-gray-300 dark:bg-slate-500'
+                            : 'bg-gray-300 dark:bg-[#3d4f6f]'
                         }`}
                         style={{ width: `${r.score}%` }}
                       />
@@ -217,7 +216,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           <div className="mt-4 text-center">
             <button
               onClick={reset}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-slate-700/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-slate-600 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-[#161d2e]/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-100 dark:hover:bg-[#1f2940] hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
             >
               <svg
                 className="w-4 h-4"
@@ -244,23 +243,23 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const progress = (currentQ / quiz.questions.length) * 100;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden h-[500px] md:h-[580px] flex flex-col">
+    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 h-[500px] md:h-[580px] flex flex-col">
       {/* Card header */}
-      <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
+      <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
         <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
           个性化方向匹配
         </p>
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 bg-gray-100 dark:bg-slate-700">
+      <div className="h-1.5 bg-gray-100 dark:bg-[#161d2e]">
         <div
           className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
-      <div className="p-8 md:p-10 flex flex-col flex-grow overflow-y-auto" aria-live="polite">
+      <div className="p-8 md:p-10 flex flex-col flex-grow overflow-y-auto rounded-b-2xl" aria-live="polite">
         {/* Progress indicator */}
         <div className="flex items-center justify-between mb-8">
           <div
@@ -278,7 +277,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                       ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-200'
                       : i === currentQ
                         ? 'bg-primary text-white shadow-md shadow-primary/30 scale-110'
-                        : 'bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-slate-600'
+                        : 'bg-gray-100 dark:bg-[#161d2e] text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-[#2a3550]'
                   }
                 `}
                 aria-current={i === currentQ ? 'step' : undefined}
@@ -320,7 +319,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                 ${
                   selectedOption === opt.tag
                     ? 'border-primary bg-primary/5 shadow-md scale-[1.02]'
-                    : 'border-gray-100 dark:border-slate-700 hover:border-primary/30 hover:bg-gray-50 dark:hover:bg-slate-700/50 hover:shadow-sm'
+                    : 'border-gray-100 dark:border-[#2a3550] hover:border-primary/30 hover:bg-gray-50 dark:hover:bg-[#1f2940]/50 hover:shadow-sm'
                 }
               `}
             >
@@ -331,7 +330,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                   ${
                     selectedOption === opt.tag
                       ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-slate-700 text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-slate-600'
+                      : 'bg-gray-100 dark:bg-[#161d2e] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
                   }
                 `}
                 >

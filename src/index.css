@@ -36,13 +36,13 @@ body {
 }
 
 .dark body {
-  color: #e2e8f0;
-  background: #0f172a;
+  color: #d4dae6;
+  background: #0e1320;
 }
 
 .dark {
-  --color-surface: #0f172a;
-  --color-surface-raised: #1e293b;
+  --color-surface: #0e1320;
+  --color-surface-raised: #151d2e;
 }
 
 h1,

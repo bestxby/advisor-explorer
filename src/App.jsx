@@ -65,7 +65,7 @@ const TAB_DEFINITIONS = [
 
 function PanelFallback({ label }) {
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 p-8 text-center text-sm text-gray-500 dark:text-slate-400">
+    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] p-8 text-center text-sm text-gray-500 dark:text-slate-400">
       {label}
     </div>
   );
@@ -94,7 +94,7 @@ export default function App() {
   }, [selectedDirection]);
 
   return (
-    <div className="min-h-screen bg-surface dark:bg-slate-900">
+    <div className="min-h-screen bg-surface dark:bg-[#0e1320]">
       <Header kpiSection={<KPISummary professors={professors} directions={directions} />}>
         <ErrorBoundary fallbackMessage="问卷加载失败">
           <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
@@ -108,7 +108,7 @@ export default function App() {
         </ErrorBoundary>
       </Header>
 
-      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-slate-900">
+      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-[#0e1320]">
         <FilterBar
           directions={directions}
           selectedDirection={selectedDirection}
@@ -144,9 +144,9 @@ export default function App() {
                 </div>
               ))}
               {filteredProfessors.length === 0 && (
-                <div className="text-center py-10 bg-white dark:bg-slate-800 rounded-xl border border-gray-100 dark:border-slate-700">
+                <div className="text-center py-10 bg-white dark:bg-[#151d2e] rounded-xl border border-gray-100 dark:border-[#2a3550]">
                   <svg
-                    className="w-10 h-10 text-gray-300 dark:text-slate-600 mx-auto mb-3"
+                    className="w-10 h-10 text-gray-300 dark:text-[#475569] mx-auto mb-3"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

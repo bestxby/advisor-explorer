@@ -30,10 +30,26 @@
     ],
     "evaluation": "汪玉团队偏\"软\"不偏\"硬\"，工作更多是编译器、映射算法、EDA工具层面的优化。不需要流片资源，一台好电脑就能出成果。注意：Hidet编译器（OSDI 2023）不是汪玉团队的工作。",
     "suitableFor": "想做AI+EDA交叉方向，或想做编译器/映射算法但不想卷TVM/MLIR红海的学生",
-    "techStack": ["C++", "Python", "LLVM/MLIR", "PyTorch", "RL框架", "CGRA仿真工具"],
-    "conferences": ["DAC", "ICCAD", "FPGA", "IEEE TCAD"],
+    "techStack": [
+      "C++",
+      "Python",
+      "LLVM/MLIR",
+      "PyTorch",
+      "RL框架",
+      "CGRA仿真工具"
+    ],
+    "conferences": [
+      "DAC",
+      "ICCAD",
+      "FPGA",
+      "IEEE TCAD"
+    ],
     "resources": [
-      { "name": "TVM", "url": "https://github.com/apache/tvm", "description": "AI编译器入门必读" },
+      {
+        "name": "TVM",
+        "url": "https://github.com/apache/tvm",
+        "description": "AI编译器入门必读"
+      },
       {
         "name": "MLIR",
         "url": "https://github.com/llvm/llvm-project/tree/main/mlir",
@@ -48,68 +64,6 @@
     "starterProject": "用TVM为MobileNet自动生成CPU/GPU代码，对比手写算子的性能差异。3个月可完成。",
     "style": "偏大组管理，具体指导由青年教师/博士后负责",
     "contact": "清华大学电子工程系官网教师主页"
-  },
-  {
-    "id": "yin-shouyi",
-    "name": "尹首一",
-    "university": "清华大学",
-    "department": "集成电路学院",
-    "directionId": "cim",
-    "tagline": "存算一体+CIM方向国内最强团队，从ISSCC到JSSC全栈覆盖，但产业化仍需时间",
-    "officialDirection": "AI处理器架构、存算一体芯片、类脑计算",
-    "realDirections": [
-      "扩散模型专用CIM加速器",
-      "晶圆级计算综述",
-      "LLM加速器(SOFA/MECLA)",
-      "浮点CIM宏"
-    ],
-    "directionDetail": "尹首一团队是国内CIM方向的绝对标杆，覆盖从器件到架构的全栈研究：(1) 扩散模型CIM加速器——发现相邻去噪步骤间数据变化很小，用低精度整数处理大部分数据，28nm实现74.34 TFLOPS/W(ISSCC 2024)；(2) LLM加速器——SOFA在注意力计算每个阶段检测稀疏性用前导零检测跳过计算(DAC 2024)，MECLA将大权重矩阵分解为源子矩阵的标量倍数，内存访问减少83.6%；(3) 浮点CIM宏——三层创新简化浮点CIM对齐逻辑，BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W(JSSC 2025)。3年发表33篇论文，ISSCC/JSSC/DAC/ISCA全覆盖。",
-    "papers": [
-      {
-        "title": "浮点CIM宏 — BF16/FP8双模式存算一体",
-        "venue": "JSSC 2025",
-        "summary": "三层创新简化浮点CIM：简化对齐逻辑、自适应量化步长、粗到细混合策略。BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W。65nm工艺实现。",
-        "url": "https://www.semanticscholar.org/search?q=floating+point+CIM+macro+BF16+FP8+JSSC+2025&sort=relevance"
-      },
-      {
-        "title": "扩散模型CIM加速器",
-        "venue": "ISSCC 2024",
-        "summary": "发现相邻去噪步骤间数据变化很小，大部分数据可用低精度整数处理，只有少量异常值用高精度浮点。28nm工艺实现74.34 TFLOPS/W惊人能效。",
-        "url": "https://www.semanticscholar.org/search?q=diffusion+model+CIM+accelerator+ISSCC+2024+28nm+TFLOPS&sort=relevance"
-      },
-      {
-        "title": "SOFA — 跨阶段协同的稀疏LLM加速器",
-        "venue": "DAC 2024",
-        "summary": "在计算的每个阶段都检测和利用稀疏性，用前导零检测预测哪些注意力分数是稀疏的然后跳过计算。23次引用。",
-        "url": "https://www.semanticscholar.org/search?q=SOFA+cross-stage+sparse+LLM+accelerator+2024&sort=relevance"
-      },
-      {
-        "title": "MECLA — 子矩阵分区的LLM加速器",
-        "venue": "2024",
-        "summary": "发现大权重矩阵可分解为小\"源子矩阵\"，其他子矩阵是源子矩阵的标量倍数。内存访问减少83.6%，能效7088 GOPS/W。",
-        "url": "https://www.semanticscholar.org/search?q=MECLA+sub-matrix+LLM+accelerator+2024&sort=relevance"
-      }
-    ],
-    "evaluation": "国内存算一体/CIM方向绝对标杆。但CIM通用性远不如GPU/NPU，流片依赖极高，就业面窄。毕业后大概率要转去常规数字IC或编译器方向。",
-    "suitableFor": "确定走学术路线的学生，或对器件/电路有强烈兴趣、愿意接受就业面窄的现实的学生",
-    "techStack": ["Verilog/SystemVerilog", "SPICE/HSPICE", "Python", "NVSim/Cacti", "Gem5"],
-    "conferences": ["ISSCC", "VLSI Symposium", "JSSC", "Nature Electronics", "DAC", "ISCA"],
-    "resources": [
-      {
-        "name": "NVSim",
-        "url": "https://github.com/NVSim-VT/NVSim",
-        "description": "非易失性存储器建模工具"
-      },
-      {
-        "name": "NeuroSim",
-        "url": "https://github.com/neurosim/NeuroSim_v1.3",
-        "description": "神经网络存算一体架构仿真器"
-      },
-      { "name": "Gem5", "url": "https://github.com/gem5/gem5", "description": "体系结构仿真器" }
-    ],
-    "starterProject": "用NeuroSim仿真一个简单的RRAM存算一体加速器，评估不同权重映射策略对能效的影响。",
-    "style": "大组管理，有博士后/青年教师具体带学生，流片资源丰富",
-    "contact": "清华大学集成电路学院官网教师主页"
   },
   {
     "id": "wei-shaojun",
@@ -156,9 +110,20 @@
       "Synopsys/Cadence EDA",
       "FPGA开发"
     ],
-    "conferences": ["ISSCC", "JSSC", "VLSI Symposium", "ISCA", "MICRO", "DAC"],
+    "conferences": [
+      "ISSCC",
+      "JSSC",
+      "VLSI Symposium",
+      "ISCA",
+      "MICRO",
+      "DAC"
+    ],
     "resources": [
-      { "name": "Gem5", "url": "https://github.com/gem5/gem5", "description": "体系结构仿真器" },
+      {
+        "name": "Gem5",
+        "url": "https://github.com/gem5/gem5",
+        "description": "体系结构仿真器"
+      },
       {
         "name": "Rocket Chip",
         "url": "https://github.com/chipsalliance/rocket-chip",
@@ -218,7 +183,13 @@
       "Cadence Virtuoso",
       "FeFET器件模型"
     ],
-    "conferences": ["ISSCC", "JSSC", "VLSI Symposium", "DAC", "IEEE TCAS"],
+    "conferences": [
+      "ISSCC",
+      "JSSC",
+      "VLSI Symposium",
+      "DAC",
+      "IEEE TCAS"
+    ],
     "resources": [
       {
         "name": "NeuroSim",
@@ -272,8 +243,24 @@
     ],
     "evaluation": "国内做分布式AI系统/编译器最扎实的团队。论文不是纯学术，直接部署到生产环境。对系统编程能力要求极高。",
     "suitableFor": "系统编程能力强、想做能跑在production里的系统的学生",
-    "techStack": ["C++/CUDA/Python", "PyTorch", "NCCL/MPI", "TVM/MLIR", "Gem5", "Linux内核编程"],
-    "conferences": ["OSDI", "SOSP", "USENIX ATC", "EuroSys", "ASPLOS", "SC", "AAAI", "SIGCOMM"],
+    "techStack": [
+      "C++/CUDA/Python",
+      "PyTorch",
+      "NCCL/MPI",
+      "TVM/MLIR",
+      "Gem5",
+      "Linux内核编程"
+    ],
+    "conferences": [
+      "OSDI",
+      "SOSP",
+      "USENIX ATC",
+      "EuroSys",
+      "ASPLOS",
+      "SC",
+      "AAAI",
+      "SIGCOMM"
+    ],
     "resources": [
       {
         "name": "vLLM",
@@ -339,10 +326,27 @@
     ],
     "evaluation": "近两年国内体系结构方向最亮眼的新星。ISCA 2026连中两篇+HPCA 2026一篇。方向选择极其精准——MoE通信瓶颈。不需要流片，就业面宽，薪资高。",
     "suitableFor": "对系统+硬件交叉感兴趣、编程能力强、想在顶级会议发文的学生。性价比最高的体系结构方向之一。",
-    "techStack": ["C++/Python", "CUDA", "Gem5/GPGPU-Sim", "Chisel/Verilog", "NVLink/InfiniBand"],
-    "conferences": ["ISCA", "MICRO", "HPCA", "ASPLOS", "DAC", "SC"],
+    "techStack": [
+      "C++/Python",
+      "CUDA",
+      "Gem5/GPGPU-Sim",
+      "Chisel/Verilog",
+      "NVLink/InfiniBand"
+    ],
+    "conferences": [
+      "ISCA",
+      "MICRO",
+      "HPCA",
+      "ASPLOS",
+      "DAC",
+      "SC"
+    ],
     "resources": [
-      { "name": "Gem5", "url": "https://github.com/gem5/gem5", "description": "体系结构仿真器" },
+      {
+        "name": "Gem5",
+        "url": "https://github.com/gem5/gem5",
+        "description": "体系结构仿真器"
+      },
       {
         "name": "SimAI",
         "url": "https://github.com/ModelTC/SimAI",
@@ -390,8 +394,20 @@
     ],
     "evaluation": "做脏活累活——开源EDA基础设施。对产业自主可控至关重要。但顶会发文不多，AI-Native EDA目前还是概念阶段。",
     "suitableFor": "对算法和工具链有执念、想做对产业有实际影响的工作的学生",
-    "techStack": ["C++/Python", "Tcl", "PyTorch", "OpenROAD/VTR", "FPGA开发板"],
-    "conferences": ["DAC", "ICCAD", "FPGA", "IEEE TCAD", "Science China"],
+    "techStack": [
+      "C++/Python",
+      "Tcl",
+      "PyTorch",
+      "OpenROAD/VTR",
+      "FPGA开发板"
+    ],
+    "conferences": [
+      "DAC",
+      "ICCAD",
+      "FPGA",
+      "IEEE TCAD",
+      "Science China"
+    ],
     "resources": [
       {
         "name": "iEDA",
@@ -456,8 +472,21 @@
     ],
     "evaluation": "纯学术方向，产业化极早期。SNN精度远不如ANN。就业面极窄。但SNN训练算法突破值得关注。",
     "suitableFor": "确定走学术路线、对脑科学和视觉有强烈兴趣的学生。优先考虑就业者强烈建议避开。",
-    "techStack": ["Python/PyTorch", "Verilog", "MATLAB", "SpikingJelly/Norse", "事件相机SDK"],
-    "conferences": ["Nature/Science", "ICML", "NeurIPS", "ICLR", "CVPR", "AAAI"],
+    "techStack": [
+      "Python/PyTorch",
+      "Verilog",
+      "MATLAB",
+      "SpikingJelly/Norse",
+      "事件相机SDK"
+    ],
+    "conferences": [
+      "Nature/Science",
+      "ICML",
+      "NeurIPS",
+      "ICLR",
+      "CVPR",
+      "AAAI"
+    ],
     "resources": [
       {
         "name": "SpikingJelly",
@@ -610,6 +639,85 @@
     "contact": "清华大学集成电路学院官网教师主页"
   },
   {
+    "id": "yin-shouyi",
+    "name": "尹首一",
+    "university": "清华大学",
+    "department": "集成电路学院",
+    "directionId": "cim",
+    "tagline": "存算一体+CIM方向国内最强团队，从ISSCC到JSSC全栈覆盖，但产业化仍需时间",
+    "officialDirection": "AI处理器架构、存算一体芯片、类脑计算",
+    "realDirections": [
+      "扩散模型专用CIM加速器",
+      "晶圆级计算综述",
+      "LLM加速器(SOFA/MECLA)",
+      "浮点CIM宏"
+    ],
+    "directionDetail": "尹首一团队是国内CIM方向的绝对标杆，覆盖从器件到架构的全栈研究：(1) 扩散模型CIM加速器——发现相邻去噪步骤间数据变化很小，用低精度整数处理大部分数据，28nm实现74.34 TFLOPS/W(ISSCC 2024)；(2) LLM加速器——SOFA在注意力计算每个阶段检测稀疏性用前导零检测跳过计算(DAC 2024)，MECLA将大权重矩阵分解为源子矩阵的标量倍数，内存访问减少83.6%；(3) 浮点CIM宏——三层创新简化浮点CIM对齐逻辑，BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W(JSSC 2025)。3年发表33篇论文，ISSCC/JSSC/DAC/ISCA全覆盖。",
+    "papers": [
+      {
+        "title": "浮点CIM宏 — BF16/FP8双模式存算一体",
+        "venue": "JSSC 2025",
+        "summary": "三层创新简化浮点CIM：简化对齐逻辑、自适应量化步长、粗到细混合策略。BF16模式54.4 TFLOPS/W，FP8模式130.9 TFLOPS/W。65nm工艺实现。",
+        "url": "https://www.semanticscholar.org/search?q=floating+point+CIM+macro+BF16+FP8+JSSC+2025&sort=relevance"
+      },
+      {
+        "title": "扩散模型CIM加速器",
+        "venue": "ISSCC 2024",
+        "summary": "发现相邻去噪步骤间数据变化很小，大部分数据可用低精度整数处理，只有少量异常值用高精度浮点。28nm工艺实现74.34 TFLOPS/W惊人能效。",
+        "url": "https://www.semanticscholar.org/search?q=diffusion+model+CIM+accelerator+ISSCC+2024+28nm+TFLOPS&sort=relevance"
+      },
+      {
+        "title": "SOFA — 跨阶段协同的稀疏LLM加速器",
+        "venue": "DAC 2024",
+        "summary": "在计算的每个阶段都检测和利用稀疏性，用前导零检测预测哪些注意力分数是稀疏的然后跳过计算。23次引用。",
+        "url": "https://www.semanticscholar.org/search?q=SOFA+cross-stage+sparse+LLM+accelerator+2024&sort=relevance"
+      },
+      {
+        "title": "MECLA — 子矩阵分区的LLM加速器",
+        "venue": "2024",
+        "summary": "发现大权重矩阵可分解为小\"源子矩阵\"，其他子矩阵是源子矩阵的标量倍数。内存访问减少83.6%，能效7088 GOPS/W。",
+        "url": "https://www.semanticscholar.org/search?q=MECLA+sub-matrix+LLM+accelerator+2024&sort=relevance"
+      }
+    ],
+    "evaluation": "国内存算一体/CIM方向绝对标杆。但CIM通用性远不如GPU/NPU，流片依赖极高，就业面窄。毕业后大概率要转去常规数字IC或编译器方向。",
+    "suitableFor": "确定走学术路线的学生，或对器件/电路有强烈兴趣、愿意接受就业面窄的现实的学生",
+    "techStack": [
+      "Verilog/SystemVerilog",
+      "SPICE/HSPICE",
+      "Python",
+      "NVSim/Cacti",
+      "Gem5"
+    ],
+    "conferences": [
+      "ISSCC",
+      "VLSI Symposium",
+      "JSSC",
+      "Nature Electronics",
+      "DAC",
+      "ISCA"
+    ],
+    "resources": [
+      {
+        "name": "NVSim",
+        "url": "https://github.com/NVSim-VT/NVSim",
+        "description": "非易失性存储器建模工具"
+      },
+      {
+        "name": "NeuroSim",
+        "url": "https://github.com/neurosim/NeuroSim_v1.3",
+        "description": "神经网络存算一体架构仿真器"
+      },
+      {
+        "name": "Gem5",
+        "url": "https://github.com/gem5/gem5",
+        "description": "体系结构仿真器"
+      }
+    ],
+    "starterProject": "用NeuroSim仿真一个简单的RRAM存算一体加速器，评估不同权重映射策略对能效的影响。",
+    "style": "大组管理，有博士后/青年教师具体带学生，流片资源丰富",
+    "contact": "清华大学集成电路学院官网教师主页"
+  },
+  {
     "id": "liang-yun",
     "name": "梁云",
     "university": "北京大学",
@@ -648,9 +756,20 @@
       "Synopsys/Cadence EDA",
       "FPGA开发"
     ],
-    "conferences": ["ISCA", "MICRO", "HPCA", "DAC", "ISSCC", "VLSI Symposium"],
+    "conferences": [
+      "ISCA",
+      "MICRO",
+      "HPCA",
+      "DAC",
+      "ISSCC",
+      "VLSI Symposium"
+    ],
     "resources": [
-      { "name": "Gem5", "url": "https://github.com/gem5/gem5", "description": "体系结构仿真器" },
+      {
+        "name": "Gem5",
+        "url": "https://github.com/gem5/gem5",
+        "description": "体系结构仿真器"
+      },
       {
         "name": "Timeloop/Accelergy",
         "url": "https://github.com/Accelergy-Project/timeloop",
