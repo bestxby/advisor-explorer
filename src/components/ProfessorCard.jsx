@@ -82,10 +82,13 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-accent" />
       )}
 
-      <button
+      <div
         onClick={() => setExpanded(!expanded)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setExpanded(!expanded); }}
         className="w-full text-left p-4 cursor-pointer focus:outline-none group"
         aria-expanded={expanded}
+        role="button"
+        tabIndex={0}
       >
         <div className="flex items-center justify-between gap-4">
           <div className="flex-1 min-w-0">
@@ -107,7 +110,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
           <div
             className={`
-            flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center
+            flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center
             transition-all duration-300 ease-out
             ${
               expanded
@@ -128,22 +131,17 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-1.5 mt-2">
-          {professor.realDirections.slice(0, 3).map((dir) => (
+        <div className="flex flex-wrap gap-1.5 mt-2 min-w-0">
+          {professor.realDirections.map((dir) => (
             <span
               key={dir}
-              className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 text-xs rounded border border-gray-100 dark:border-slate-700"
+              className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-slate-700/50 text-gray-600 dark:text-slate-400 text-xs rounded border border-gray-100 dark:border-slate-700 max-w-full break-words"
             >
               {dir}
             </span>
           ))}
-          {professor.realDirections.length > 3 && (
-            <span className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-slate-700/50 text-gray-400 dark:text-slate-500 text-xs rounded border border-gray-100 dark:border-slate-700">
-              +{professor.realDirections.length - 3}
-            </span>
-          )}
         </div>
-      </button>
+      </div>
 
       {/* Expandable content with smooth height transition */}
       <div
@@ -178,7 +176,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   研究方向详解
                 </h4>
               </div>
-              <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+              <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 rounded-xl p-6 border border-green-100 dark:border-green-800/50">
                 <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed">
                   {professor.directionDetail}
                 </p>

@@ -55,6 +55,7 @@ function RecommendationBadge({ level }) {
   return (
     <span
       className={`inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border ${colors[level] || colors[3]}`}
+      aria-label={`推荐 ${level}/5`}
     >
       {'★'.repeat(level)}
     </span>
@@ -116,7 +117,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
                   </h3>
                 </div>
                 <div
-                  className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200 ${
+                  className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 ${
                     expandedId === d.id
                       ? 'bg-primary text-white rotate-180'
                       : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'

@@ -2,10 +2,17 @@ import ThemeToggle from './ThemeToggle';
 
 export default function Header({ children, kpiSection }) {
   return (
-    <header
-      data-animate="header"
-      className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white min-h-[55vh] flex flex-col justify-center px-8 md:px-10 relative"
-    >
+    <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-white focus:text-primary focus:rounded-lg focus:shadow-lg focus:text-sm focus:font-semibold"
+      >
+        跳转到主要内容
+      </a>
+      <header
+        data-animate="header"
+        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-slate-900 dark:via-slate-800 dark:to-slate-900 text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative"
+      >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
         aria-hidden="true"
@@ -15,11 +22,11 @@ export default function Header({ children, kpiSection }) {
         }}
       />
 
-      <div className="max-w-[1440px] mx-auto relative z-10">
+      <div className="w-full max-w-[95%] xl:max-w-[1800px] mx-auto relative z-10 py-8">
         {/* Two-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[9fr_11fr] gap-6 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[4.5fr_5.5fr] gap-12 xl:gap-20 items-start">
           {/* Left column: brand content */}
-          <div className="md:col-span-1 flex flex-col gap-3">
+          <div className="md:col-span-1 flex flex-col gap-5 xl:gap-8 pt-2">
             {/* Theme toggle - above title */}
             <ThemeToggle />
 
@@ -40,13 +47,13 @@ export default function Header({ children, kpiSection }) {
                   />
                 </svg>
               </div>
-              <span className="text-sm font-medium text-white/80 dark:text-white/60 tracking-wide uppercase">
+              <span className="text-base font-medium text-white/80 dark:text-white/60 tracking-wide uppercase">
                 Advisor Explorer
               </span>
             </div>
 
             {/* Main title */}
-            <h1 className="text-[2.5rem] md:text-[3rem] lg:text-[3.5rem] font-black leading-[1.05] font-heading tracking-tight whitespace-nowrap">
+            <h1 className="text-[2.5rem] sm:text-[3.25rem] md:text-[4rem] lg:text-[4.5rem] xl:text-[5rem] font-black leading-[1.1] font-heading tracking-tight">
               计算机体系结构
               <br />
               <span className="text-accent-light">方向导航</span>
@@ -58,7 +65,7 @@ export default function Header({ children, kpiSection }) {
                 {
                   icon: (
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="w-4 h-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -76,7 +83,7 @@ export default function Header({ children, kpiSection }) {
                 {
                   icon: (
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="w-4 h-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -94,7 +101,7 @@ export default function Header({ children, kpiSection }) {
                 {
                   icon: (
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="w-4 h-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -112,7 +119,7 @@ export default function Header({ children, kpiSection }) {
                 {
                   icon: (
                     <svg
-                      className="w-3.5 h-3.5"
+                      className="w-4 h-4"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -130,7 +137,7 @@ export default function Header({ children, kpiSection }) {
               ].map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center gap-1.5 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
+                  className="inline-flex items-center gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-5 py-3.5 min-h-[48px] rounded-full text-base font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200"
                 >
                   {icon}
                   {label}
@@ -141,15 +148,16 @@ export default function Header({ children, kpiSection }) {
 
           {/* Right column: quiz questionnaire */}
           <div className="md:col-span-1">
-            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 h-full flex flex-col overflow-hidden">
+            <div className="bg-white/10 dark:bg-slate-800 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-slate-700 h-full flex flex-col overflow-y-auto overflow-x-hidden">
               {children}
             </div>
           </div>
         </div>
 
         {/* KPI 概览 */}
-        {kpiSection && <div className="mt-6">{kpiSection}</div>}
+        {kpiSection && <div className="mt-8 xl:mt-10 mb-2">{kpiSection}</div>}
       </div>
     </header>
+    </>
   );
 }

@@ -14,8 +14,9 @@ export default function ThemeToggle() {
         <button
           key={value}
           onClick={() => setTheme(value)}
-          title={label}
-          className={`w-8 h-8 rounded-full flex items-center justify-center text-xs transition-all duration-200 cursor-pointer ${
+          aria-label={label}
+          aria-pressed={theme === value}
+          className={`w-11 h-11 rounded-full flex items-center justify-center text-sm transition-all duration-200 cursor-pointer ${
             theme === value
               ? 'bg-white text-primary shadow-sm'
               : 'text-white/60 hover:text-white hover:bg-white/10'

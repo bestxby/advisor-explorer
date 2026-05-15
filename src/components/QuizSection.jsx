@@ -119,7 +119,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   if (results) {
     const top = results[0];
     return (
-      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden h-[500px] md:h-[580px] flex flex-col">
         {/* Card header */}
         <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
           <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -127,7 +127,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           </p>
         </div>
 
-        <div ref={exportRef} className="p-6 md:p-8">
+        <div ref={exportRef} className="p-6 md:p-8 flex-grow overflow-y-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -244,7 +244,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const progress = (currentQ / quiz.questions.length) * 100;
 
   return (
-    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden">
+    <div className="bg-white dark:bg-slate-800 rounded-2xl border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50 overflow-hidden h-[500px] md:h-[580px] flex flex-col">
       {/* Card header */}
       <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-slate-700">
         <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -260,15 +260,19 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
         />
       </div>
 
-      <div className="p-8 md:p-10">
+      <div className="p-8 md:p-10 flex flex-col flex-grow overflow-y-auto" aria-live="polite">
         {/* Progress indicator */}
         <div className="flex items-center justify-between mb-8">
-          <div className="flex items-center gap-3 flex-wrap">
+          <div
+            className="flex items-center gap-2 sm:gap-3 overflow-x-auto pb-1"
+            role="group"
+            aria-label="问卷进度"
+          >
             {quiz.questions.map((_, i) => (
               <div
                 key={i}
                 className={`
-                  w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold transition-all duration-300
+                  flex-shrink-0 w-9 h-9 sm:w-11 sm:h-11 rounded-full flex items-center justify-center text-xs sm:text-sm font-bold transition-all duration-300
                   ${
                     i < currentQ
                       ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-200'
@@ -277,10 +281,11 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                         : 'bg-gray-100 dark:bg-slate-700 text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-slate-600'
                   }
                 `}
+                aria-current={i === currentQ ? 'step' : undefined}
               >
                 {i < currentQ ? (
                   <svg
-                    className="w-4 h-4"
+                    className="w-3.5 h-3.5 sm:w-4 sm:h-4"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -294,7 +299,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
               </div>
             ))}
           </div>
-          <span className="text-sm font-medium text-gray-500 dark:text-slate-400">
+          <span className="text-sm font-medium text-gray-500 dark:text-slate-400 flex-shrink-0 ml-2">
             {currentQ + 1} / {quiz.questions.length}
           </span>
         </div>

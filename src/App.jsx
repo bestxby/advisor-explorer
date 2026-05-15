@@ -4,6 +4,7 @@ import FilterBar from './components/FilterBar';
 import KPISummary from './components/KPISummary';
 import ProfessorCard from './components/ProfessorCard';
 import Footer from './components/Footer';
+import BackToTop from './components/BackToTop';
 import ErrorBoundary from './components/ErrorBoundary';
 import useScrollAnimations from './hooks/useScrollAnimations';
 import { loadQuizResult, saveQuizResult, clearQuizResult } from './utils/storage';
@@ -107,64 +108,22 @@ export default function App() {
         </ErrorBoundary>
       </Header>
 
-      <FilterBar
-        directions={directions}
-        selectedDirection={selectedDirection}
-        onDirectionChange={setSelectedDirection}
-        sortBy={sortBy}
-        onSortChange={setSortBy}
-        activeTab={activeTab}
-      />
+      <div className="snap-start min-h-screen bg-surface dark:bg-slate-900">
+        <FilterBar
+          directions={directions}
+          selectedDirection={selectedDirection}
+          onDirectionChange={setSelectedDirection}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          filteredProfessorsLength={filteredProfessors.length}
+          directionsLength={directions.length}
+          tabs={TAB_DEFINITIONS}
+        />
 
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
-        {/* Tab Bar */}
-        <div
-          data-animate="tabbar"
-          className="flex gap-1.5 bg-white dark:bg-slate-800 rounded-xl p-1.5 border border-gray-100 dark:border-slate-700 shadow-sm dark:shadow-slate-900/50"
-          role="tablist"
-          aria-label="内容视图"
-        >
-          {TAB_DEFINITIONS.map((tab) => {
-            const isActive = activeTab === tab.id;
-            const count =
-              tab.countKey === 'professors'
-                ? filteredProfessors.length
-                : tab.countKey === 'directions'
-                  ? directions.length
-                  : undefined;
-            return (
-              <button
-                key={tab.id}
-                id={`${tab.id}-tab`}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                className={`
-                  flex-1 flex items-center justify-center gap-2 px-3 sm:px-4 py-2.5 rounded-lg
-                  text-sm font-semibold transition-all duration-200 cursor-pointer
-                  ${isActive ? 'bg-primary text-white shadow-md' : 'text-gray-600 dark:text-slate-300 hover:bg-gray-50 dark:hover:bg-slate-700'}
-                `}
-                aria-selected={isActive}
-                aria-controls={`${tab.id}-panel`}
-                role="tab"
-                tabIndex={isActive ? 0 : -1}
-              >
-                {tab.icon}
-                <span className="hidden sm:inline">{tab.label}</span>
-                <span className="sm:hidden">{tab.shortLabel}</span>
-                {count !== undefined && (
-                  <span
-                    className={`
-                    text-xs px-1.5 py-0.5 rounded-full font-bold
-                    ${isActive ? 'bg-white/20 text-white' : 'bg-gray-100 dark:bg-slate-700 text-gray-500 dark:text-slate-400'}
-                  `}
-                  >
-                    {count}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
+        <main id="main-content" className="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-10">
+
 
         {/* Tab Content */}
         {activeTab === 'professors' && (
@@ -240,9 +199,11 @@ export default function App() {
             </Suspense>
           </ErrorBoundary>
         )}
-      </main>
+        </main>
 
-      <Footer />
+        <BackToTop />
+        <Footer />
+      </div>
     </div>
   );
 }
