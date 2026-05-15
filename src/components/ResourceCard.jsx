@@ -1,14 +1,29 @@
+import { useRef, useCallback } from 'react';
+
 export default function ResourceCard({ name, url, description }) {
+  const cardRef = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty('--card-mouse-x', `${x}px`);
+    cardRef.current.style.setProperty('--card-mouse-y', `${y}px`);
+  }, []);
+
   return (
     <a
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
       href={url}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={`${name}，在新窗口打开`}
-      className="group block bg-white dark:bg-[#151d2e] rounded-xl border border-gray-100 dark:border-[#2a3550] p-5 hover:shadow-md hover:border-gray-200 dark:hover:border-[#3d4f6f] dark:hover:shadow-[#0e1320]/50 transition-all duration-200 cursor-pointer"
+      className="group block bg-white dark:bg-[#131a2b] rounded-xl border border-gray-100 dark:border-[#2a3550] p-5 hover:shadow-md hover:border-gray-200 dark:hover:border-blue-500/20 dark:hover:shadow-blue-500/5 transition-all duration-300 cursor-pointer card-glow card-glow-track"
     >
       <div className="flex items-start gap-3">
-        <div className="w-10 h-10 rounded-lg bg-gray-900 dark:bg-[#161d2e] flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
+        <div className="w-10 h-10 rounded-lg bg-gray-900 dark:bg-[#151d2b] flex items-center justify-center flex-shrink-0 group-hover:bg-primary transition-colors duration-200">
           <svg
             aria-hidden="true"
             className="w-5 h-5 text-white"

@@ -1,6 +1,9 @@
 import { useMemo } from 'react';
+import useCountUp from '../hooks/useCountUp';
 
-function KPICard({ icon, label, value, sub, color = 'primary' }) {
+function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffix = '', sub, color = 'primary' }) {
+  const animatedValue = useCountUp(countUpTarget, { decimals: countUpDecimals });
+  const displayValue = countUpTarget != null ? `${animatedValue}${suffix}` : value;
   const colorMap = {
     primary:
       'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:text-blue-400 dark:border-primary/30',
@@ -17,7 +20,7 @@ function KPICard({ icon, label, value, sub, color = 'primary' }) {
   return (
     <div
       data-animate="kpi"
-      className="bg-white dark:bg-[#151d2e] rounded-xl border border-gray-100 dark:border-[#2a3550] p-4 hover:shadow-md hover:border-gray-200 dark:hover:border-[#3d4f6f] transition-all duration-200"
+      className="bg-white dark:bg-[#131a2b] rounded-xl border border-gray-100 dark:border-[#2a3550] p-4 hover:shadow-md hover:border-gray-200 dark:hover:border-blue-500/20 dark:hover:shadow-blue-500/5 transition-all duration-300 card-glow"
     >
       <div className="flex items-start justify-between mb-3">
         <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${colorMap[color]}`}>
@@ -25,7 +28,7 @@ function KPICard({ icon, label, value, sub, color = 'primary' }) {
         </div>
       </div>
       <p className="text-2xl font-bold text-gray-900 dark:text-slate-100 font-heading tracking-tight">
-        {value}
+        {displayValue}
       </p>
       <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 font-medium">{label}</p>
       {sub && <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">{sub}</p>}
@@ -66,7 +69,8 @@ export default function KPISummary({ professors, directions }) {
           </svg>
         }
         label="导师总数"
-        value={professors.length}
+        value={`${professors.length}`}
+        countUpTarget={professors.length}
         sub={`${stats.universities.length} 所高校`}
         color="primary"
       />
@@ -87,7 +91,8 @@ export default function KPISummary({ professors, directions }) {
           </svg>
         }
         label="研究方向"
-        value={directions.length}
+        value={`${directions.length}`}
+        countUpTarget={directions.length}
         sub={`${stats.highRecommend} 个推荐`}
         color="purple"
       />
@@ -109,6 +114,9 @@ export default function KPISummary({ professors, directions }) {
         }
         label="平均难度"
         value={`${stats.avgDifficulty}/5`}
+        countUpTarget={Number(stats.avgDifficulty)}
+        countUpDecimals={1}
+        suffix="/5"
         sub="5分最高"
         color="amber"
       />
@@ -130,6 +138,8 @@ export default function KPISummary({ professors, directions }) {
         }
         label="就业面宽"
         value={`${stats.wideJobMarket} 个`}
+        countUpTarget={stats.wideJobMarket}
+        suffix=" 个"
         sub="极宽/宽"
         color="emerald"
       />

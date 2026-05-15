@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import ErrorBoundary from './components/ErrorBoundary';
 import useScrollAnimations from './hooks/useScrollAnimations';
+import useCursorGlow from './hooks/useCursorGlow';
 import { loadQuizResult, saveQuizResult, clearQuizResult } from './utils/storage';
 import professors from './data/professors.json';
 import directions from './data/directions.json';
@@ -65,7 +66,7 @@ const TAB_DEFINITIONS = [
 
 function PanelFallback({ label }) {
   return (
-    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] p-8 text-center text-sm text-gray-500 dark:text-slate-400">
+    <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] p-8 text-center text-sm text-gray-500 dark:text-slate-400">
       {label}
     </div>
   );
@@ -87,6 +88,7 @@ export default function App() {
   const [activeTab, setActiveTab] = useState('professors');
 
   useScrollAnimations({ activeTab });
+  useCursorGlow();
 
   const filteredProfessors = useMemo(() => {
     if (selectedDirection === 'all') return professors;
@@ -94,7 +96,9 @@ export default function App() {
   }, [selectedDirection]);
 
   return (
-    <div className="min-h-screen bg-surface dark:bg-[#0e1320]">
+    <div className="min-h-screen bg-surface dark:bg-[#0c1018]">
+      {/* Cursor-following ambient glow — Lusion organic alive effect */}
+      <div className="cursor-glow-layer" aria-hidden="true" />
       <Header kpiSection={<KPISummary professors={professors} directions={directions} />}>
         <ErrorBoundary fallbackMessage="问卷加载失败">
           <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
@@ -108,7 +112,7 @@ export default function App() {
         </ErrorBoundary>
       </Header>
 
-      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-[#0e1320]">
+      <div id="content-wrapper" className="min-h-screen bg-surface dark:bg-[#0c1018]">
         <FilterBar
           directions={directions}
           selectedDirection={selectedDirection}
@@ -144,7 +148,7 @@ export default function App() {
                 </div>
               ))}
               {filteredProfessors.length === 0 && (
-                <div className="text-center py-10 bg-white dark:bg-[#151d2e] rounded-xl border border-gray-100 dark:border-[#2a3550]">
+                <div className="text-center py-10 bg-white dark:bg-[#131a2b] rounded-xl border border-gray-100 dark:border-[#2a3550]">
                   <svg
                     className="w-10 h-10 text-gray-300 dark:text-[#475569] mx-auto mb-3"
                     fill="none"

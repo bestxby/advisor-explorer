@@ -5,7 +5,7 @@ const PRIORITY_STYLES = {
   high: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
   medium:
     'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
-  low: 'bg-gray-50 dark:bg-[#161d2e]/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
+  low: 'bg-gray-50 dark:bg-[#151d2b]/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
 };
 
 const PRIORITY_LABELS = {
@@ -45,7 +45,7 @@ export default function RoadmapSection({ directionId, directionName }) {
   if (!roadmap) return null;
 
   return (
-    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 overflow-hidden">
+    <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 overflow-hidden card-glow">
       <div className="p-8 md:p-10">
         <div className="flex items-center gap-3 mb-2">
           <div className="w-10 h-10 bg-indigo-100 dark:bg-indigo-900/30 rounded-xl flex items-center justify-center">
@@ -136,7 +136,7 @@ export default function RoadmapSection({ directionId, directionName }) {
                         {phase.tasks.map((task, taskIdx) => (
                           <div
                             key={taskIdx}
-                            className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#161d2e]/50 border border-gray-100 dark:border-[#2a3550]"
+                            className="flex items-start gap-3 p-3 rounded-lg bg-gray-50 dark:bg-[#151d2b]/50 border border-gray-100 dark:border-[#2a3550]"
                           >
                             <span
                               className={`flex-shrink-0 mt-0.5 px-2 py-0.5 text-xs font-semibold rounded border ${PRIORITY_STYLES[task.priority]}`}
@@ -196,7 +196,7 @@ export default function RoadmapSection({ directionId, directionName }) {
               {roadmap.resources.map((res, i) => (
                 <span
                   key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#161d2e]/50 border border-gray-200 dark:border-[#2a3550] rounded-lg text-sm text-gray-700 dark:text-slate-300"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#151d2b]/50 border border-gray-200 dark:border-[#2a3550] rounded-lg text-sm text-gray-700 dark:text-slate-300"
                 >
                   {res.url ? (
                     <a

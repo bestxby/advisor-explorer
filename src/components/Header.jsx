@@ -11,7 +11,7 @@ export default function Header({ children, kpiSection }) {
       </a>
       <header
         data-animate="header"
-        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#151d2e] dark:via-[#1e3a5f] dark:to-[#151d2e] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative"
+        className="snap-start bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#080c14] dark:via-[#0f1d35] dark:to-[#080c14] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
       >
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
@@ -19,6 +19,22 @@ export default function Header({ children, kpiSection }) {
         className="absolute inset-0 opacity-10 dark:opacity-0"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+        }}
+      />
+
+      {/* Lusion-style ambient glow — dark mode only */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 70% 50% at 55% 45%, rgba(30, 64, 175, 0.15) 0%, rgba(59, 130, 246, 0.06) 40%, transparent 75%)',
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none"
+        style={{
+          background: 'radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)',
         }}
       />
 
@@ -53,14 +69,14 @@ export default function Header({ children, kpiSection }) {
             </div>
 
             {/* Main title */}
-            <h1 className="text-[2.5rem] sm:text-[3.25rem] md:text-[4rem] lg:text-[4.5rem] xl:text-[5rem] font-black leading-[1.1] font-heading tracking-tight">
+            <h1 data-parallax="slow" className="text-[2.75rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.5rem] font-black leading-[1.05] font-heading tracking-tight dark:tracking-[-0.02em]">
               计算机体系结构
               <br />
-              <span className="text-accent-light">方向导航</span>
+              <span className="text-accent-light dark:bg-gradient-to-r dark:from-amber-300 dark:to-orange-400 dark:bg-clip-text dark:text-transparent">方向导航</span>
             </h1>
 
             {/* Badges */}
-            <div className="flex flex-wrap gap-2">
+            <div data-parallax="fast" className="flex flex-wrap gap-2">
               {[
                 {
                   icon: (
@@ -148,7 +164,7 @@ export default function Header({ children, kpiSection }) {
 
           {/* Right column: quiz questionnaire */}
           <div className="md:col-span-1">
-            <div className="bg-white/10 dark:bg-[#151d2e] backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550] h-full flex flex-col overflow-y-auto overflow-x-hidden">
+            <div data-parallax="med" className="bg-white/10 dark:bg-[#131a2b]/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550]/60 h-full flex flex-col overflow-y-auto overflow-x-hidden dark:shadow-[0_0_60px_-12px_rgba(30,64,175,0.12)]">
               {children}
             </div>
           </div>

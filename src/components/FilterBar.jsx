@@ -41,7 +41,7 @@ export default function FilterBar({
   };
 
   return (
-    <div className="bg-white/80 dark:bg-[#151d2e]/90 backdrop-blur-md border-b border-border dark:border-[#2a3550] sticky top-0 z-20 shadow-sm dark:shadow-[#0e1320]/50">
+    <div data-filterbar className="bg-white/80 dark:bg-[#0c1018]/90 backdrop-blur-xl border-b border-border dark:border-[#2a3550]/40 sticky top-0 z-20 shadow-sm dark:shadow-[0_4px_24px_-4px_rgba(0,0,0,0.5)]">
       <div className="max-w-[1800px] mx-auto px-6 min-h-[4rem] flex flex-col md:grid md:grid-cols-3 items-center gap-4 xl:gap-8 py-3">
         {/* Left Spacer - Hidden on mobile */}
         <div className="hidden md:block"></div>
@@ -52,7 +52,7 @@ export default function FilterBar({
           className="flex justify-center w-full"
         >
           <div
-            className="flex w-full max-w-lg gap-1.5 bg-gray-100/50 dark:bg-[#0e1320]/50 rounded-xl p-1.5 border border-gray-200/50 dark:border-[#2a3550]"
+            className="flex w-full max-w-lg gap-1.5 bg-gray-100/50 dark:bg-[#0c1018]/50 rounded-xl p-1.5 border border-gray-200/50 dark:border-[#2a3550]"
             role="tablist"
             aria-label="内容视图"
             onKeyDown={handleTabKeyDown}
@@ -88,7 +88,7 @@ export default function FilterBar({
                     <span
                       className={`
                       text-xs px-1.5 py-0.5 rounded-full font-extrabold
-                      ${isActive ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-[#161d2e] text-gray-500 dark:text-slate-400'}
+                      ${isActive ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-[#151d2b] text-gray-500 dark:text-slate-400'}
                     `}
                     >
                       {count}
@@ -128,7 +128,7 @@ export default function FilterBar({
                 id="direction-filter"
                 value={selectedDirection}
                 onChange={(e) => onDirectionChange(e.target.value)}
-                className="border border-gray-200 dark:border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-[#161d2e] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-[#3d4f6f] appearance-none pr-10"
+                className="border border-gray-200 dark:border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-[#151d2b] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-[#3d4f6f] appearance-none pr-10"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%239CA3AF'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',
@@ -171,7 +171,7 @@ export default function FilterBar({
                 id="direction-sort"
                 value={sortBy}
                 onChange={(e) => onSortChange(e.target.value)}
-                className="border border-gray-200 dark:border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-[#161d2e] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-[#3d4f6f] appearance-none pr-10"
+                className="border border-gray-200 dark:border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-[#151d2b] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-[#3d4f6f] appearance-none pr-10"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='%239CA3AF'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E")`,
                   backgroundRepeat: 'no-repeat',

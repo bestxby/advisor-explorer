@@ -1,6 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+import { gsap } from 'gsap';
 import { QUIZ_ANSWER_DELAY_MS } from '../constants';
 import ExportButton from './ExportButton';
+
+const prefersReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 export default function QuizSection({ quiz, professors, directions, onResult }) {
   const [currentQ, setCurrentQ] = useState(0);
@@ -8,6 +12,8 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const [results, setResults] = useState(null);
   const [selectedOption, setSelectedOption] = useState(null);
   const answerDelayRef = useRef(null);
+  const questionRef = useRef(null);
+  const resultsRef = useRef(null);
 
   useEffect(
     () => () => {
@@ -18,31 +24,66 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
     [],
   );
 
-  const handleAnswer = (tag) => {
-    if (selectedOption) return;
+  // Animate new question in when currentQ changes
+  useEffect(() => {
+    if (questionRef.current && !prefersReducedMotion()) {
+      gsap.fromTo(
+        questionRef.current,
+        { x: 50, opacity: 0 },
+        { x: 0, opacity: 1, duration: 0.5, ease: 'power3.out' },
+      );
+    }
+  }, [currentQ]);
 
-    setSelectedOption(tag);
+  // Animate results in when they appear
+  useEffect(() => {
+    if (results && resultsRef.current && !prefersReducedMotion()) {
+      gsap.fromTo(
+        resultsRef.current,
+        { scale: 0.92, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.7, ease: 'back.out(1.4)' },
+      );
+    }
+  }, [results]);
 
-    answerDelayRef.current = window.setTimeout(() => {
-      const newAnswers = [...answers, tag];
-      setAnswers(newAnswers);
-      setSelectedOption(null);
-      answerDelayRef.current = null;
+  const handleAnswer = useCallback(
+    (tag) => {
+      if (selectedOption) return;
 
-      if (currentQ < quiz.questions.length - 1) {
-        setCurrentQ(currentQ + 1);
-      } else {
-        const topMatches = findTopMatches(newAnswers);
-        setResults(topMatches);
-        onResult({
-          direction: topMatches[0]?.direction,
-          directionName: topMatches[0]?.directionName,
-          professors: topMatches[0]?.professors,
-          topResults: topMatches,
+      setSelectedOption(tag);
+
+      // Animate current question out
+      if (questionRef.current && !prefersReducedMotion()) {
+        gsap.to(questionRef.current, {
+          x: -50,
+          opacity: 0,
+          duration: 0.25,
+          ease: 'power2.in',
         });
       }
-    }, QUIZ_ANSWER_DELAY_MS);
-  };
+
+      answerDelayRef.current = window.setTimeout(() => {
+        const newAnswers = [...answers, tag];
+        setAnswers(newAnswers);
+        setSelectedOption(null);
+        answerDelayRef.current = null;
+
+        if (currentQ < quiz.questions.length - 1) {
+          setCurrentQ(currentQ + 1);
+        } else {
+          const topMatches = findTopMatches(newAnswers);
+          setResults(topMatches);
+          onResult({
+            direction: topMatches[0]?.direction,
+            directionName: topMatches[0]?.directionName,
+            professors: topMatches[0]?.professors,
+            topResults: topMatches,
+          });
+        }
+      }, QUIZ_ANSWER_DELAY_MS);
+    },
+    [selectedOption, answers, currentQ, quiz, onResult],
+  );
 
   const findTopMatches = (tags) => {
     const { dimensionWeights, directionProfiles, defaultRecommendation } = quiz;
@@ -118,7 +159,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   if (results) {
     const top = results[0];
     return (
-      <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 h-[500px] md:h-[580px] flex flex-col">
+      <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col">
         {/* Card header */}
         <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
           <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -126,7 +167,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           </p>
         </div>
 
-        <div className="p-6 md:p-8 flex-grow overflow-y-auto rounded-b-2xl">
+        <div ref={resultsRef} className="p-6 md:p-8 flex-grow overflow-y-auto rounded-b-2xl">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-3">
@@ -162,8 +203,8 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                 key={r.direction}
                 className={`relative rounded-xl p-4 border-2 transition-all ${
                   i === 0
-                    ? 'border-primary bg-primary/5 shadow-md'
-                    : 'border-gray-100 dark:border-[#2a3550] bg-gray-50 dark:bg-[#161d2e]/50 opacity-75'
+                    ? 'border-primary bg-primary/5 shadow-md dark:shadow-blue-500/10'
+                    : 'border-gray-100 dark:border-[#2a3550] bg-gray-50 dark:bg-[#151d2b]/50 opacity-75'
                 }`}
               >
                 {i === 0 && (
@@ -216,7 +257,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           <div className="mt-4 text-center">
             <button
               onClick={reset}
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-[#161d2e]/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-100 dark:hover:bg-[#1f2940] hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
+              className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-[#151d2b]/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-100 dark:hover:bg-[#1f2940] hover:shadow-sm transition-all duration-200 cursor-pointer text-sm"
             >
               <svg
                 className="w-4 h-4"
@@ -243,7 +284,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
   const progress = (currentQ / quiz.questions.length) * 100;
 
   return (
-    <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-[#0e1320]/50 h-[500px] md:h-[580px] flex flex-col">
+    <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 h-[500px] md:h-[580px] flex flex-col">
       {/* Card header */}
       <div className="px-6 pt-5 pb-3 border-b border-gray-100 dark:border-[#2a3550]">
         <p className="text-xs font-semibold text-gray-400 dark:text-slate-500 tracking-wider uppercase">
@@ -252,7 +293,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
       </div>
 
       {/* Progress bar */}
-      <div className="h-1.5 bg-gray-100 dark:bg-[#161d2e]">
+      <div className="h-1.5 bg-gray-100 dark:bg-[#151d2b]">
         <div
           className="h-full bg-gradient-to-r from-primary to-primary-light transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
@@ -277,7 +318,7 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
                       ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-200'
                       : i === currentQ
                         ? 'bg-primary text-white shadow-md shadow-primary/30 scale-110'
-                        : 'bg-gray-100 dark:bg-[#161d2e] text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-[#2a3550]'
+                        : 'bg-gray-100 dark:bg-[#151d2b] text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-[#2a3550]'
                   }
                 `}
                 aria-current={i === currentQ ? 'step' : undefined}
@@ -303,45 +344,47 @@ export default function QuizSection({ quiz, professors, directions, onResult }) 
           </span>
         </div>
 
-        {/* Question */}
-        <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-slate-100 mb-8 font-heading leading-relaxed">
-          {question.text}
-        </h3>
+        {/* Question — spatial slide transition */}
+        <div ref={questionRef}>
+          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-slate-100 mb-8 font-heading leading-relaxed">
+            {question.text}
+          </h3>
 
-        {/* Options */}
-        <div className="grid gap-3">
-          {question.options.map((opt) => (
-            <button
-              key={opt.label}
-              onClick={() => handleAnswer(opt.tag)}
-              className={`
-                w-full text-left p-5 rounded-xl border-2 transition-all duration-200 cursor-pointer
-                ${
-                  selectedOption === opt.tag
-                    ? 'border-primary bg-primary/5 shadow-md scale-[1.02]'
-                    : 'border-gray-100 dark:border-[#2a3550] hover:border-primary/30 hover:bg-gray-50 dark:hover:bg-[#1f2940]/50 hover:shadow-sm'
-                }
-              `}
-            >
-              <div className="flex items-start gap-4">
-                <span
-                  className={`
-                  flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold transition-all duration-200
+          {/* Options */}
+          <div className="grid gap-3">
+            {question.options.map((opt) => (
+              <button
+                key={opt.label}
+                onClick={() => handleAnswer(opt.tag)}
+                className={`
+                  w-full text-left p-5 rounded-xl border-2 transition-all duration-200 cursor-pointer
                   ${
                     selectedOption === opt.tag
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-[#161d2e] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+                      ? 'border-primary bg-primary/5 shadow-md dark:shadow-blue-500/10 scale-[1.02]'
+                      : 'border-gray-100 dark:border-[#2a3550] hover:border-primary/30 dark:hover:border-blue-500/25 hover:bg-gray-50 dark:hover:bg-[#1f2940]/50 hover:shadow-sm'
                   }
                 `}
-                >
-                  {opt.label}
-                </span>
-                <span className="text-gray-700 dark:text-slate-300 leading-relaxed pt-2">
-                  {opt.text}
-                </span>
-              </div>
-            </button>
-          ))}
+              >
+                <div className="flex items-start gap-4">
+                  <span
+                    className={`
+                    flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold transition-all duration-200
+                    ${
+                      selectedOption === opt.tag
+                        ? 'bg-primary text-white'
+                        : 'bg-gray-100 dark:bg-[#151d2b] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+                    }
+                  `}
+                  >
+                    {opt.label}
+                  </span>
+                  <span className="text-gray-700 dark:text-slate-300 leading-relaxed pt-2">
+                    {opt.text}
+                  </span>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>

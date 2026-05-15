@@ -17,7 +17,7 @@ export default class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       return (
-        <div className="bg-white dark:bg-[#151d2e] rounded-2xl border border-red-100 p-8 text-center">
+        <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-red-100 p-8 text-center">
           <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mx-auto mb-4">
             <svg
               className="w-6 h-6 text-red-500"
@@ -39,7 +39,7 @@ export default class ErrorBoundary extends Component {
           </p>
           <button
             onClick={() => window.location.reload()}
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-[#161d2e]/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-100 dark:hover:bg-[#1f2940] transition-all duration-200 cursor-pointer text-sm"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-gray-50 dark:bg-[#151d2b]/50 text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-100 dark:hover:bg-[#1f2940] transition-all duration-200 cursor-pointer text-sm"
           >
             刷新页面
           </button>

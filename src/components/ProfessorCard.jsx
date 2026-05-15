@@ -1,16 +1,51 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useCallback } from 'react';
+import { gsap } from 'gsap';
 import ResourceCard from './ResourceCard';
 
 export default function ProfessorCard({ professor, isHighlighted }) {
   const [expanded, setExpanded] = useState(false);
   const contentRef = useRef(null);
-  const [contentHeight, setContentHeight] = useState(0);
+  const cardRef = useRef(null);
 
-  useEffect(() => {
+  // Spring expand/collapse with GSAP
+  const toggleExpanded = useCallback(() => {
+    const willExpand = !expanded;
+    setExpanded(willExpand);
+
     if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      if (willExpand) {
+        // Measure natural height
+        contentRef.current.style.maxHeight = 'none';
+        const h = contentRef.current.scrollHeight;
+        contentRef.current.style.maxHeight = '0px';
+
+        gsap.to(contentRef.current, {
+          maxHeight: h,
+          duration: 0.6,
+          ease: 'elastic.out(1, 0.75)',
+          onComplete: () => {
+            contentRef.current.style.maxHeight = 'none';
+          },
+        });
+      } else {
+        gsap.to(contentRef.current, {
+          maxHeight: 0,
+          duration: 0.4,
+          ease: 'power3.inOut',
+        });
+      }
     }
   }, [expanded]);
+
+  // Card inner glow tracking — Lusion organic hover
+  const handleMouseMove = useCallback((e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    cardRef.current.style.setProperty('--card-mouse-x', `${x}px`);
+    cardRef.current.style.setProperty('--card-mouse-y', `${y}px`);
+  }, []);
 
   const collegeColors = {
     '清华大学 · 电子工程系': {
@@ -59,7 +94,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
   const collegeKey = `${professor.university} · ${professor.department}`;
   const colors = collegeColors[collegeKey] || {
-    bg: 'bg-gray-50 dark:bg-[#161d2e]/50',
+    bg: 'bg-gray-50 dark:bg-[#151d2b]/50',
     text: 'text-gray-700 dark:text-slate-300',
     border: 'border-gray-200 dark:border-[#2a3550]',
     dot: 'bg-gray-500 dark:bg-slate-400',
@@ -67,14 +102,16 @@ export default function ProfessorCard({ professor, isHighlighted }) {
 
   return (
     <div
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
       className={`
-        group relative border-2 rounded-2xl transition-all duration-300 ease-out
+        group relative border-2 rounded-2xl transition-all duration-300 ease-out card-glow card-glow-track
         ${
           isHighlighted
-            ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10'
-            : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-[#3d4f6f] hover:shadow-md dark:shadow-[#0e1320]/50'
+            ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10 dark:shadow-blue-500/10'
+            : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-blue-500/20 hover:shadow-md dark:shadow-black/30 dark:hover:shadow-blue-500/5'
         }
-        bg-white dark:bg-[#151d2e] overflow-hidden
+        bg-white dark:bg-[#131a2b] overflow-hidden
       `}
     >
       {/* Highlight indicator */}
@@ -83,8 +120,8 @@ export default function ProfessorCard({ professor, isHighlighted }) {
       )}
 
       <div
-        onClick={() => setExpanded(!expanded)}
-        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') setExpanded(!expanded); }}
+        onClick={toggleExpanded}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') toggleExpanded(); }}
         className="w-full text-left p-4 cursor-pointer focus:outline-none group"
         aria-expanded={expanded}
         role="button"
@@ -114,8 +151,8 @@ export default function ProfessorCard({ professor, isHighlighted }) {
             transition-all duration-300 ease-out
             ${
               expanded
-                ? 'bg-primary text-white rotate-180 shadow-sm dark:shadow-[#0e1320]/50'
-                : 'bg-gray-100 dark:bg-[#161d2e] text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+                ? 'bg-primary text-white rotate-180 shadow-sm dark:shadow-black/30'
+                : 'bg-gray-100 dark:bg-[#151d2b] text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
             }
           `}
           >
@@ -135,7 +172,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {professor.realDirections.map((dir) => (
             <span
               key={dir}
-              className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-[#161d2e]/50 text-gray-600 dark:text-slate-400 text-xs rounded border border-gray-100 dark:border-[#2a3550] max-w-full break-words"
+              className="inline-flex items-center px-2 py-0.5 bg-gray-50 dark:bg-[#151d2b]/50 text-gray-600 dark:text-slate-400 text-xs rounded border border-gray-100 dark:border-[#2a3550] max-w-full break-words"
             >
               {dir}
             </span>
@@ -143,13 +180,13 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         </div>
       </div>
 
-      {/* Expandable content with smooth height transition */}
+      {/* Expandable content — GSAP spring controlled */}
       <div
-        className="overflow-hidden transition-all duration-300 ease-out"
-        style={{ maxHeight: expanded ? `${contentHeight}px` : '0px' }}
+        ref={contentRef}
+        className="overflow-hidden"
+        style={{ maxHeight: '0px' }}
       >
         <div
-          ref={contentRef}
           className="px-6 pb-6 border-t border-gray-100 dark:border-[#2a3550] pt-6 space-y-8"
         >
           {/* Direction Detail */}
@@ -213,7 +250,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   href={paper.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group/paper bg-gradient-to-br from-gray-50 dark:from-slate-700/50 to-white dark:to-slate-800 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550] hover:border-blue-200 hover:shadow-sm dark:hover:shadow-[#0e1320]/50 transition-all duration-200 cursor-pointer block"
+                  className="group/paper bg-gradient-to-br from-gray-50 dark:from-[#151d2b]/70 to-white dark:to-[#131a2b] rounded-xl p-5 border border-gray-100 dark:border-[#2a3550] hover:border-blue-200 hover:shadow-sm dark:hover:shadow-black/30 transition-all duration-200 cursor-pointer block"
                 >
                   <div className="flex flex-wrap items-start gap-3 mb-3">
                     <h5 className="font-semibold text-gray-900 dark:text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
@@ -271,7 +308,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
               <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed mb-4">
                 {professor.evaluation}
               </p>
-              <div className="flex items-start gap-2 bg-white/60 dark:bg-[#151d2e]/60 rounded-lg p-3 border border-amber-200 dark:border-amber-700/50">
+              <div className="flex items-start gap-2 bg-white/60 dark:bg-[#131a2b]/60 rounded-lg p-3 border border-amber-200 dark:border-amber-700/50">
                 <svg
                   className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0"
                   fill="none"
@@ -315,7 +352,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
               </h4>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div className="bg-gray-50 dark:bg-[#161d2e]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
+              <div className="bg-gray-50 dark:bg-[#151d2b]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
                 <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                   核心技术栈
                 </p>
@@ -323,14 +360,14 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   {professor.techStack.map((tech) => (
                     <span
                       key={tech}
-                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#161d2e] text-indigo-700 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-100 dark:border-indigo-800 shadow-sm dark:shadow-[#0e1320]/50"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#151d2b] text-indigo-700 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-100 dark:border-indigo-800 shadow-sm dark:shadow-black/30"
                     >
                       {tech}
                     </span>
                   ))}
                 </div>
               </div>
-              <div className="bg-gray-50 dark:bg-[#161d2e]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
+              <div className="bg-gray-50 dark:bg-[#151d2b]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
                 <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
                   顶会/顶刊
                 </p>
@@ -338,7 +375,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
                   {professor.conferences.map((conf) => (
                     <span
                       key={conf}
-                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#161d2e] text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-100 dark:border-emerald-800 shadow-sm dark:shadow-[#0e1320]/50"
+                      className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#151d2b] text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-100 dark:border-emerald-800 shadow-sm dark:shadow-black/30"
                     >
                       {conf}
                     </span>
@@ -351,7 +388,7 @@ export default function ProfessorCard({ professor, isHighlighted }) {
           {/* Resources */}
           <section>
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-[#161d2e] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-[#151d2b] flex items-center justify-center">
                 <svg
                   className="w-4 h-4 text-gray-700 dark:text-slate-300"
                   fill="currentColor"

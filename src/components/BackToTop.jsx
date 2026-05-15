@@ -16,7 +16,7 @@ export default function BackToTop() {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
       aria-label="回到顶部"
-      className="fixed bottom-6 right-6 z-30 w-11 h-11 rounded-full bg-white dark:bg-[#151d2e] text-gray-600 dark:text-slate-300 shadow-lg border border-gray-200 dark:border-[#2a3550] flex items-center justify-center hover:bg-gray-50 dark:hover:bg-[#1f2940] hover:shadow-xl transition-all duration-200 cursor-pointer"
+      className="fixed bottom-6 right-6 z-30 w-11 h-11 rounded-full bg-white dark:bg-[#131a2b] text-gray-600 dark:text-slate-300 shadow-lg border border-gray-200 dark:border-[#2a3550] flex items-center justify-center hover:bg-gray-50 dark:hover:bg-[#1f2940] hover:shadow-xl transition-all duration-200 cursor-pointer"
     >
       <svg
         className="w-5 h-5"

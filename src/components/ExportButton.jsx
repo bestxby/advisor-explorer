@@ -190,7 +190,7 @@ export default function ExportButton({ results, directions, professors, filename
     <button
       onClick={handleExport}
       disabled={exporting || !results?.length}
-      className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#161d2e] text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-50 dark:hover:bg-[#2a3550] hover:shadow-sm transition-all duration-200 cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+      className="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-[#151d2b] text-gray-700 dark:text-slate-300 rounded-xl font-semibold border border-gray-200 dark:border-[#2a3550] hover:bg-gray-50 dark:hover:bg-[#2a3550] hover:shadow-sm transition-all duration-200 cursor-pointer text-sm disabled:opacity-50 disabled:cursor-not-allowed"
     >
       <svg
         className="w-4 h-4"
