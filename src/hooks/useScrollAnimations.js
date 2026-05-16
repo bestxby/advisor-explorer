@@ -61,7 +61,7 @@ function observeReveal(elements, { transform = 'translate3d(0, 28px, 0)', stagge
   return () => observer.disconnect();
 }
 
-export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
+export default function useScrollAnimations({ activeTab }) {
   const isFirstLoad = useRef(true);
 
   useEffect(() => {
@@ -145,5 +145,5 @@ export default function useScrollAnimations({ activeTab, refreshKey = 0 }) {
       window.removeEventListener('resize', requestUpdate);
       if (rafId) window.cancelAnimationFrame(rafId);
     };
-  }, [activeTab, refreshKey]);
+  }, [activeTab]);
 }

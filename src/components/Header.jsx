@@ -1,4 +1,4 @@
-import ThemeToggle from './ThemeToggle';
+import HeroBackdrop from './layout/HeroBackdrop';
 
 export default function Header({ children, kpiSection }) {
   return (
@@ -11,8 +11,10 @@ export default function Header({ children, kpiSection }) {
       </a>
       <header
         data-animate="header"
-        className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#080c14] dark:via-[#0f1d35] dark:to-[#080c14] text-white min-h-[100svh] flex flex-col justify-center px-8 md:px-10 relative overflow-hidden"
+        className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:from-[#080c14] dark:via-[#0f1d35] dark:to-[#080c14] text-white min-h-[100svh] flex flex-col justify-start px-4 sm:px-6 lg:px-8 xl:px-10 relative overflow-hidden"
       >
+      <HeroBackdrop />
+
       {/* Subtle pattern overlay - hidden in dark mode */}
       <div
         aria-hidden="true"
@@ -22,32 +24,13 @@ export default function Header({ children, kpiSection }) {
         }}
       />
 
-      {/* Lusion-style ambient glow — dark mode only */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none"
-        style={{
-          background: 'radial-gradient(ellipse 70% 50% at 55% 45%, rgba(30, 64, 175, 0.15) 0%, rgba(59, 130, 246, 0.06) 40%, transparent 75%)',
-        }}
-      />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-0 dark:opacity-100 pointer-events-none"
-        style={{
-          background: 'radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)',
-        }}
-      />
-
-      <div className="w-full max-w-full xl:max-w-[1800px] mx-auto relative z-10 py-8">
+      <div className="w-full max-w-full xl:max-w-[1800px] mx-auto relative z-10 pt-8 sm:pt-10 pb-8">
         {/* Two-column layout */}
-        <div className="grid grid-cols-[minmax(0,1fr)] lg:grid-cols-[minmax(0,4.5fr)_minmax(0,5.5fr)] gap-12 xl:gap-20 items-start min-w-0">
+        <div className="grid grid-cols-[minmax(0,1fr)] xl:grid-cols-[minmax(0,4.5fr)_minmax(0,5.5fr)] gap-8 lg:gap-12 xl:gap-20 items-start min-w-0">
           {/* Left column: brand content */}
           <div
-            className="md:col-span-1 flex flex-col gap-5 xl:gap-8 pt-2 min-w-0 w-full"
+            className="md:col-span-1 flex flex-col gap-5 xl:gap-8 min-w-0 w-full"
           >
-            {/* Theme toggle - above title */}
-            <ThemeToggle />
-
             {/* Logo row */}
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/20 dark:bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
@@ -71,14 +54,15 @@ export default function Header({ children, kpiSection }) {
             </div>
 
             {/* Main title */}
-            <h1 data-parallax="slow" className="min-w-0 break-words text-[2.75rem] sm:text-[3.5rem] md:text-[4.25rem] lg:text-[5rem] xl:text-[5.5rem] font-black leading-[1.05] font-heading tracking-tight dark:tracking-[-0.02em]">
+            <h1 data-parallax="slow" className="mt-4 min-w-0 break-words text-[2.65rem] sm:text-[3.35rem] md:text-[4.1rem] lg:text-[4.35rem] xl:text-[4.9rem] font-black leading-[1] font-heading tracking-tight dark:tracking-[-0.02em]">
               计算机体系结构
               <br />
-              <span className="text-accent-light dark:bg-gradient-to-r dark:from-amber-300 dark:to-orange-400 dark:bg-clip-text dark:text-transparent">方向导航</span>
+              <span className="text-accent-light dark:bg-gradient-to-r dark:from-amber-300 dark:to-orange-400 dark:bg-clip-text dark:text-transparent inline-block mt-2">方向导航</span>
             </h1>
 
             {/* Badges */}
-            <div data-parallax="fast" className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 max-w-full">
+            <div data-parallax="fast" className="flex flex-col gap-1">
+            <div className="flex flex-wrap gap-2 max-w-full">
               {[
                 {
                   icon: (
@@ -116,6 +100,19 @@ export default function Header({ children, kpiSection }) {
                   ),
                   label: '论文验证',
                 },
+              ].map(({ icon, label }) => (
+                <span
+                  key={label}
+                  className="inline-flex items-center justify-center sm:justify-start gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-3.5 min-h-[48px] rounded-full text-sm sm:text-base font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200 min-w-0"
+                >
+                  {icon}
+                  <span className="min-w-0 truncate">{label}</span>
+                </span>
+              ))}
+            </div>
+            {/* Badges - row 2 */}
+            <div className="flex flex-wrap gap-2 max-w-full">
+              {[
                 {
                   icon: (
                     <svg
@@ -162,13 +159,14 @@ export default function Header({ children, kpiSection }) {
                 </span>
               ))}
             </div>
+            </div>
           </div>
 
           {/* Right column: quiz questionnaire */}
           <div
             className="md:col-span-1 min-w-0 w-full"
           >
-            <div data-parallax="med" className="bg-white/10 dark:bg-[#131a2b]/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550]/60 h-full flex flex-col overflow-y-auto overflow-x-hidden dark:shadow-[0_0_60px_-12px_rgba(30,64,175,0.12)]">
+            <div data-parallax="med" className="hero-quiz-panel bg-white/10 dark:bg-[#131a2b]/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550]/60 h-full flex flex-col overflow-y-auto overflow-x-hidden dark:shadow-[0_0_60px_-12px_rgba(30,64,175,0.12)]">
               {children}
             </div>
           </div>

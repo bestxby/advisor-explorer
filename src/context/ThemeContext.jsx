@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ThemeContext } from './useTheme';
+import { ThemeContext } from './themeContextValue';
 
 const THEME_KEY = 'advisor-explorer-theme';
 

@@ -1,8 +1,9 @@
 {
   "name": "advisor-explorer",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "homepage": "https://bestxby.github.io/advisor-explorer/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -10,8 +11,7 @@
     "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
     "preview": "vite preview",
     "test": "vitest",
-    "test:run": "vitest run",
-    "deploy": "gh-pages -d dist"
+    "test:run": "vitest run"
   },
   "dependencies": {
     "react": "^19.2.6",
@@ -23,14 +23,11 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
-    "@types/react": "^19.2.14",
-    "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",
     "eslint": "^10.3.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.2",
-    "gh-pages": "^6.3.0",
     "globals": "^17.6.0",
     "jsdom": "^29.1.1",
     "prettier": "^3.8.3",

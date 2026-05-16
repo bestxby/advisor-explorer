@@ -28,7 +28,21 @@
   --glow-primary: rgba(59, 130, 246, 0.08);
   --glow-accent: rgba(245, 158, 11, 0.06);
   --glow-blue: rgba(59, 130, 246, 0.12);
+
+  /* Z-index layers (use Tailwind classes: z-0/z-1/z-10/z-20/z-30/z-[100]) */
+  --z-base: 0;
+  --z-overlay: 1;
+  --z-timeline: 10;
+  --z-sticky: 20;
+  --z-floating: 30;
+  --z-skip-link: 100;
 }
+
+/* Dark mode standard colors (used with Tailwind arbitrary values):
+   Backgrounds: dark:bg-[#0c1018] (base), dark:bg-[#131a2b] (raised/cards), dark:bg-[#151d2b] (deeper/inputs)
+   Borders:     dark:border-[#2a3550] (standard), dark:border-[#3d4f6f] (hover)
+   Text:        dark:text-slate-100 (headings), dark:text-slate-200 (strong), dark:text-slate-300 (body), dark:text-slate-400 (secondary), dark:text-slate-500 (muted)
+*/
 
 /* Base styles */
 body {
@@ -191,6 +205,165 @@ html {
   animation: slideQuestion 0.32s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Dark hero architecture background */
+.hero-tech-backdrop {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(2, 6, 18, 0.94) 0%, rgba(5, 13, 28, 0.86) 42%, rgba(7, 17, 35, 0.72) 100%),
+    repeating-linear-gradient(115deg, rgba(56, 189, 248, 0.08) 0 1px, transparent 1px 88px),
+    linear-gradient(135deg, #06101f 0%, #081427 44%, #050914 100%);
+  transition: opacity 0.35s ease;
+}
+
+.dark .hero-tech-backdrop {
+  opacity: 1;
+}
+
+.hero-tech-grid {
+  position: absolute;
+  inset: -1px;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.1) 58%, transparent 82%);
+  background-size: 44px 44px, 44px 44px, 100% 100%;
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.72) 34%, black 58%, rgba(0, 0, 0, 0.42) 100%);
+}
+
+.hero-tech-scan {
+  position: absolute;
+  inset: 0 -20%;
+  background:
+    linear-gradient(100deg, transparent 0%, rgba(56, 189, 248, 0.06) 48%, rgba(245, 158, 11, 0.08) 50%, transparent 55%),
+    repeating-linear-gradient(0deg, transparent 0 28px, rgba(148, 163, 184, 0.04) 28px 29px);
+  transform: skewX(-12deg);
+  animation: techScan 8s ease-in-out infinite;
+}
+
+.hero-tech-circuit {
+  position: absolute;
+  inset: -8% -10% -8% 6%;
+  width: 106%;
+  height: 114%;
+  opacity: 0.68;
+  transform: translateX(-3%);
+}
+
+.hero-tech-panel path {
+  stroke: rgba(56, 189, 248, 0.2);
+  stroke-width: 1.5;
+}
+
+.hero-tech-trace {
+  fill: none;
+  stroke: url('#traceGradient');
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.5;
+}
+
+.hero-tech-trace-soft {
+  opacity: 0.58;
+  stroke-width: 1.5;
+}
+
+.hero-tech-data rect {
+  fill: rgba(56, 189, 248, 0.16);
+  stroke: rgba(125, 211, 252, 0.38);
+  stroke-width: 1;
+}
+
+.hero-tech-data path {
+  fill: none;
+  stroke: rgba(245, 158, 11, 0.36);
+  stroke-dasharray: 14 10;
+  stroke-linecap: round;
+  stroke-width: 2;
+}
+
+.hero-tech-nodes circle {
+  fill: #7dd3fc;
+  stroke: rgba(15, 23, 42, 0.9);
+  stroke-width: 3;
+}
+
+.hero-tech-shield {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 42% 48% at 47% 44%, transparent 0%, rgba(2, 6, 18, 0.18) 58%, rgba(2, 6, 18, 0.58) 100%),
+    linear-gradient(90deg, rgba(2, 6, 18, 0.9) 0%, rgba(2, 6, 18, 0.74) 30%, rgba(2, 6, 18, 0.18) 50%, rgba(2, 6, 18, 0.78) 100%),
+    linear-gradient(180deg, rgba(2, 6, 18, 0.26) 0%, transparent 28%, rgba(2, 6, 18, 0.44) 100%);
+}
+
+@keyframes techScan {
+  0%, 100% {
+    opacity: 0.42;
+    transform: translateX(-4%) skewX(-12deg);
+  }
+
+  50% {
+    opacity: 0.8;
+    transform: translateX(4%) skewX(-12deg);
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-tech-grid {
+    mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.68) 48%, black 100%);
+  }
+
+  .hero-tech-circuit {
+    inset: 0 -28% 0 -8%;
+    width: 136%;
+    height: 96%;
+    opacity: 0.48;
+    transform: translateX(-4%);
+  }
+
+  .hero-tech-shield {
+    background:
+      linear-gradient(90deg, rgba(2, 6, 18, 0.95) 0%, rgba(2, 6, 18, 0.78) 55%, rgba(2, 6, 18, 0.6) 100%),
+      linear-gradient(180deg, rgba(2, 6, 18, 0.32) 0%, transparent 28%, rgba(2, 6, 18, 0.48) 100%);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero-tech-circuit {
+    inset: -8% -12% -10% 8%;
+    width: 114%;
+    height: 118%;
+  }
+
+  .hero-quiz-panel {
+    min-height: clamp(36rem, 67.5vh, 42.5rem);
+  }
+
+  .hero-quiz-panel > * {
+    height: 100%;
+    min-height: inherit;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero-tech-circuit {
+    inset: -6% -8% -8% 10%;
+    width: 106%;
+    height: 114%;
+    opacity: 0.72;
+  }
+
+}
+
+.dark .hero-quiz-panel {
+  backdrop-filter: blur(20px) saturate(1.4);
+  -webkit-backdrop-filter: blur(20px) saturate(1.4);
+}
+
 /* Lusion-inspired slow reveal */
 @keyframes revealUp {
   from {
@@ -222,6 +395,107 @@ html {
     0 4px 24px -4px rgba(59, 130, 246, 0.08),
     0 12px 48px -8px rgba(0, 0, 0, 0.4);
   border-color: rgba(59, 130, 246, 0.2);
+}
+
+.kpi-card-glow {
+  --kpi-glow-rgb: 59 130 246;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.kpi-card-glow > * {
+  position: relative;
+  z-index: 1;
+}
+
+.kpi-card-glow::before,
+.kpi-card-glow::after {
+  position: absolute;
+  content: '';
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease, transform 0.45s ease;
+}
+
+.kpi-card-glow::before {
+  inset: -42%;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 28% 18%, rgba(var(--kpi-glow-rgb), 0.28), transparent 32%),
+    radial-gradient(circle at 78% 86%, rgba(var(--kpi-glow-rgb), 0.16), transparent 36%);
+  filter: blur(18px);
+  transform: scale(0.82);
+}
+
+.kpi-card-glow::after {
+  left: 50%;
+  top: 50%;
+  z-index: 0;
+  width: 5.5rem;
+  height: 5.5rem;
+  border: 1px solid rgba(var(--kpi-glow-rgb), 0.26);
+  border-radius: 999px;
+  box-shadow:
+    0 0 28px rgba(var(--kpi-glow-rgb), 0.18),
+    inset 0 0 18px rgba(var(--kpi-glow-rgb), 0.08);
+  transform: translate(-50%, -50%) scale(0.36);
+}
+
+.dark .kpi-card-glow:hover {
+  border-color: rgba(var(--kpi-glow-rgb), 0.34);
+  box-shadow:
+    0 0 0 1px rgba(var(--kpi-glow-rgb), 0.16),
+    0 10px 32px -14px rgba(var(--kpi-glow-rgb), 0.34),
+    0 18px 60px -20px rgba(0, 0, 0, 0.55);
+}
+
+.dark .kpi-card-glow:hover::before {
+  opacity: 1;
+  transform: scale(1);
+  animation: kpiGlowBreath 2.2s ease-in-out infinite;
+}
+
+.dark .kpi-card-glow:hover::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1.58);
+  animation: kpiGlowRipple 1.8s ease-out infinite;
+}
+
+@keyframes kpiGlowBreath {
+  0%, 100% {
+    filter: blur(18px);
+    opacity: 0.72;
+  }
+
+  50% {
+    filter: blur(24px);
+    opacity: 1;
+  }
+}
+
+@keyframes kpiGlowRipple {
+  0% {
+    opacity: 0.46;
+    transform: translate(-50%, -50%) scale(0.52);
+  }
+
+  72% {
+    opacity: 0.1;
+    transform: translate(-50%, -50%) scale(1.74);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.92);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dark .kpi-card-glow:hover::before,
+  .dark .kpi-card-glow:hover::after {
+    animation: none;
+  }
 }
 
 /* Card inner glow that tracks cursor — Lusion organic hover */

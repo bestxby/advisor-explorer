@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import useCountUp from '../hooks/useCountUp';
+import { computeStats } from '../utils/stats';
 
 function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffix = '', sub, color = 'primary' }) {
   const animatedValue = useCountUp(countUpTarget, { decimals: countUpDecimals });
@@ -16,14 +17,23 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
     rose: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800',
     cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-400 dark:border-cyan-800',
   };
+  const glowMap = {
+    primary: '59 130 246',
+    emerald: '16 185 129',
+    amber: '245 158 11',
+    purple: '168 85 247',
+    rose: '244 63 94',
+    cyan: '34 211 238',
+  };
 
   return (
     <div
       data-animate="kpi"
-      className="bg-white dark:bg-[#131a2b] rounded-xl border border-gray-100 dark:border-[#2a3550] p-4 hover:shadow-md hover:border-gray-200 dark:hover:border-blue-500/20 dark:hover:shadow-blue-500/5 transition-all duration-300 card-glow"
+      className="kpi-card-glow bg-white/70 dark:bg-[#131a2b]/60 backdrop-blur-md rounded-xl border border-gray-100 dark:border-[#2a3550] min-h-[11.5rem] p-6 hover:shadow-md hover:border-gray-200 transition-all duration-300 card-glow"
+      style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
       <div className="flex items-start justify-between mb-3">
-        <div className={`w-9 h-9 rounded-lg flex items-center justify-center ${colorMap[color]}`}>
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${colorMap[color]}`}>
           {icon}
         </div>
       </div>
@@ -37,18 +47,7 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
 }
 
 export default function KPISummary({ professors, directions }) {
-  const stats = useMemo(() => {
-    const avgDifficulty = (
-      directions.reduce((sum, d) => sum + d.difficulty, 0) / directions.length
-    ).toFixed(1);
-    const highRecommend = directions.filter((d) => d.recommendation >= 4).length;
-    const wideJobMarket = directions.filter(
-      (d) => d.jobMarket === '极宽' || d.jobMarket === '宽',
-    ).length;
-    const universities = [...new Set(professors.map((p) => p.university))];
-
-    return { avgDifficulty, highRecommend, wideJobMarket, universities };
-  }, [professors, directions]);
+  const stats = useMemo(() => computeStats(professors, directions), [professors, directions]);
 
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
