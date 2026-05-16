@@ -8,7 +8,7 @@ const PRIORITY_CLASSES = {
   high: 'bg-red-50 dark:bg-red-900/30 text-red-700 dark:text-red-400 border-red-200 dark:border-red-800',
   medium:
     'bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-800',
-  low: 'bg-gray-50 dark:bg-[#151d2b]/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
+  low: 'bg-gray-50 dark:bg-[#111a2e]/50 text-gray-500 dark:text-slate-400 border-gray-200 dark:border-[#2a3550]',
 };
 
 const PHASE_COLORS = [

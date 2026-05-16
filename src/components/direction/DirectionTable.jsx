@@ -27,7 +27,7 @@ export default function DirectionTable({ directions, highlightedDirection, sortB
   };
 
   return (
-    <div className="bg-white dark:bg-[#131a2b] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 overflow-hidden card-glow">
+    <div className="bg-white dark:bg-[#0f1629] rounded-2xl border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30 overflow-hidden card-glow">
       <DirectionMobileList
         directions={sortedDirections}
         expandedId={expandedId}

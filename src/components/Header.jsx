@@ -1,6 +1,6 @@
 import HeroBackdrop from './layout/HeroBackdrop';
 
-export default function Header({ children, kpiSection }) {
+export default function Header({ kpiSection }) {
   return (
     <>
       <a
@@ -162,14 +162,8 @@ export default function Header({ children, kpiSection }) {
             </div>
           </div>
 
-          {/* Right column: quiz questionnaire */}
-          <div
-            className="md:col-span-1 min-w-0 w-full"
-          >
-            <div data-parallax="med" className="hero-quiz-panel bg-white/10 dark:bg-[#131a2b]/80 backdrop-blur-sm rounded-2xl border border-white/20 dark:border-[#2a3550]/60 h-full flex flex-col overflow-y-auto overflow-x-hidden dark:shadow-[0_0_60px_-12px_rgba(30,64,175,0.12)]">
-              {children}
-            </div>
-          </div>
+          {/* Right column: reserved */}
+          <div className="hidden xl:block min-w-0 w-full" />
         </div>
 
         {/* KPI 概览 */}

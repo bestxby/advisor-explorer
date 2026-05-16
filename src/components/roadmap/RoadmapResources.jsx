@@ -10,7 +10,7 @@ export default function RoadmapResources({ resources }) {
         {resources.map((resource, index) => (
           <span
             key={`${resource.name}-${index}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#151d2b]/50 border border-gray-200 dark:border-[#2a3550] rounded-lg text-sm text-gray-700 dark:text-slate-300 min-w-0 max-w-full"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#111a2e]/50 border border-gray-200 dark:border-[#2a3550] rounded-lg text-sm text-gray-700 dark:text-slate-300 min-w-0 max-w-full"
           >
             {resource.url ? (
               <a

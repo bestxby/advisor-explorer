@@ -28,7 +28,7 @@ export default function ProfessorPapers({ papers }) {
             href={paper.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/paper bg-gradient-to-br from-gray-50 dark:from-[#151d2b]/70 to-white dark:to-[#131a2b] rounded-xl p-5 border border-gray-100 dark:border-[#2a3550] hover:border-blue-200 hover:shadow-sm dark:hover:shadow-black/30 transition-all duration-200 cursor-pointer block"
+            className="group/paper bg-gradient-to-br from-gray-50 dark:from-[#111a2e]/70 to-white dark:to-[#0f1629] rounded-xl p-5 border border-gray-100 dark:border-[#2a3550] hover:border-blue-200 hover:shadow-sm dark:hover:shadow-black/30 transition-all duration-200 cursor-pointer block"
           >
             <div className="flex flex-wrap items-start gap-3 mb-3">
               <h5 className="font-semibold text-gray-900 dark:text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">

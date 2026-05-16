@@ -22,7 +22,7 @@ export default function ProfessorTechStack({ techStack, conferences }) {
         </h4>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-gray-50 dark:bg-[#151d2b]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
+        <div className="bg-gray-50 dark:bg-[#111a2e]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
             核心技术栈
           </p>
@@ -30,14 +30,14 @@ export default function ProfessorTechStack({ techStack, conferences }) {
             {techStack.map((tech) => (
               <span
                 key={tech}
-                className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#151d2b] text-indigo-700 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-100 dark:border-indigo-800 shadow-sm dark:shadow-black/30"
+                className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#111a2e] text-indigo-700 dark:text-indigo-400 text-xs font-semibold rounded-lg border border-indigo-100 dark:border-indigo-800 shadow-sm dark:shadow-black/30"
               >
                 {tech}
               </span>
             ))}
           </div>
         </div>
-        <div className="bg-gray-50 dark:bg-[#151d2b]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
+        <div className="bg-gray-50 dark:bg-[#111a2e]/50 rounded-xl p-5 border border-gray-100 dark:border-[#2a3550]">
           <p className="text-xs font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3">
             顶会/顶刊
           </p>
@@ -45,7 +45,7 @@ export default function ProfessorTechStack({ techStack, conferences }) {
             {conferences.map((conf) => (
               <span
                 key={conf}
-                className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#151d2b] text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-100 dark:border-emerald-800 shadow-sm dark:shadow-black/30"
+                className="inline-flex items-center px-3 py-1.5 bg-white dark:bg-[#111a2e] text-emerald-700 dark:text-emerald-400 text-xs font-semibold rounded-lg border border-emerald-100 dark:border-emerald-800 shadow-sm dark:shadow-black/30"
               >
                 {conf}
               </span>

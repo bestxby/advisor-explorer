@@ -19,7 +19,7 @@ function QuizOption({ option, selected, onAnswer }) {
             ${
               selected
                 ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-[#151d2b] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+                : 'bg-gray-100 dark:bg-[#111a2e] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
             }
           `}
         >

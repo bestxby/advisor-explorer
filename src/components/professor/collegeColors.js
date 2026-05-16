@@ -44,7 +44,7 @@ export const COLLEGE_COLORS = {
 };
 
 export const DEFAULT_COLLEGE_COLORS = {
-  bg: 'bg-gray-50 dark:bg-[#151d2b]/50',
+  bg: 'bg-gray-50 dark:bg-[#111a2e]/50',
   text: 'text-gray-700 dark:text-slate-300',
   border: 'border-gray-200 dark:border-[#2a3550]',
   dot: 'bg-gray-500 dark:bg-slate-400',

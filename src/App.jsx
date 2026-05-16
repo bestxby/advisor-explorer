@@ -1,11 +1,9 @@
 import { lazy, Suspense } from 'react';
 import BackToTop from './components/BackToTop';
-import ErrorBoundary from './components/ErrorBoundary';
 import FilterBar from './components/FilterBar';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import AppPanels from './components/layout/AppPanels';
-import PanelFallback from './components/layout/PanelFallback';
 import KPISummary from './components/KPISummary';
 import { TAB_DEFINITIONS } from './config/tabs';
 import { FilterProvider } from './context/FilterContext';
@@ -19,7 +17,7 @@ import useFilteredProfessors from './hooks/useFilteredProfessors';
 import useScrollAnimations from './hooks/useScrollAnimations';
 
 const ParticleLayer = lazy(() => import('./components/ParticleLayer'));
-const QuizSection = lazy(() => import('./components/QuizSection'));
+const SplineBackground = lazy(() => import('./components/SplineBackground'));
 
 export default function App() {
   const { theme } = useTheme();
@@ -33,7 +31,11 @@ export default function App() {
   useCursorGlow();
 
   return (
-    <div className="min-h-screen bg-surface dark:bg-[#0c1018] overflow-x-hidden">
+    <div className="min-h-screen bg-transparent overflow-x-hidden relative">
+      <Suspense fallback={null}>
+        <SplineBackground />
+      </Suspense>
+
       <div className="cursor-glow-layer" aria-hidden="true" />
 
       {theme === 'dark' && (
@@ -42,23 +44,12 @@ export default function App() {
         </Suspense>
       )}
 
-      <Header kpiSection={<KPISummary professors={professors} directions={directions} />}>
-        <ErrorBoundary fallbackMessage="问卷加载失败">
-          <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
-            <QuizSection
-              quiz={quiz}
-              professors={professors}
-              directions={directions}
-              onResult={explorerState.handleQuizResult}
-            />
-          </Suspense>
-        </ErrorBoundary>
-      </Header>
+      <Header kpiSection={<KPISummary professors={professors} directions={directions} />} />
 
       <FilterProvider value={explorerState.filterValue}>
         <div
           id="content-wrapper"
-          className="min-h-screen bg-surface dark:bg-[#0c1018] overflow-x-hidden"
+          className="min-h-screen bg-transparent overflow-x-hidden"
         >
           <FilterBar
             directions={directions}
@@ -72,6 +63,9 @@ export default function App() {
             filteredProfessors={filteredProfessors}
             quizResult={explorerState.quizResult}
             sortBy={explorerState.sortBy}
+            quiz={quiz}
+            professors={professors}
+            onQuizResult={explorerState.handleQuizResult}
           />
           <BackToTop />
           <Footer />

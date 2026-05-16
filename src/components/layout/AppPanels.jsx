@@ -1,10 +1,10 @@
 import { lazy, Suspense } from 'react';
 import ErrorBoundary from '../ErrorBoundary';
 import ProfessorList from '../professors/ProfessorList';
-import LockedRoadmapPanel from './LockedRoadmapPanel';
 import PanelFallback from './PanelFallback';
 
 const DirectionTable = lazy(() => import('../DirectionTable'));
+const QuizSection = lazy(() => import('../QuizSection'));
 const RoadmapSection = lazy(() => import('../RoadmapSection'));
 
 function ProfessorsPanel({ professors, quizResult }) {
@@ -39,8 +39,29 @@ function DirectionsPanel({ directions, quizResult, sortBy }) {
   );
 }
 
-function RoadmapPanel({ directions, quizResult }) {
-  if (!quizResult) return <LockedRoadmapPanel />;
+function RoadmapPanel({ directions, quizResult, quiz, professors, onQuizResult }) {
+  if (!quizResult) {
+    return (
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8" aria-label="个性化方向匹配">
+        <ErrorBoundary fallbackMessage="问卷加载失败">
+          <div
+            id="roadmap-panel"
+            role="tabpanel"
+            aria-labelledby="roadmap-tab"
+          >
+            <Suspense fallback={<PanelFallback label="正在加载匹配问卷..." />}>
+              <QuizSection
+                quiz={quiz}
+                professors={professors}
+                directions={directions}
+                onResult={onQuizResult}
+              />
+            </Suspense>
+          </div>
+        </ErrorBoundary>
+      </section>
+    );
+  }
 
   return (
     <section
@@ -77,6 +98,9 @@ export default function AppPanels({
   filteredProfessors,
   quizResult,
   sortBy,
+  quiz,
+  professors,
+  onQuizResult,
 }) {
   return (
     <>
@@ -93,7 +117,13 @@ export default function AppPanels({
       </main>
 
       {activeTab === 'roadmap' && (
-        <RoadmapPanel directions={directions} quizResult={quizResult} />
+        <RoadmapPanel
+          directions={directions}
+          quizResult={quizResult}
+          quiz={quiz}
+          professors={professors}
+          onQuizResult={onQuizResult}
+        />
       )}
     </>
   );

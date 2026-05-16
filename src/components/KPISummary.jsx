@@ -29,7 +29,7 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
   return (
     <div
       data-animate="kpi"
-      className="kpi-card-glow bg-white/70 dark:bg-[#131a2b]/60 backdrop-blur-md rounded-xl border border-gray-100 dark:border-[#2a3550] min-h-[11.5rem] p-6 hover:shadow-md hover:border-gray-200 transition-all duration-300 card-glow"
+      className="kpi-card-glow bg-white/70 dark:bg-[#0f1629]/60 backdrop-blur-md rounded-xl border border-gray-100 dark:border-[#2a3550] min-h-[11.5rem] p-6 hover:shadow-md hover:border-gray-200 transition-all duration-300 card-glow"
       style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
       <div className="flex items-start justify-between mb-3">

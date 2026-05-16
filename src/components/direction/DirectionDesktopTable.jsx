@@ -23,7 +23,7 @@ function DirectionDesktopRow({
           ${
             highlighted
               ? 'bg-primary/5 hover:bg-primary/10'
-              : 'bg-white dark:bg-[#131a2b] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
+              : 'bg-white dark:bg-[#0f1629] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
           }
         `}
       >
@@ -80,7 +80,7 @@ export default function DirectionDesktopTable({
     <div className="hidden lg:block overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-gradient-to-r from-gray-50 dark:from-[#151d2b] to-gray-100 dark:to-[#131a2b] border-b border-gray-200 dark:border-[#2a3550]">
+          <tr className="bg-gradient-to-r from-gray-50 dark:from-[#111a2e] to-gray-100 dark:to-[#0f1629] border-b border-gray-200 dark:border-[#2a3550]">
             <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
               方向
             </th>

@@ -1,4 +1,4 @@
-const QUIZ_RESULT_KEY = 'advisor-explorer-quiz-result';
+const QUIZ_RESULT_KEY = 'advisor-explorer-quiz-result-v2';
 
 export function saveQuizResult(result) {
   try {

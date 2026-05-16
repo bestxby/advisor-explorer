@@ -2,7 +2,7 @@ import ProfessorCard from '../ProfessorCard';
 
 function EmptyProfessorList() {
   return (
-    <div className="text-center py-10 bg-white dark:bg-[#131a2b] rounded-xl border border-gray-100 dark:border-[#2a3550]">
+    <div className="text-center py-10 bg-white dark:bg-[#0f1629] rounded-xl border border-gray-100 dark:border-[#2a3550]">
       <svg
         className="w-10 h-10 text-gray-300 dark:text-[#475569] mx-auto mb-3"
         fill="none"

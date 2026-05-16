@@ -6,7 +6,7 @@ export default function DirectionJobsMobile({ jobs }) {
       {jobs.map((job, index) => (
         <div
           key={`${job.company}-${job.role}-${index}`}
-          className="bg-white dark:bg-[#131a2b] rounded-xl p-4 border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30"
+          className="bg-white dark:bg-[#0f1629] rounded-xl p-4 border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30"
         >
           <p className="font-semibold text-gray-900 dark:text-slate-100 text-sm mb-2">
             {job.company}

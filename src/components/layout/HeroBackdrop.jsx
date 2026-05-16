@@ -51,10 +51,10 @@ export default function HeroBackdrop() {
       >
         <defs>
           <linearGradient id="traceGradient" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="#38bdf8" stopOpacity="0" />
-            <stop offset="36%" stopColor="#38bdf8" stopOpacity="0.72" />
-            <stop offset="72%" stopColor="#818cf8" stopOpacity="0.58" />
-            <stop offset="100%" stopColor="#f59e0b" stopOpacity="0" />
+            <stop offset="0%" stopColor="#22d3ee" stopOpacity="0" />
+            <stop offset="36%" stopColor="#22d3ee" stopOpacity="0.72" />
+            <stop offset="72%" stopColor="#a78bfa" stopOpacity="0.58" />
+            <stop offset="100%" stopColor="#34d396" stopOpacity="0" />
           </linearGradient>
           <linearGradient id="panelGradient" x1="0" x2="1" y1="0" y2="1">
             <stop offset="0%" stopColor="#0f2742" stopOpacity="0.8" />

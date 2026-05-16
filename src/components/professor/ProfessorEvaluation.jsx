@@ -26,7 +26,7 @@ export default function ProfessorEvaluation({ evaluation, suitableFor }) {
         <p className="text-sm text-gray-700 dark:text-slate-300 leading-relaxed mb-4">
           {evaluation}
         </p>
-        <div className="flex items-start gap-2 bg-white/60 dark:bg-[#131a2b]/60 rounded-lg p-3 border border-amber-200 dark:border-amber-700/50">
+        <div className="flex items-start gap-2 bg-white/60 dark:bg-[#0f1629]/60 rounded-lg p-3 border border-amber-200 dark:border-amber-700/50">
           <svg
             className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0"
             fill="none"

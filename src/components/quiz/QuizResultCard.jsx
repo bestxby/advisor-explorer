@@ -8,7 +8,7 @@ export default function QuizResultCard({ result, index }) {
       className={`relative rounded-xl p-4 border-2 transition-all ${
         best
           ? 'border-primary bg-primary/5 shadow-md dark:shadow-blue-500/10'
-          : 'border-gray-100 dark:border-[#2a3550] bg-gray-50 dark:bg-[#151d2b]/50 opacity-75'
+          : 'border-gray-100 dark:border-[#2a3550] bg-gray-50 dark:bg-[#111a2e]/50 opacity-75'
       }`}
     >
       {best && (

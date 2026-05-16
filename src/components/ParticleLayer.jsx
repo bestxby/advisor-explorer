@@ -16,10 +16,10 @@ const ENERGY_LANE_COUNT = 84;
 const PARALLAX_STRENGTH = 18;
 const ORTHOGONAL_BLEND = 0.08;
 const COLORS = [
-  'rgba(96, 165, 250, 0.86)',
+  'rgba(56, 189, 248, 0.86)',
   'rgba(34, 211, 238, 0.72)',
-  'rgba(168, 85, 247, 0.64)',
-  'rgba(245, 158, 11, 0.58)',
+  'rgba(167, 139, 250, 0.64)',
+  'rgba(52, 211, 153, 0.58)',
 ];
 
 function createSeededRandom(seed = 1) {

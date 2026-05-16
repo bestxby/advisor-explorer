@@ -5,7 +5,7 @@ export default function ProfessorResources({ resources }) {
   return (
     <section>
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-[#151d2b] flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-gray-100 dark:bg-[#111a2e] flex items-center justify-center">
           <ProfessorIcon
             type="github"
             className="w-4 h-4 text-gray-700 dark:text-slate-300"

@@ -2,13 +2,13 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* Design Tokens — Lusion-inspired cinematic dark */
+/* Design Tokens — Retrofuturistic circuit loop */
 @theme {
-  --color-primary: #1e40af;
-  --color-primary-light: #3b82f6;
-  --color-primary-dark: #1e3a8a;
-  --color-accent: #d97706;
-  --color-accent-light: #f59e0b;
+  --color-primary: #0ea5e9;
+  --color-primary-light: #38bdf8;
+  --color-primary-dark: #0369a1;
+  --color-accent: #22d3ee;
+  --color-accent-light: #a78bfa;
   --color-surface: #f5f5f5;
   --color-surface-raised: #ffffff;
   --color-muted: #e9eef6;
@@ -24,10 +24,10 @@
   --font-size-small: 12px;
   --table-row-height: 36px;
 
-  /* Lusion ambient glow colors */
-  --glow-primary: rgba(59, 130, 246, 0.08);
-  --glow-accent: rgba(245, 158, 11, 0.06);
-  --glow-blue: rgba(59, 130, 246, 0.12);
+  /* Retrofuturistic glow colors */
+  --glow-primary: rgba(14, 165, 233, 0.12);
+  --glow-accent: rgba(167, 139, 250, 0.08);
+  --glow-blue: rgba(34, 211, 238, 0.15);
 
   /* Z-index layers (use Tailwind classes: z-0/z-1/z-10/z-20/z-30/z-[100]) */
   --z-base: 0;
@@ -39,7 +39,7 @@
 }
 
 /* Dark mode standard colors (used with Tailwind arbitrary values):
-   Backgrounds: dark:bg-[#0c1018] (base), dark:bg-[#131a2b] (raised/cards), dark:bg-[#151d2b] (deeper/inputs)
+   Backgrounds: dark:bg-[#070b14] (base), dark:bg-[#0f1629] (raised/cards), dark:bg-[#111a2e] (deeper/inputs)
    Borders:     dark:border-[#2a3550] (standard), dark:border-[#3d4f6f] (hover)
    Text:        dark:text-slate-100 (headings), dark:text-slate-200 (strong), dark:text-slate-300 (body), dark:text-slate-400 (secondary), dark:text-slate-500 (muted)
 */
@@ -56,12 +56,12 @@ body {
 
 .dark body {
   color: #d4dae6;
-  background: #0c1018;
+  background: #070b14;
 }
 
 .dark {
-  --color-surface: #0c1018;
-  --color-surface-raised: #131a2b;
+  --color-surface: #070b14;
+  --color-surface-raised: #0f1629;
 }
 
 h1,
@@ -99,8 +99,8 @@ h4 {
   opacity: 1;
   background: radial-gradient(
     600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
-    rgba(59, 130, 246, 0.06) 0%,
-    rgba(59, 130, 246, 0.02) 30%,
+    rgba(14, 165, 233, 0.08) 0%,
+    rgba(34, 211, 238, 0.03) 30%,
     transparent 60%
   );
 }
@@ -168,11 +168,11 @@ html {
 }
 
 .dark ::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.2);
+  background: rgba(14, 165, 233, 0.2);
 }
 
 .dark ::-webkit-scrollbar-thumb:hover {
-  background: rgba(59, 130, 246, 0.35);
+  background: rgba(14, 165, 233, 0.35);
 }
 
 /* Animations */
@@ -214,7 +214,7 @@ html {
   overflow: hidden;
   background:
     linear-gradient(90deg, rgba(2, 6, 18, 0.94) 0%, rgba(5, 13, 28, 0.86) 42%, rgba(7, 17, 35, 0.72) 100%),
-    repeating-linear-gradient(115deg, rgba(56, 189, 248, 0.08) 0 1px, transparent 1px 88px),
+    repeating-linear-gradient(115deg, rgba(34, 211, 238, 0.08) 0 1px, transparent 1px 88px),
     linear-gradient(135deg, #06101f 0%, #081427 44%, #050914 100%);
   transition: opacity 0.35s ease;
 }
@@ -227,9 +227,9 @@ html {
   position: absolute;
   inset: -1px;
   background-image:
-    linear-gradient(rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(56, 189, 248, 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, transparent 0%, rgba(56, 189, 248, 0.1) 58%, transparent 82%);
+    linear-gradient(rgba(34, 211, 238, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 0%, rgba(34, 211, 238, 0.1) 58%, transparent 82%);
   background-size: 44px 44px, 44px 44px, 100% 100%;
   mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, rgba(0, 0, 0, 0.72) 34%, black 58%, rgba(0, 0, 0, 0.42) 100%);
 }
@@ -238,7 +238,7 @@ html {
   position: absolute;
   inset: 0 -20%;
   background:
-    linear-gradient(100deg, transparent 0%, rgba(56, 189, 248, 0.06) 48%, rgba(245, 158, 11, 0.08) 50%, transparent 55%),
+    linear-gradient(100deg, transparent 0%, rgba(34, 211, 238, 0.06) 48%, rgba(52, 211, 153, 0.08) 50%, transparent 55%),
     repeating-linear-gradient(0deg, transparent 0 28px, rgba(148, 163, 184, 0.04) 28px 29px);
   transform: skewX(-12deg);
   animation: techScan 8s ease-in-out infinite;
@@ -254,7 +254,7 @@ html {
 }
 
 .hero-tech-panel path {
-  stroke: rgba(56, 189, 248, 0.2);
+  stroke: rgba(34, 211, 238, 0.2);
   stroke-width: 1.5;
 }
 
@@ -272,21 +272,21 @@ html {
 }
 
 .hero-tech-data rect {
-  fill: rgba(56, 189, 248, 0.16);
-  stroke: rgba(125, 211, 252, 0.38);
+  fill: rgba(34, 211, 238, 0.16);
+  stroke: rgba(103, 232, 249, 0.38);
   stroke-width: 1;
 }
 
 .hero-tech-data path {
   fill: none;
-  stroke: rgba(245, 158, 11, 0.36);
+  stroke: rgba(52, 211, 153, 0.36);
   stroke-dasharray: 14 10;
   stroke-linecap: round;
   stroke-width: 2;
 }
 
 .hero-tech-nodes circle {
-  fill: #7dd3fc;
+  fill: #67e8f9;
   stroke: rgba(15, 23, 42, 0.9);
   stroke-width: 3;
 }
@@ -391,14 +391,14 @@ html {
 }
 .dark .card-glow:hover {
   box-shadow:
-    0 0 0 1px rgba(59, 130, 246, 0.1),
-    0 4px 24px -4px rgba(59, 130, 246, 0.08),
+    0 0 0 1px rgba(14, 165, 233, 0.12),
+    0 4px 24px -4px rgba(34, 211, 238, 0.1),
     0 12px 48px -8px rgba(0, 0, 0, 0.4);
-  border-color: rgba(59, 130, 246, 0.2);
+  border-color: rgba(14, 165, 233, 0.25);
 }
 
 .kpi-card-glow {
-  --kpi-glow-rgb: 59 130 246;
+  --kpi-glow-rgb: 14 165 233;
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -512,7 +512,7 @@ html {
   transition: opacity 0.3s ease-out;
   background: radial-gradient(
     400px circle at var(--card-mouse-x) var(--card-mouse-y),
-    rgba(59, 130, 246, 0.06) 0%,
+    rgba(14, 165, 233, 0.08) 0%,
     transparent 60%
   );
   pointer-events: none;

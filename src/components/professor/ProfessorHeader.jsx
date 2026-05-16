@@ -25,7 +25,7 @@ export default function ProfessorHeader({ professor, colors, expanded }) {
         ${
           expanded
             ? 'bg-primary text-white rotate-180 shadow-sm dark:shadow-black/30'
-            : 'bg-gray-100 dark:bg-[#151d2b] text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+            : 'bg-gray-100 dark:bg-[#111a2e] text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
         }
       `}
       >

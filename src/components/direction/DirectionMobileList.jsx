@@ -40,7 +40,7 @@ function DirectionMobileCard({
             className={`w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-200 ${
               expanded
                 ? 'bg-primary text-white rotate-180'
-                : 'bg-gray-100 dark:bg-[#151d2b] text-gray-500 dark:text-slate-400'
+                : 'bg-gray-100 dark:bg-[#111a2e] text-gray-500 dark:text-slate-400'
             }`}
           >
             <svg
