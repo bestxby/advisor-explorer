@@ -2,7 +2,6 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useTheme } from '../context/useTheme';
 import { vertexShader, fragmentShader } from './Background3DShaders';
-import { uploadedImage4 } from '../utils/particleShapeImage4';
 
 const PARTICLE_COUNT = 110000;
 const particleSize = 212;
@@ -271,7 +270,8 @@ export default function Background3D({ activeDirection }) {
     const shapeKeys = ['shape4', 'infinity'];
     let cycleInterval;
 
-    processImageToPoints(uploadedImage4, { threshold: 35, zDepth: 5 }).then((pts2) => {
+    const shape4Url = `${import.meta.env.BASE_URL}shape4.jpg`;
+    processImageToPoints(shape4Url, { threshold: 35, zDepth: 5 }).then((pts2) => {
       loadedShapes.shape4 = pts2;
       loadedShapes.infinity = generateInfinityShape();
       
