@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { useTheme } from '../context/useTheme';
 import { vertexShader, fragmentShader } from './Background3DShaders';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 const PARTICLE_COUNT = 110000;
 const particleSize = 212;
@@ -88,6 +91,58 @@ export default function Background3D({ activeDirection }) {
     renderer.setClearColor(0x000000, 0);
     container.appendChild(renderer.domElement);
 
+    // Setup Bloom
+    const renderScene = new RenderPass(scene, camera);
+    const bloomPass = new UnrealBloomPass(new THREE.Vector2(width, height), 1.5, 0.4, 0.85);
+    bloomPass.threshold = 0.4; // Only brighter pixels get bloomed
+    bloomPass.strength = 0.07; // Tone down the intensity
+    bloomPass.radius = 0.2; // Less spread
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+
+    // Setup Ambient Dust
+    const dustGeometry = new THREE.BufferGeometry();
+    const dustCount = 6000;
+    const dustPositions = new Float32Array(dustCount * 3);
+    const dustColors = new Float32Array(dustCount * 3);
+    const colorObj = new THREE.Color();
+
+    for (let i = 0; i < dustCount; i++) {
+      const i3 = i * 3;
+      dustPositions[i3] = (Math.random() - 0.5) * 100;
+      dustPositions[i3 + 1] = (Math.random() - 0.5) * 100;
+      dustPositions[i3 + 2] = (Math.random() - 0.5) * 100;
+      
+      // Diverse colors for ambient dust
+      const rand = Math.random();
+      if (rand < 0.6) {
+        colorObj.setHSL(0.58 + (Math.random() - 0.5) * 0.1, 0.9, 0.6 + Math.random() * 0.2); // Blue
+      } else if (rand < 0.9) {
+        colorObj.setHSL(0.75 + (Math.random() - 0.5) * 0.1, 0.8, 0.6 + Math.random() * 0.2); // Purple/Pink
+      } else {
+        colorObj.setHSL(0.12 + (Math.random() - 0.5) * 0.05, 0.8, 0.8 + Math.random() * 0.2); // Gold/White
+      }
+      
+      dustColors[i3] = colorObj.r;
+      dustColors[i3 + 1] = colorObj.g;
+      dustColors[i3 + 2] = colorObj.b;
+    }
+    
+    dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+    dustGeometry.setAttribute('color', new THREE.BufferAttribute(dustColors, 3));
+    
+    const dustMaterial = new THREE.PointsMaterial({
+      size: 0.15,
+      transparent: true,
+      opacity: 0.4,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      vertexColors: true
+    });
+    const dustParticles = new THREE.Points(dustGeometry, dustMaterial);
+    scene.add(dustParticles);
+
     const geometry = new THREE.BufferGeometry();
     const positions = new Float32Array(PARTICLE_COUNT * 3);
     const targetPositions = new Float32Array(PARTICLE_COUNT * 3);
@@ -147,7 +202,7 @@ export default function Background3D({ activeDirection }) {
     scene.add(points);
 
     sceneDataRef.current = { 
-      scene, camera, renderer, points, geometry, material, 
+      scene, camera, renderer, composer, dustParticles, points, geometry, material, 
       originalPositions: positions.slice(), targetPositions, 
       originalColors: colors.slice(), targetColors,
       validPoints: []
@@ -314,6 +369,7 @@ export default function Background3D({ activeDirection }) {
       sceneDataRef.current.camera.aspect = newWidth / newHeight;
       sceneDataRef.current.camera.updateProjectionMatrix();
       sceneDataRef.current.renderer.setSize(newWidth, newHeight);
+      sceneDataRef.current.composer.setSize(newWidth, newHeight);
       
       // Update position responsively (36% from right)
       if (sceneDataRef.current.points) {
@@ -353,7 +409,7 @@ export default function Background3D({ activeDirection }) {
       time += 0.008;
       
       if (!sceneDataRef.current) return;
-      const { renderer, scene, camera, points, material } = sceneDataRef.current;
+      const { renderer, composer, dustParticles, scene, camera, points, material } = sceneDataRef.current;
       
       targetX = mouseX * 0.5;
       targetY = mouseY * 0.5;
@@ -384,7 +440,11 @@ export default function Background3D({ activeDirection }) {
       
       material.uniforms.uEffectIntensity.value = effectIntensity;
       
-      renderer.render(scene, camera);
+      // Slowly rotate ambient dust
+      dustParticles.rotation.y += 0.0005;
+      dustParticles.rotation.x += 0.0002;
+      
+      composer.render();
     };
     
     animate();

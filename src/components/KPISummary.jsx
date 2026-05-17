@@ -28,7 +28,7 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
   return (
     <div
       data-animate="kpi"
-      className={`kpi-card-glow bg-white/40 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/10 dark:border-white/10 border-t-2 ${scheme.border} min-h-[11.5rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
+      className={`kpi-card-glow bg-white/20 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 dark:border-white/10 border-t-2 ${scheme.border} min-h-[9rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
       style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
       <div className="flex items-start justify-between mb-3">
