@@ -4,7 +4,7 @@ import ProfessorList from '../professors/ProfessorList';
 import PanelFallback from './PanelFallback';
 
 const DirectionTable = lazy(() => import('../direction/DirectionTable'));
-const QuizSection = lazy(() => import('../QuizSection'));
+const QuizSection = lazy(() => import('../quiz/QuizSection'));
 const RoadmapSection = lazy(() => import('../roadmap/RoadmapSection'));
 
 function ProfessorsPanel({ professors, quizResult }) {

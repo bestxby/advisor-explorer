@@ -1,10 +1,10 @@
 import { useCallback, useState } from 'react';
 import useCardPointerGlow from '../hooks/useCardPointerGlow';
 import useMeasuredExpansion from '../hooks/useMeasuredExpansion';
-import { COLLEGE_COLORS, DEFAULT_COLLEGE_COLORS } from './professor/collegeColors';
-import ProfessorCardBody from './professor/ProfessorCardBody';
-import ProfessorDirectionTags from './professor/ProfessorDirectionTags';
-import ProfessorHeader from './professor/ProfessorHeader';
+import { COLLEGE_COLORS, DEFAULT_COLLEGE_COLORS } from './professors/collegeColors';
+import ProfessorCardBody from './professors/ProfessorCardBody';
+import ProfessorDirectionTags from './professors/ProfessorDirectionTags';
+import ProfessorHeader from './professors/ProfessorHeader';
 
 function getCollegeColors(professor) {
   const collegeKey = `${professor.university} · ${professor.department}`;

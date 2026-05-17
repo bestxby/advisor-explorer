@@ -1,6 +1,6 @@
-import useQuizFlow from '../hooks/useQuizFlow';
-import QuizQuestion from './quiz/QuizQuestion';
-import QuizResults from './quiz/QuizResults';
+import useQuizFlow from '../../hooks/useQuizFlow';
+import QuizQuestion from './QuizQuestion';
+import QuizResults from './QuizResults';
 
 export default function QuizSection({ quiz, professors, directions, onResult }) {
   const quizFlow = useQuizFlow({ quiz, professors, directions, onResult });

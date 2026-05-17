@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import QuizSection from '../components/QuizSection';
+import QuizSection from '../components/quiz/QuizSection';
 import { QUIZ_ANSWER_DELAY_MS } from '../constants';
 import quiz from '../data/quiz.json';
 import professors from '../data/professors.json';
