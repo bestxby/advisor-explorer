@@ -4,7 +4,6 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
-const PARTICLE_COUNT = 120000;
 const particleSize = 212;
 
 const DIRECTION_PALETTES = {
@@ -50,6 +49,10 @@ export class ThreeParticleEngine {
     this.theme = theme;
     this.activeDirection = activeDirection;
 
+    // Detect hardware capabilities and apply quality profile
+    this.quality = this.detectHardwareQuality();
+    this.applyQualityProfile();
+
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.time = 0;
@@ -82,19 +85,23 @@ export class ThreeParticleEngine {
     // 2. Renderer Setup
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     this.renderer.setSize(this.width, this.height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(this.pixelRatioCap);
     this.renderer.setClearColor(0x000000, 0);
     this.container.appendChild(this.renderer.domElement);
 
-    // 3. Post-Processing / Bloom Setup
-    const renderScene = new RenderPass(this.scene, this.camera);
-    const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.width, this.height), 1.5, 0.4, 0.85);
-    bloomPass.threshold = 0.4;
-    bloomPass.strength = 0.07;
-    bloomPass.radius = 0.2;
-    this.composer = new EffectComposer(this.renderer);
-    this.composer.addPass(renderScene);
-    this.composer.addPass(bloomPass);
+    // 3. Conditional Post-Processing / Bloom Setup
+    if (this.enableBloom) {
+      const renderScene = new RenderPass(this.scene, this.camera);
+      const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.width, this.height), 1.5, 0.4, 0.85);
+      bloomPass.threshold = 0.4;
+      bloomPass.strength = 0.07;
+      bloomPass.radius = 0.2;
+      this.composer = new EffectComposer(this.renderer);
+      this.composer.addPass(renderScene);
+      this.composer.addPass(bloomPass);
+    } else {
+      this.composer = null;
+    }
 
     // 4. Create Systems
     this.createAmbientDust();
@@ -118,9 +125,73 @@ export class ThreeParticleEngine {
     this.camera.position.z = 45 * Math.max(1.0, 1.55 / aspect);
   }
 
+  detectHardwareQuality() {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    const cores = navigator.hardwareConcurrency || 4;
+    let gpuName = '';
+    
+    try {
+      const canvas = document.createElement('canvas');
+      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      if (gl) {
+        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+        if (debugInfo) {
+          gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
+        }
+      }
+    } catch (e) {
+      // Safe fallback
+    }
+
+    const gpuLower = gpuName.toLowerCase();
+    
+    // Classify extremely low-end (weak cores or very old integrated graphics)
+    if (cores <= 2 || gpuLower.includes('mali-t') || gpuLower.includes('adreno (tm) 3') || gpuLower.includes('intel hd')) {
+      return 'low';
+    }
+    
+    // Classify medium-end (general mobiles, office laptops with integrated UHD/Iris Xe graphics)
+    if (isMobile || cores <= 4 || gpuLower.includes('intel') || gpuLower.includes('uhd') || gpuLower.includes('iris') || gpuLower.includes('amd radeon(tm) graphics')) {
+      return 'medium';
+    }
+    
+    // High-end (Desktops, Apple Silicon M-series, Nvidia RTX/GTX, AMD RX discrete cards)
+    return 'high';
+  }
+
+  applyQualityProfile() {
+    console.log(`[ThreeParticleEngine] Hardware profile: ${this.quality.toUpperCase()}`);
+    
+    switch (this.quality) {
+      case 'low':
+        this.particleCount = 20000;
+        this.dustCount = 0;
+        this.enableBloom = false;
+        this.pixelRatioCap = 1.0;
+        this.pointSizeMultiplier = 1.6; // Slightly larger points to maintain shape fullness at low density
+        break;
+      case 'medium':
+        this.particleCount = 60000;
+        this.dustCount = 2000;
+        this.enableBloom = false;
+        this.pixelRatioCap = 1.2;
+        this.pointSizeMultiplier = 1.35; // Visually full representation
+        break;
+      case 'high':
+      default:
+        this.particleCount = 120000;
+        this.dustCount = 6000;
+        this.enableBloom = true;
+        this.pixelRatioCap = Math.min(window.devicePixelRatio, 2);
+        this.pointSizeMultiplier = 1.0;
+        break;
+    }
+  }
+
   createAmbientDust() {
+    if (this.dustCount <= 0) return;
     const dustGeometry = new THREE.BufferGeometry();
-    const dustCount = 6000;
+    const dustCount = this.dustCount;
     const dustPositions = new Float32Array(dustCount * 3);
     const dustColors = new Float32Array(dustCount * 3);
     const colorObj = new THREE.Color();
@@ -162,15 +233,16 @@ export class ThreeParticleEngine {
 
   createMainParticles() {
     this.geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(PARTICLE_COUNT * 3);
-    this.targetPositions = new Float32Array(PARTICLE_COUNT * 3);
-    const colors = new Float32Array(PARTICLE_COUNT * 3);
-    this.targetColors = new Float32Array(PARTICLE_COUNT * 3);
-    const randomOffsets = new Float32Array(PARTICLE_COUNT * 3);
+    const count = this.particleCount;
+    const positions = new Float32Array(count * 3);
+    this.targetPositions = new Float32Array(count * 3);
+    const colors = new Float32Array(count * 3);
+    this.targetColors = new Float32Array(count * 3);
+    const randomOffsets = new Float32Array(count * 3);
     
     const palette = getPalette(this.activeDirection).map(parseColor);
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       const x = (Math.random() - 0.5) * 80;
       const y = (Math.random() - 0.5) * 80;
@@ -201,7 +273,7 @@ export class ThreeParticleEngine {
       uniforms: { 
         uTime: { value: 0 }, 
         uMorph: { value: 0 }, 
-        uPointSize: { value: particleSize }, 
+        uPointSize: { value: particleSize * this.pointSizeMultiplier }, 
         uEffectMode: { value: 0 }, 
         uEffectIntensity: { value: 0 }, 
         uExplosionTime: { value: 0 } 
@@ -288,8 +360,9 @@ export class ThreeParticleEngine {
     if (!pts || pts.length === 0) return;
     
     this.validPoints = pts;
+    const count = this.particleCount;
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
+    for (let i = 0; i < count; i++) {
       const i3 = i * 3;
       const point = pts[i % pts.length];
       
@@ -360,7 +433,8 @@ export class ThreeParticleEngine {
   updateDirection(direction) {
     this.activeDirection = direction;
     if (this.validPoints && this.validPoints.length > 0) {
-      for (let i = 0; i < PARTICLE_COUNT; i++) {
+      const count = this.particleCount;
+      for (let i = 0; i < count; i++) {
         const i3 = i * 3;
         const point = this.validPoints[i % this.validPoints.length];
         
@@ -389,7 +463,9 @@ export class ThreeParticleEngine {
     this.adjustCameraZ();
     this.camera.updateProjectionMatrix();
     this.renderer.setSize(this.width, this.height);
-    this.composer.setSize(this.width, this.height);
+    if (this.enableBloom && this.composer) {
+      this.composer.setSize(this.width, this.height);
+    }
     
     if (this.points) {
       this.points.position.x = this.width > 1024 ? 3.121 * (this.width / this.height) : 0;
@@ -449,8 +525,10 @@ export class ThreeParticleEngine {
       this.dustParticles.rotation.x += 0.0002;
     }
     
-    if (this.composer) {
+    if (this.enableBloom && this.composer) {
       this.composer.render();
+    } else {
+      this.renderer.render(this.scene, this.camera);
     }
   }
 
