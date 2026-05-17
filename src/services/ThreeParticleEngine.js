@@ -112,13 +112,10 @@ export class ThreeParticleEngine {
 
   adjustCameraZ() {
     const aspect = this.width / this.height;
-    if (aspect < 1.0) {
-      // Scale camera Z distance in inverse proportion to the aspect ratio to fully fit
-      // the wide particle shape inside narrow portrait mobile viewports without cropping.
-      this.camera.position.z = 45 / aspect;
-    } else {
-      this.camera.position.z = 45;
-    }
+    // Mathematically continuous camera distance scaling (smooth transition without any sudden jumps).
+    // Begins pulling the camera back smoothly once the aspect ratio drops below 1.55 (e.g. tablet portrait, square monitor).
+    // At aspect = 1.0 (square), Z is ~70; at aspect = 0.5 (mobile portrait), Z is ~140, keeping the 38-unit wide cloud perfectly framed.
+    this.camera.position.z = 45 * Math.max(1.0, 1.55 / aspect);
   }
 
   createAmbientDust() {
