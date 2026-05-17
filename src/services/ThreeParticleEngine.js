@@ -320,36 +320,41 @@ export class ThreeParticleEngine {
   }
 
   loadShapes() {
-    const shape4Url = `${import.meta.env.BASE_URL}shape4.jpg`;
-    this.processImageToPoints(shape4Url, { threshold: 35, zDepth: 5 }).then((pts2) => {
-      this.loadedShapes.shape4 = pts2;
-      
-      // Defer math-heavy infinity shape generation by 1.2s to prevent startup frame drop
-      this.loadedShapes.infinity = [];
-      this.infinityDeferredTimeout = setTimeout(() => {
-        this.loadedShapes.infinity = this.generateInfinityShape();
-      }, 1200);
-      
-      this.applyShape('shape4');
-      this.morphTarget = 1.0;
-      
-      this.cycleTimeout = setTimeout(() => {
-        this.cycleInterval = setInterval(() => {
-          this.transitionState = 1;
-          this.material.uniforms.uEffectMode.value = 1;
-          
-          setTimeout(() => {
-            this.currentShapeIndex = (this.currentShapeIndex + 1) % this.shapeKeys.length;
-            this.applyShape(this.shapeKeys[this.currentShapeIndex]);
-            this.transitionState = 2;
+    const shape4PointsUrl = `${import.meta.env.BASE_URL}shape4_points.json`;
+    fetch(shape4PointsUrl)
+      .then((res) => res.json())
+      .then((pts2) => {
+        this.loadedShapes.shape4 = pts2;
+        
+        // Defer math-heavy infinity shape generation by 1.2s to prevent startup frame drop
+        this.loadedShapes.infinity = [];
+        this.infinityDeferredTimeout = setTimeout(() => {
+          this.loadedShapes.infinity = this.generateInfinityShape();
+        }, 1200);
+        
+        this.applyShape('shape4');
+        this.morphTarget = 1.0;
+        
+        this.cycleTimeout = setTimeout(() => {
+          this.cycleInterval = setInterval(() => {
+            this.transitionState = 1;
+            this.material.uniforms.uEffectMode.value = 1;
             
             setTimeout(() => {
-              this.transitionState = 0;
+              this.currentShapeIndex = (this.currentShapeIndex + 1) % this.shapeKeys.length;
+              this.applyShape(this.shapeKeys[this.currentShapeIndex]);
+              this.transitionState = 2;
+              
+              setTimeout(() => {
+                this.transitionState = 0;
+              }, 1200);
             }, 1200);
-          }, 1200);
-        }, 5000);
-      }, 1500);
-    });
+          }, 5000);
+        }, 1500);
+      })
+      .catch((err) => {
+        console.error('Failed to load pre-calculated shape4 points:', err);
+      });
   }
 
   updateDirection(direction) {
