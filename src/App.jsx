@@ -6,7 +6,6 @@ import AppPanels from './components/layout/AppPanels';
 import KPISummary from './components/KPISummary';
 import { TAB_DEFINITIONS } from './config/tabs';
 import { FilterProvider } from './context/FilterContext';
-import { useTheme } from './context/useTheme';
 import directions from './data/directions.json';
 import professors from './data/professors.json';
 import quiz from './data/quiz.json';
@@ -18,7 +17,6 @@ import useScrollAnimations from './hooks/useScrollAnimations';
 const Background3D = lazy(() => import('./components/Background3D'));
 
 export default function App() {
-  const { theme } = useTheme();
   const explorerState = useExplorerState();
   const filteredProfessors = useFilteredProfessors(
     professors,
@@ -32,11 +30,9 @@ export default function App() {
     <div className="min-h-screen bg-transparent overflow-x-hidden relative">
       <div className="cursor-glow-layer" aria-hidden="true" />
 
-      {theme === 'dark' && (
-        <Suspense fallback={null}>
-          <Background3D activeDirection={explorerState.selectedDirection} />
-        </Suspense>
-      )}
+      <Suspense fallback={null}>
+        <Background3D activeDirection={explorerState.selectedDirection} />
+      </Suspense>
 
       <Header
         kpiSection={<KPISummary professors={professors} directions={directions} />}
@@ -45,8 +41,14 @@ export default function App() {
       <FilterProvider value={explorerState.filterValue}>
         <div
           id="content-wrapper"
-          className="min-h-screen bg-transparent overflow-x-hidden"
+          className="min-h-screen bg-transparent overflow-x-hidden content-ambient content-grid-texture relative"
         >
+          {/* Ambient glow orbs */}
+          <div className="content-ambient-orbs" aria-hidden="true">
+            <div className="content-ambient-orb content-ambient-orb--1" />
+            <div className="content-ambient-orb content-ambient-orb--2" />
+            <div className="content-ambient-orb content-ambient-orb--3" />
+          </div>
           <FilterBar
             directions={directions}
             filteredProfessorsLength={filteredProfessors.length}

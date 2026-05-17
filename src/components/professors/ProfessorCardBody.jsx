@@ -8,7 +8,7 @@ import ProfessorTechStack from './ProfessorTechStack';
 
 export default function ProfessorCardBody({ professor }) {
   return (
-    <div className="px-6 pb-6 border-t border-gray-100 dark:border-[#2a3550] pt-6 space-y-8">
+    <div className="px-6 pb-6 border-t border-[#2a3550] pt-6 space-y-8">
       <ProfessorDirectionDetail detail={professor.directionDetail} />
       <ProfessorPapers papers={professor.papers} />
       <ProfessorEvaluation

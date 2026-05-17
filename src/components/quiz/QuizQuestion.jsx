@@ -21,7 +21,7 @@ export default function QuizQuestion({
         <QuizProgress currentQ={currentQ} totalQuestions={totalQuestions} />
 
         <div key={currentQ} className="animate-slideQuestion">
-          <h3 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-slate-100 mb-8 font-heading leading-relaxed">
+          <h3 className="text-xl md:text-2xl font-bold text-slate-100 mb-8 font-heading leading-relaxed">
             {question.text}
           </h3>
           <QuizOptionList

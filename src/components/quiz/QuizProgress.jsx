@@ -11,7 +11,7 @@ function ProgressStep({ index, currentQ }) {
             ? 'bg-emerald-100 text-emerald-700 border-2 border-emerald-200'
             : current
               ? 'bg-primary text-white shadow-md shadow-primary/30 scale-110'
-              : 'bg-gray-100 dark:bg-[#111a2e] text-gray-400 dark:text-slate-500 border-2 border-gray-200 dark:border-[#2a3550]'
+              : 'bg-[#111a2e] text-slate-500 border-2 border-[#2a3550]'
         }
       `}
       aria-current={current ? 'step' : undefined}
@@ -46,7 +46,7 @@ export default function QuizProgress({ currentQ, totalQuestions }) {
           <ProgressStep key={index} index={index} currentQ={currentQ} />
         ))}
       </div>
-      <span className="text-sm font-medium text-gray-500 dark:text-slate-400 flex-shrink-0 ml-2">
+      <span className="text-sm font-medium text-slate-400 flex-shrink-0 ml-2">
         {currentQ + 1} / {totalQuestions}
       </span>
     </div>

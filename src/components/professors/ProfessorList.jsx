@@ -2,9 +2,9 @@ import ProfessorCard from '../ProfessorCard';
 
 function EmptyProfessorList() {
   return (
-    <div className="text-center py-10 bg-white dark:bg-[#0f1629] rounded-xl border border-gray-100 dark:border-[#2a3550]">
+    <div className="text-center py-10 bg-[#0f1629] rounded-xl border border-[#2a3550]">
       <svg
-        className="w-10 h-10 text-gray-300 dark:text-[#475569] mx-auto mb-3"
+        className="w-10 h-10 text-[#475569] mx-auto mb-3"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"
@@ -16,7 +16,7 @@ function EmptyProfessorList() {
           d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
         />
       </svg>
-      <p className="text-gray-500 dark:text-slate-400 text-sm">该方向暂无导师数据</p>
+      <p className="text-slate-400 text-sm">该方向暂无导师数据</p>
     </div>
   );
 }

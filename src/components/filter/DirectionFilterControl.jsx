@@ -8,7 +8,7 @@ export default function DirectionFilterControl({
 }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-      <div className="flex items-center gap-2 text-gray-500 dark:text-slate-400 flex-shrink-0">
+      <div className="flex items-center gap-2 text-slate-400 flex-shrink-0">
         <ControlIcon type="filter" />
         <label htmlFor="direction-filter" className="text-sm font-semibold">
           方向筛选

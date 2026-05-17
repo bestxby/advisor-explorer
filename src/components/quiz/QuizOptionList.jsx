@@ -7,8 +7,8 @@ function QuizOption({ option, selected, onAnswer }) {
         w-full text-left p-5 rounded-xl border-2 transition-all duration-200 cursor-pointer
         ${
           selected
-            ? 'border-primary bg-primary/5 shadow-md dark:shadow-blue-500/10 scale-[1.02]'
-            : 'border-gray-100 dark:border-[#2a3550] hover:border-primary/30 dark:hover:border-blue-500/25 hover:bg-gray-50 dark:hover:bg-[#1f2940]/50 hover:shadow-sm'
+            ? 'border-primary bg-primary/5 shadow-md shadow-blue-500/10 scale-[1.02]'
+            : 'border-[#2a3550] hover:border-primary/30 hover:border-blue-500/25 hover:bg-[#1f2940]/50 hover:shadow-sm'
         }
       `}
     >
@@ -19,13 +19,13 @@ function QuizOption({ option, selected, onAnswer }) {
             ${
               selected
                 ? 'bg-primary text-white'
-                : 'bg-gray-100 dark:bg-[#111a2e] text-gray-600 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+                : 'bg-[#111a2e] text-slate-400 group-hover:bg-[#2a3550]'
             }
           `}
         >
           {option.label}
         </span>
-        <span className="min-w-0 break-words text-gray-700 dark:text-slate-300 leading-relaxed pt-2">
+        <span className="min-w-0 break-words text-slate-300 leading-relaxed pt-2">
           {option.text}
         </span>
       </div>

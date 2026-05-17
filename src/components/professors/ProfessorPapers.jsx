@@ -2,9 +2,9 @@ export default function ProfessorPapers({ papers }) {
   return (
     <section>
       <div className="flex items-center gap-2 mb-4">
-        <div className="w-8 h-8 rounded-lg bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-blue-900/30 flex items-center justify-center">
           <svg
-            className="w-4 h-4 text-blue-600 dark:text-blue-400"
+            className="w-4 h-4 text-blue-600 text-blue-400"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -17,7 +17,7 @@ export default function ProfessorPapers({ papers }) {
             />
           </svg>
         </div>
-        <h4 className="font-semibold text-gray-900 dark:text-slate-100 text-lg font-heading">
+        <h4 className="font-semibold text-slate-100 text-lg font-heading">
           代表性论文解读
         </h4>
       </div>
@@ -28,17 +28,17 @@ export default function ProfessorPapers({ papers }) {
             href={paper.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="group/paper bg-gradient-to-br from-gray-50 dark:from-[#111a2e]/70 to-white dark:to-[#0f1629] rounded-xl p-5 border border-gray-100 dark:border-[#2a3550] hover:border-blue-200 hover:shadow-sm dark:hover:shadow-black/30 transition-all duration-200 cursor-pointer block"
+            className="group/paper bg-gradient-to-br from-[#111a2e]/70 to-[#0f1629] rounded-xl p-5 border border-[#2a3550] hover:border-blue-200 hover:shadow-sm hover:shadow-black/30 transition-all duration-200 cursor-pointer block"
           >
             <div className="flex flex-wrap items-start gap-3 mb-3">
-              <h5 className="font-semibold text-gray-900 dark:text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
+              <h5 className="font-semibold text-slate-100 text-sm leading-snug flex-1 min-w-0 group-hover/paper:text-blue-700 transition-colors duration-200">
                 {paper.title}
               </h5>
-              <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-400 rounded-md">
+              <span className="flex-shrink-0 inline-flex items-center px-2.5 py-1 text-xs font-semibold bg-blue-100 bg-blue-900/40 text-blue-400 rounded-md">
                 {paper.venue}
               </span>
               <svg
-                className="w-3.5 h-3.5 text-gray-400 dark:text-slate-500 flex-shrink-0 opacity-0 group-hover/paper:opacity-100 transition-opacity duration-200 mt-0.5"
+                className="w-3.5 h-3.5 text-slate-500 flex-shrink-0 opacity-0 group-hover/paper:opacity-100 transition-opacity duration-200 mt-0.5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -51,7 +51,7 @@ export default function ProfessorPapers({ papers }) {
                 />
               </svg>
             </div>
-            <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+            <p className="text-sm text-slate-400 leading-relaxed">
               {paper.summary}
             </p>
           </a>

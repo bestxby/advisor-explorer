@@ -2,30 +2,30 @@ import DirectionInfoCard from './DirectionInfoCard';
 
 const CARD_TONES = {
   blue: {
-    iconBg: 'bg-blue-50 dark:bg-blue-900/30',
-    iconText: 'text-blue-600 dark:text-blue-400',
+    iconBg: 'bg-blue-900/30',
+    iconText: 'text-blue-600 text-blue-400',
   },
   red: {
-    iconBg: 'bg-red-50 dark:bg-red-900/30',
-    iconText: 'text-red-600 dark:text-red-400',
+    iconBg: 'bg-red-900/30',
+    iconText: 'text-red-600 text-red-400',
   },
   emerald: {
-    iconBg: 'bg-emerald-50 dark:bg-emerald-900/30',
-    iconText: 'text-emerald-600 dark:text-emerald-400',
+    iconBg: 'bg-emerald-900/30',
+    iconText: 'text-emerald-600 text-emerald-400',
   },
   purple: {
-    iconBg: 'bg-purple-50 dark:bg-purple-900/30',
-    iconText: 'text-purple-600 dark:text-purple-400',
+    iconBg: 'bg-purple-900/30',
+    iconText: 'text-purple-600 text-purple-400',
   },
   orange: {
-    iconBg: 'bg-orange-50 dark:bg-orange-900/30',
-    iconText: 'text-orange-600 dark:text-orange-400',
+    iconBg: 'bg-orange-900/30',
+    iconText: 'text-orange-600 text-orange-400',
   },
 };
 
 function DirectionParagraph({ children }) {
   return (
-    <p className="text-sm text-gray-600 dark:text-slate-400 leading-relaxed">
+    <p className="text-sm text-slate-400 leading-relaxed">
       {children}
     </p>
   );
@@ -37,7 +37,7 @@ function Courses({ courses }) {
       {courses.map((course) => (
         <span
           key={course}
-          className="inline-flex items-center px-3 py-1.5 bg-purple-50 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs font-medium rounded-lg border border-purple-100 dark:border-purple-800"
+          className="inline-flex items-center px-3 py-1.5 bg-purple-900/30 text-purple-400 text-xs font-medium rounded-lg border border-purple-800"
         >
           {course}
         </span>

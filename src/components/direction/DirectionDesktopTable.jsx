@@ -23,7 +23,7 @@ function DirectionDesktopRow({
           ${
             highlighted
               ? 'bg-primary/5 hover:bg-primary/10'
-              : 'bg-white dark:bg-[#0f1629] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
+              : 'bg-[#0f1629] hover:bg-[#1f2940]/50'
           }
         `}
       >
@@ -31,10 +31,10 @@ function DirectionDesktopRow({
           <div className="flex items-center gap-3">
             {highlighted && <div className="w-1 h-10 bg-primary rounded-full" />}
             <div>
-              <span className="font-bold text-gray-900 dark:text-slate-100 font-heading">
+              <span className="font-bold text-slate-100 font-heading">
                 {direction.code}. {direction.name}
               </span>
-              <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 line-clamp-1">
+              <p className="text-xs text-slate-400 mt-1 line-clamp-1">
                 {direction.otherTeams.split('、').slice(0, 2).join('、')}等
               </p>
             </div>
@@ -44,7 +44,7 @@ function DirectionDesktopRow({
           <DifficultyDots level={direction.difficulty} />
         </td>
         <td className="p-4">
-          <span className="font-medium text-gray-700 dark:text-slate-300">
+          <span className="font-medium text-slate-300">
             {direction.jobMarket}
           </span>
         </td>
@@ -80,28 +80,28 @@ export default function DirectionDesktopTable({
     <div className="hidden lg:block overflow-x-auto">
       <table className="w-full text-sm">
         <thead>
-          <tr className="bg-gradient-to-r from-gray-50 dark:from-[#111a2e] to-gray-100 dark:to-[#0f1629] border-b border-gray-200 dark:border-[#2a3550]">
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+          <tr className="bg-gradient-to-r from-[#111a2e] to-[#0f1629] border-b border-[#2a3550]">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               方向
             </th>
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               难度
             </th>
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               就业面
             </th>
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               薪资天花板
             </th>
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               竞争热度
             </th>
-            <th className="text-left p-4 font-semibold text-gray-700 dark:text-slate-300 text-xs uppercase tracking-wider">
+            <th className="text-left p-4 font-semibold text-slate-300 text-xs uppercase tracking-wider">
               推荐
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-50 dark:divide-[#1e2a40]">
+        <tbody className="divide-y divide-[#1e2a40]">
           {directions.map((direction) => (
             <DirectionDesktopRow
               key={direction.id}

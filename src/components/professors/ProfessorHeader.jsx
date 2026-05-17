@@ -3,7 +3,7 @@ export default function ProfessorHeader({ professor, colors, expanded }) {
     <div className="flex items-center justify-between gap-4">
       <div className="flex-1 min-w-0">
         <div className="flex flex-wrap items-center gap-2 mb-1.5">
-          <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100 font-heading group-hover:text-primary transition-colors duration-200">
+          <h3 className="text-lg font-bold text-slate-100 font-heading group-hover:text-primary transition-colors duration-200">
             {professor.name}
           </h3>
           <span
@@ -13,7 +13,7 @@ export default function ProfessorHeader({ professor, colors, expanded }) {
             {professor.university} · {professor.department}
           </span>
         </div>
-        <p className="text-gray-500 dark:text-slate-400 text-xs leading-relaxed line-clamp-1">
+        <p className="text-slate-400 text-xs leading-relaxed line-clamp-1">
           {professor.tagline}
         </p>
       </div>
@@ -24,8 +24,8 @@ export default function ProfessorHeader({ professor, colors, expanded }) {
         transition-all duration-300 ease-out
         ${
           expanded
-            ? 'bg-primary text-white rotate-180 shadow-sm dark:shadow-black/30'
-            : 'bg-gray-100 dark:bg-[#111a2e] text-gray-500 dark:text-slate-400 group-hover:bg-gray-200 dark:group-hover:bg-[#2a3550]'
+            ? 'bg-primary text-white rotate-180 shadow-sm shadow-black/30'
+            : 'bg-[#111a2e] text-slate-400 group-hover:bg-[#2a3550]'
         }
       `}
       >

@@ -12,20 +12,8 @@ export default function Header({ kpiSection }) {
       </a>
       <header
         data-animate="header"
-        className="bg-gradient-to-br from-primary-dark via-primary to-primary-light dark:bg-none dark:bg-transparent text-white min-h-[100svh] flex flex-col justify-start px-4 sm:px-6 lg:px-8 xl:px-10 relative overflow-hidden"
+        className="bg-transparent text-white min-h-[100svh] flex flex-col justify-start px-4 sm:px-6 lg:px-8 xl:px-10 relative overflow-hidden"
       >
-      {/* Frame animation background removed for 3D background */}
-      <div className="absolute inset-0 z-0">
-      </div>
-
-      {/* Subtle pattern overlay - hidden in dark mode */}
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 opacity-10 dark:opacity-0"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
 
       <div className="w-full max-w-full xl:max-w-[1800px] mx-auto relative z-10 pt-8 sm:pt-10 pb-8">
         {/* Single-column layout for brand content */}
@@ -34,11 +22,16 @@ export default function Header({ kpiSection }) {
           <div
             className="flex flex-col gap-5 xl:gap-8 min-w-0 w-full xl:max-w-3xl"
           >
-            {/* Logo row */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/20 dark:bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm">
+            {/* Logo row - links to your GitHub repository */}
+            <a
+              href="https://github.com/bestxby/advisor-explorer"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity group cursor-pointer"
+            >
+              <div className="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center backdrop-blur-sm group-hover:bg-white/15 group-hover:scale-105 transition-all duration-300">
                 <svg
-                  className="w-6 h-6"
+                  className="w-6 h-6 text-white/80 group-hover:text-white transition-colors duration-300"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -51,16 +44,16 @@ export default function Header({ kpiSection }) {
                   />
                 </svg>
               </div>
-              <span className="text-base font-medium text-white/80 dark:text-white/60 tracking-wide uppercase">
+              <span className="text-base font-medium text-white/60 tracking-wide uppercase group-hover:text-white/90 transition-colors duration-300 font-heading">
                 Advisor Explorer
               </span>
-            </div>
+            </a>
 
             {/* Main title */}
-            <h1 data-parallax="slow" className="mt-4 min-w-0 text-[3.6rem] sm:text-[4.3rem] md:text-[5.2rem] lg:text-[5.6rem] xl:text-[6.2rem] font-black leading-[1] font-heading tracking-tight dark:tracking-[-0.02em]">
+            <h1 data-parallax="slow" className="mt-4 min-w-0 text-[3.6rem] sm:text-[4.3rem] md:text-[5.2rem] lg:text-[5.6rem] xl:text-[6.2rem] font-black leading-[1] font-heading tracking-[-0.02em]">
               <span className="whitespace-nowrap">计算机体系结构</span>
               <br />
-              <span className="text-accent-light dark:bg-gradient-to-r dark:from-amber-300 dark:to-orange-400 dark:bg-clip-text dark:text-transparent inline-block mt-2">方向导航</span>
+              <span className="text-accent-light bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent inline-block mt-2">方向导航</span>
             </h1>
 
             {/* Badges */}
@@ -101,7 +94,7 @@ export default function Header({ kpiSection }) {
               ].map(({ icon, label }) => (
                 <span
                   key={label}
-                  className="inline-flex items-center justify-center sm:justify-start gap-2 bg-white/20 dark:bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-3.5 min-h-[48px] rounded-full text-sm sm:text-base font-medium border border-white/20 dark:border-white/10 hover:bg-white/30 dark:hover:bg-white/15 transition-colors duration-200 min-w-0"
+                  className="inline-flex items-center justify-center sm:justify-start gap-2 bg-white/10 backdrop-blur-sm px-4 sm:px-5 py-3.5 min-h-[48px] rounded-full text-sm sm:text-base font-medium border border-white/10 hover:bg-white/15 transition-colors duration-200 min-w-0"
                 >
                   {icon}
                   <span className="min-w-0 truncate">{label}</span>
@@ -116,6 +109,9 @@ export default function Header({ kpiSection }) {
         {/* KPI 概览 */}
         {kpiSection && <div className="mt-[11.25rem] mb-2">{kpiSection}</div>}
       </div>
+
+      {/* Bottom fade — blends header into content area */}
+      <div className="header-bottom-fade" aria-hidden="true" />
     </header>
     </>
   );

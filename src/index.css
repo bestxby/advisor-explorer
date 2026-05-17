@@ -1,7 +1,5 @@
 @import 'tailwindcss';
 
-@custom-variant dark (&:is(.dark *));
-
 /* Design Tokens — Retrofuturistic circuit loop */
 @theme {
   --color-primary: #0ea5e9;
@@ -9,8 +7,8 @@
   --color-primary-dark: #0369a1;
   --color-accent: #22d3ee;
   --color-accent-light: #a78bfa;
-  --color-surface: #f5f5f5;
-  --color-surface-raised: #ffffff;
+  --color-surface: #070b14;
+  --color-surface-raised: #0f1629;
   --color-muted: #e9eef6;
   --color-border: #dbeafe;
   --color-destructive: #dc2626;
@@ -38,30 +36,20 @@
   --z-skip-link: 100;
 }
 
-/* Dark mode standard colors (used with Tailwind arbitrary values):
-   Backgrounds: dark:bg-[#070b14] (base), dark:bg-[#0f1629] (raised/cards), dark:bg-[#111a2e] (deeper/inputs)
-   Borders:     dark:border-[#2a3550] (standard), dark:border-[#3d4f6f] (hover)
-   Text:        dark:text-slate-100 (headings), dark:text-slate-200 (strong), dark:text-slate-300 (body), dark:text-slate-400 (secondary), dark:text-slate-500 (muted)
+/* Color reference (used with Tailwind arbitrary values):
+   Backgrounds: bg-[#070b14] (base), bg-[#0f1629] (raised/cards), bg-[#111a2e] (deeper/inputs)
+   Borders:     border-[#2a3550] (standard), border-[#3d4f6f] (hover)
+   Text:        text-slate-100 (headings), text-slate-200 (strong), text-slate-300 (body), text-slate-400 (secondary), text-slate-500 (muted)
 */
 
 /* Base styles */
 body {
   font-family: var(--font-body);
-  color: #1e293b;
-  background: var(--color-surface);
+  color: #d4dae6;
+  background: #070b14;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
-}
-
-.dark body {
-  color: #d4dae6;
-  background: #070b14;
-}
-
-.dark {
-  --color-surface: #070b14;
-  --color-surface-raised: #0f1629;
 }
 
 h1,
@@ -71,12 +59,12 @@ h4 {
   font-family: var(--font-heading);
 }
 
-/* Lusion-inspired ambient glow layer for dark mode */
-.dark .ambient-glow {
+/* Lusion-inspired ambient glow layer */
+.ambient-glow {
   position: relative;
 }
 
-.dark .ambient-glow::before {
+.ambient-glow::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -91,11 +79,6 @@ h4 {
   inset: 0;
   pointer-events: none;
   z-index: 1;
-  opacity: 0;
-  transition: opacity 0.6s ease-out;
-}
-
-.dark .cursor-glow-layer {
   opacity: 1;
   background: radial-gradient(
     600px circle at var(--cursor-x, 50%) var(--cursor-y, 50%),
@@ -105,8 +88,8 @@ h4 {
   );
 }
 
-/* Subtle scan-line texture for dark atmosphere */
-.dark .dark-texture::after {
+/* Subtle scan-line texture */
+.dark-texture::after {
   content: '';
   position: absolute;
   inset: 0;
@@ -159,19 +142,11 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
+  background: rgba(14, 165, 233, 0.2);
   border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(14, 165, 233, 0.2);
-}
-
-.dark ::-webkit-scrollbar-thumb:hover {
   background: rgba(14, 165, 233, 0.35);
 }
 
@@ -217,7 +192,7 @@ html {
   }
 }
 
-.dark .hero-quiz-panel {
+.hero-quiz-panel {
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
 }
@@ -243,11 +218,11 @@ html {
   }
 }
 
-/* Dark mode card glow on hover */
-.dark .card-glow {
+/* Card glow on hover */
+.card-glow {
   transition: box-shadow 0.4s ease-out, border-color 0.3s ease-out;
 }
-.dark .card-glow:hover {
+.card-glow:hover {
   box-shadow:
     0 0 0 1px rgba(14, 165, 233, 0.12),
     0 4px 24px -4px rgba(34, 211, 238, 0.1),
@@ -300,7 +275,7 @@ html {
   transform: translate(-50%, -50%) scale(0.36);
 }
 
-.dark .kpi-card-glow:hover {
+.kpi-card-glow:hover {
   border-color: rgba(var(--kpi-glow-rgb), 0.34);
   box-shadow:
     0 0 0 1px rgba(var(--kpi-glow-rgb), 0.16),
@@ -308,13 +283,13 @@ html {
     0 18px 60px -20px rgba(0, 0, 0, 0.55);
 }
 
-.dark .kpi-card-glow:hover::before {
+.kpi-card-glow:hover::before {
   opacity: 1;
   transform: scale(1);
   animation: kpiGlowBreath 2.2s ease-in-out infinite;
 }
 
-.dark .kpi-card-glow:hover::after {
+.kpi-card-glow:hover::after {
   opacity: 1;
   transform: translate(-50%, -50%) scale(1.58);
   animation: kpiGlowRipple 1.8s ease-out infinite;
@@ -350,18 +325,18 @@ html {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dark .kpi-card-glow:hover::before,
-  .dark .kpi-card-glow:hover::after {
+  .kpi-card-glow:hover::before,
+  .kpi-card-glow:hover::after {
     animation: none;
   }
 }
 
 /* Card inner glow that tracks cursor — Lusion organic hover */
-.dark .card-glow-track {
+.card-glow-track {
   --card-mouse-x: 50%;
   --card-mouse-y: 50%;
 }
-.dark .card-glow-track::before {
+.card-glow-track::before {
   content: '';
   position: absolute;
   inset: 0;
@@ -376,7 +351,7 @@ html {
   pointer-events: none;
   z-index: 1;
 }
-.dark .card-glow-track:hover::before {
+.card-glow-track:hover::before {
   opacity: 1;
 }
 
@@ -393,3 +368,91 @@ html {
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* ── Content area ambient glow orbs ── */
+.content-ambient {
+  position: relative;
+}
+
+.content-ambient-orbs {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.content-ambient-orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(100px);
+  opacity: 1;
+}
+
+.content-ambient-orb--1 {
+  width: 500px;
+  height: 500px;
+  top: -100px;
+  left: -80px;
+  background: radial-gradient(circle, rgba(14, 165, 233, 0.06) 0%, transparent 70%);
+  animation: ambientDrift1 25s ease-in-out infinite;
+}
+
+.content-ambient-orb--2 {
+  width: 400px;
+  height: 400px;
+  top: 30%;
+  right: -120px;
+  background: radial-gradient(circle, rgba(167, 139, 250, 0.045) 0%, transparent 70%);
+  animation: ambientDrift2 30s ease-in-out infinite;
+}
+
+.content-ambient-orb--3 {
+  width: 350px;
+  height: 350px;
+  bottom: 10%;
+  left: 20%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
+  animation: ambientDrift3 22s ease-in-out infinite;
+}
+
+@keyframes ambientDrift1 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(60px, 40px); }
+  66% { transform: translate(-30px, 80px); }
+}
+
+@keyframes ambientDrift2 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(-50px, 60px); }
+  66% { transform: translate(40px, -30px); }
+}
+
+@keyframes ambientDrift3 {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(40px, -50px); }
+  66% { transform: translate(-60px, 30px); }
+}
+
+/* ── Dot grid texture overlay ── */
+.content-grid-texture::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Header bottom fade transition ── */
+.header-bottom-fade {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 200px;
+  background: linear-gradient(to bottom, transparent, #070b14);
+  pointer-events: none;
+  z-index: 2;
+  opacity: 1;
+}

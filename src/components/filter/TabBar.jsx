@@ -41,7 +41,7 @@ export default function TabBar({
   return (
     <div data-animate="tabbar" className="flex justify-center w-full xl:flex-1 min-w-0">
       <div
-        className="grid grid-cols-3 w-full max-w-3xl min-w-0 gap-1.5 bg-gray-100/50 dark:bg-[#070b14]/50 rounded-xl p-1.5 border border-gray-200/50 dark:border-[#2a3550] overflow-hidden"
+        className="grid grid-cols-3 w-full max-w-3xl min-w-0 gap-1.5 bg-[#070b14]/50 rounded-xl p-1.5 border border-[#2a3550] overflow-hidden"
         role="tablist"
         aria-label="内容视图"
         onKeyDown={handleTabKeyDown}
@@ -60,7 +60,7 @@ export default function TabBar({
               className={`
                 min-w-0 flex items-center justify-center gap-1.5 sm:gap-2 px-2 sm:px-3 lg:px-4 py-2.5 rounded-lg
                 text-sm font-bold transition-all duration-200 cursor-pointer
-                ${isActive ? 'bg-primary text-white shadow-md' : 'text-gray-600 dark:text-slate-300 hover:bg-white dark:hover:bg-[#151d2e]'}
+                ${isActive ? 'bg-primary text-white shadow-md' : 'text-slate-300 hover:bg-[#151d2e]'}
                 ${isLocked && !isActive ? 'opacity-50' : ''}
               `}
               aria-selected={isActive}
@@ -78,7 +78,7 @@ export default function TabBar({
                 <span
                   className={`
                     flex-shrink-0 text-xs px-1.5 py-0.5 rounded-full font-extrabold
-                    ${isActive ? 'bg-white/20 text-white' : 'bg-gray-200 dark:bg-[#111a2e] text-gray-500 dark:text-slate-400'}
+                    ${isActive ? 'bg-white/20 text-white' : 'bg-[#111a2e] text-slate-400'}
                   `}
                 >
                   {count}

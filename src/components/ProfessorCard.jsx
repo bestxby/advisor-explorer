@@ -29,10 +29,10 @@ export default function ProfessorCard({ professor, isHighlighted }) {
         group relative border-2 rounded-2xl transition-all duration-300 ease-out card-glow card-glow-track
         ${
           isHighlighted
-            ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10 dark:shadow-blue-500/10'
-            : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-blue-500/20 hover:shadow-md dark:shadow-black/30 dark:hover:shadow-blue-500/5'
+            ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10 shadow-blue-500/10'
+            : 'border-[#2a3550] hover:border-blue-500/20 hover:shadow-md shadow-black/30 hover:shadow-blue-500/5'
         }
-        bg-white dark:bg-[#0f1629] overflow-hidden
+        bg-[#0f1629] overflow-hidden
       `}
     >
       {isHighlighted && (

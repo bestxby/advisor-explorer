@@ -84,6 +84,9 @@ function RoadmapPanel({ directions, quizResult, quiz, professors, onQuizResult }
                 directions.find((direction) => direction.id === quizResult.direction)?.name ||
                 quizResult.direction
               }
+              results={quizResult.topResults}
+              directions={directions}
+              professors={professors}
             />
           </Suspense>
         </div>
@@ -104,17 +107,19 @@ export default function AppPanels({
 }) {
   return (
     <>
-      <main
-        id="main-content"
-        className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-10 overflow-hidden"
-      >
-        {activeTab === 'professors' && (
-          <ProfessorsPanel professors={filteredProfessors} quizResult={quizResult} />
-        )}
-        {activeTab === 'directions' && (
-          <DirectionsPanel directions={directions} quizResult={quizResult} sortBy={sortBy} />
-        )}
-      </main>
+      {activeTab !== 'roadmap' && (
+        <main
+          id="main-content"
+          className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-10 overflow-hidden"
+        >
+          {activeTab === 'professors' && (
+            <ProfessorsPanel professors={filteredProfessors} quizResult={quizResult} />
+          )}
+          {activeTab === 'directions' && (
+            <DirectionsPanel directions={directions} quizResult={quizResult} sortBy={sortBy} />
+          )}
+        </main>
+      )}
 
       {activeTab === 'roadmap' && (
         <RoadmapPanel

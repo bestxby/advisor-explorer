@@ -5,4 +5,4 @@ export const SELECT_CHEVRON_STYLE = {
 };
 
 export const SELECT_CLASS_NAME =
-  'w-full sm:w-auto border border-gray-200 dark:border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-gray-900 dark:text-slate-100 bg-white dark:bg-[#111a2e] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-gray-300 dark:hover:border-[#3d4f6f] appearance-none pr-10';
+  'w-full sm:w-auto border border-[#2a3550] rounded-lg px-4 py-3 min-h-[44px] text-sm text-slate-100 bg-[#111a2e] shadow-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all duration-200 cursor-pointer hover:border-[#3d4f6f] appearance-none pr-10';

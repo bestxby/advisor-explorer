@@ -22,7 +22,7 @@ export default function RoadmapPhase({
           className={`w-full flex items-center justify-between p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer min-w-0 overflow-hidden ${
             expanded
               ? `${colors.border} ${colors.light}`
-              : 'border-gray-100 dark:border-[#2a3550] hover:border-gray-200 dark:hover:border-[#3d4f6f] hover:bg-gray-50 dark:hover:bg-[#1f2940]/50'
+              : 'border-[#2a3550] hover:border-[#3d4f6f] hover:bg-[#1f2940]/50'
           }`}
         >
           <div className="flex items-center gap-3 min-w-0 overflow-hidden">
@@ -33,18 +33,18 @@ export default function RoadmapPhase({
             </span>
             <div className="text-left min-w-0 overflow-hidden">
               <span
-                className={`font-bold text-lg ${expanded ? colors.text : 'text-gray-800 dark:text-slate-200'} block truncate`}
+                className={`font-bold text-lg ${expanded ? colors.text : 'text-slate-200'} block truncate`}
               >
                 {phase.period}
               </span>
-              <span className="text-gray-400 dark:text-slate-500 text-sm truncate block">
+              <span className="text-slate-500 text-sm truncate block">
                 {phase.subtitle}
               </span>
             </div>
           </div>
           <RoadmapIcon
             type="chevron"
-            className={`w-5 h-5 text-gray-400 dark:text-slate-500 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
+            className={`w-5 h-5 text-slate-500 transition-transform duration-200 ${expanded ? 'rotate-180' : ''}`}
           />
         </button>
 

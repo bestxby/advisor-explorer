@@ -9,8 +9,8 @@ export default function QuizResultsHeader({ top, results, directions, professors
           <QuizResultIcon type="success" className="w-5 h-5 text-emerald-600" />
         </div>
         <div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-slate-100">匹配完成</h3>
-          <p className="text-sm text-gray-500 dark:text-slate-400">
+          <h3 className="text-lg font-bold text-slate-100">匹配完成</h3>
+          <p className="text-sm text-slate-400">
             最佳方向：{top.directionName}，匹配度 {top.score}%
           </p>
         </div>

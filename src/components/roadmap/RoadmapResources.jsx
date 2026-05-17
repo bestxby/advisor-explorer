@@ -2,15 +2,15 @@ export default function RoadmapResources({ resources }) {
   if (!resources?.length) return null;
 
   return (
-    <div className="mt-8 pt-6 border-t border-gray-100 dark:border-[#2a3550] min-w-0 overflow-hidden">
-      <h4 className="text-sm font-bold text-gray-500 dark:text-slate-400 uppercase tracking-wide mb-3">
+    <div className="mt-8 pt-6 border-t border-[#2a3550] min-w-0 overflow-hidden">
+      <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wide mb-3">
         推荐资源
       </h4>
       <div className="flex flex-wrap gap-2">
         {resources.map((resource, index) => (
           <span
             key={`${resource.name}-${index}`}
-            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 dark:bg-[#111a2e]/50 border border-gray-200 dark:border-[#2a3550] rounded-lg text-sm text-gray-700 dark:text-slate-300 min-w-0 max-w-full"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#111a2e]/50 border border-[#2a3550] rounded-lg text-sm text-slate-300 min-w-0 max-w-full"
           >
             {resource.url ? (
               <a
@@ -25,7 +25,7 @@ export default function RoadmapResources({ resources }) {
               <span>{resource.name}</span>
             )}
             {resource.note && (
-              <span className="text-gray-400 dark:text-slate-500 text-xs">
+              <span className="text-slate-500 text-xs">
                 ({resource.note})
               </span>
             )}

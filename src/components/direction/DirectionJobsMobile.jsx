@@ -6,12 +6,12 @@ export default function DirectionJobsMobile({ jobs }) {
       {jobs.map((job, index) => (
         <div
           key={`${job.company}-${job.role}-${index}`}
-          className="bg-white dark:bg-[#0f1629] rounded-xl p-4 border border-gray-100 dark:border-[#2a3550] shadow-sm dark:shadow-black/30"
+          className="bg-[#0f1629] rounded-xl p-4 border border-[#2a3550] shadow-sm shadow-black/30"
         >
-          <p className="font-semibold text-gray-900 dark:text-slate-100 text-sm mb-2">
+          <p className="font-semibold text-slate-100 text-sm mb-2">
             {job.company}
           </p>
-          <p className="text-xs text-gray-600 dark:text-slate-400 mb-3">{job.role}</p>
+          <p className="text-xs text-slate-400 mb-3">{job.role}</p>
           <div className="flex items-center justify-between">
             <span className="text-sm font-bold text-primary">{job.salary}</span>
             <span

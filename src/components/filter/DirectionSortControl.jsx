@@ -11,7 +11,7 @@ const SORT_OPTIONS = [
 export default function DirectionSortControl({ sortBy, onSortChange }) {
   return (
     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-      <div className="flex items-center gap-2 text-gray-500 dark:text-slate-400 flex-shrink-0">
+      <div className="flex items-center gap-2 text-slate-400 flex-shrink-0">
         <ControlIcon type="sort" />
         <label htmlFor="direction-sort" className="text-sm font-semibold">
           排序方式

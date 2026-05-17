@@ -15,12 +15,12 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
   };
 
   const colorMap = {
-    primary: { border: 'border-t-blue-500', iconBg: 'bg-blue-500/20 dark:bg-blue-400/20', iconText: 'text-blue-400' },
-    emerald: { border: 'border-t-emerald-500', iconBg: 'bg-emerald-500/20 dark:bg-emerald-400/20', iconText: 'text-emerald-400' },
-    amber: { border: 'border-t-amber-500', iconBg: 'bg-amber-500/20 dark:bg-amber-400/20', iconText: 'text-amber-400' },
-    purple: { border: 'border-t-purple-500', iconBg: 'bg-purple-500/20 dark:bg-purple-400/20', iconText: 'text-purple-400' },
-    rose: { border: 'border-t-rose-500', iconBg: 'bg-rose-500/20 dark:bg-rose-400/20', iconText: 'text-rose-400' },
-    cyan: { border: 'border-t-cyan-500', iconBg: 'bg-cyan-500/20 dark:bg-cyan-400/20', iconText: 'text-cyan-400' },
+    primary: { border: 'border-t-blue-500', iconBg: 'bg-blue-400/20', iconText: 'text-blue-400' },
+    emerald: { border: 'border-t-emerald-500', iconBg: 'bg-emerald-400/20', iconText: 'text-emerald-400' },
+    amber: { border: 'border-t-amber-500', iconBg: 'bg-amber-400/20', iconText: 'text-amber-400' },
+    purple: { border: 'border-t-purple-500', iconBg: 'bg-purple-400/20', iconText: 'text-purple-400' },
+    rose: { border: 'border-t-rose-500', iconBg: 'bg-rose-400/20', iconText: 'text-rose-400' },
+    cyan: { border: 'border-t-cyan-500', iconBg: 'bg-cyan-400/20', iconText: 'text-cyan-400' },
   };
 
   const scheme = colorMap[color] || colorMap.primary;
@@ -28,7 +28,7 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
   return (
     <div
       data-animate="kpi"
-      className={`kpi-card-glow bg-white/20 dark:bg-white/5 backdrop-blur-md rounded-xl border border-white/10 dark:border-white/10 border-t-2 ${scheme.border} min-h-[9rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
+      className={`kpi-card-glow bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-t-2 ${scheme.border} min-h-[9rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
       style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
       <div className="flex items-start justify-between mb-3">
@@ -36,11 +36,11 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
           {icon}
         </div>
       </div>
-      <p className="text-2xl font-bold text-white dark:text-slate-100 font-heading tracking-tight">
+      <p className="text-2xl font-bold text-slate-100 font-heading tracking-tight">
         {displayValue}
       </p>
-      <p className="text-xs text-white/70 dark:text-slate-400 mt-1 font-medium">{label}</p>
-      {sub && <p className="text-xs text-white/50 dark:text-slate-500 mt-0.5">{sub}</p>}
+      <p className="text-xs text-slate-400 mt-1 font-medium">{label}</p>
+      {sub && <p className="text-xs text-slate-500 mt-0.5">{sub}</p>}
     </div>
   );
 }

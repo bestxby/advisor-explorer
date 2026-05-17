@@ -13,7 +13,7 @@ export default function RoadmapMilestone({ milestone, colors }) {
         <span className={`text-xs font-bold ${colors.text} uppercase tracking-wide`}>
           阶段目标
         </span>
-        <p className="text-gray-700 dark:text-slate-300 text-sm mt-1 leading-relaxed break-words">
+        <p className="text-slate-300 text-sm mt-1 leading-relaxed break-words">
           {milestone}
         </p>
       </div>
