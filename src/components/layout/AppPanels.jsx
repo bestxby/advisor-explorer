@@ -3,9 +3,9 @@ import ErrorBoundary from '../ErrorBoundary';
 import ProfessorList from '../professors/ProfessorList';
 import PanelFallback from './PanelFallback';
 
-const DirectionTable = lazy(() => import('../DirectionTable'));
+const DirectionTable = lazy(() => import('../direction/DirectionTable'));
 const QuizSection = lazy(() => import('../QuizSection'));
-const RoadmapSection = lazy(() => import('../RoadmapSection'));
+const RoadmapSection = lazy(() => import('../roadmap/RoadmapSection'));
 
 function ProfessorsPanel({ professors, quizResult }) {
   return (
