@@ -5,18 +5,6 @@ import { computeStats } from '../utils/stats';
 function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffix = '', sub, color = 'primary' }) {
   const animatedValue = useCountUp(countUpTarget, { decimals: countUpDecimals });
   const displayValue = countUpTarget != null ? `${animatedValue}${suffix}` : value;
-  const colorMap = {
-    primary:
-      'bg-primary/10 text-primary border-primary/20 dark:bg-primary/20 dark:text-blue-400 dark:border-primary/30',
-    emerald:
-      'bg-emerald-50 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800',
-    amber:
-      'bg-amber-50 text-amber-700 border-amber-200 dark:bg-amber-900/30 dark:text-amber-400 dark:border-amber-800',
-    purple:
-      'bg-purple-50 text-purple-700 border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-800',
-    rose: 'bg-rose-50 text-rose-700 border-rose-200 dark:bg-rose-900/30 dark:text-rose-400 dark:border-rose-800',
-    cyan: 'bg-cyan-50 text-cyan-700 border-cyan-200 dark:bg-cyan-900/30 dark:text-cyan-400 dark:border-cyan-800',
-  };
   const glowMap = {
     primary: '59 130 246',
     emerald: '16 185 129',
@@ -26,22 +14,33 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
     cyan: '34 211 238',
   };
 
+  const colorMap = {
+    primary: { border: 'border-t-blue-500', iconBg: 'bg-blue-500/20 dark:bg-blue-400/20', iconText: 'text-blue-400' },
+    emerald: { border: 'border-t-emerald-500', iconBg: 'bg-emerald-500/20 dark:bg-emerald-400/20', iconText: 'text-emerald-400' },
+    amber: { border: 'border-t-amber-500', iconBg: 'bg-amber-500/20 dark:bg-amber-400/20', iconText: 'text-amber-400' },
+    purple: { border: 'border-t-purple-500', iconBg: 'bg-purple-500/20 dark:bg-purple-400/20', iconText: 'text-purple-400' },
+    rose: { border: 'border-t-rose-500', iconBg: 'bg-rose-500/20 dark:bg-rose-400/20', iconText: 'text-rose-400' },
+    cyan: { border: 'border-t-cyan-500', iconBg: 'bg-cyan-500/20 dark:bg-cyan-400/20', iconText: 'text-cyan-400' },
+  };
+
+  const scheme = colorMap[color] || colorMap.primary;
+
   return (
     <div
       data-animate="kpi"
-      className="kpi-card-glow bg-white/70 dark:bg-[#0f1629]/60 backdrop-blur-md rounded-xl border border-gray-100 dark:border-[#2a3550] min-h-[11.5rem] p-6 hover:shadow-md hover:border-gray-200 transition-all duration-300 card-glow"
+      className={`kpi-card-glow bg-white/40 dark:bg-white/10 backdrop-blur-md rounded-xl border border-white/10 dark:border-white/10 border-t-2 ${scheme.border} min-h-[11.5rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
       style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
       <div className="flex items-start justify-between mb-3">
-        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${colorMap[color]}`}>
+        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${scheme.iconBg} ${scheme.iconText}`}>
           {icon}
         </div>
       </div>
-      <p className="text-2xl font-bold text-gray-900 dark:text-slate-100 font-heading tracking-tight">
+      <p className="text-2xl font-bold text-white dark:text-slate-100 font-heading tracking-tight">
         {displayValue}
       </p>
-      <p className="text-xs text-gray-500 dark:text-slate-400 mt-1 font-medium">{label}</p>
-      {sub && <p className="text-xs text-gray-400 dark:text-slate-500 mt-0.5">{sub}</p>}
+      <p className="text-xs text-white/70 dark:text-slate-400 mt-1 font-medium">{label}</p>
+      {sub && <p className="text-xs text-white/50 dark:text-slate-500 mt-0.5">{sub}</p>}
     </div>
   );
 }

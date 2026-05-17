@@ -21,7 +21,7 @@ function queryAll(selector) {
 function prepareElement(el, transform) {
   el.style.opacity = '0';
   el.style.transform = transform;
-  el.style.transition = 'opacity 700ms cubic-bezier(0.16, 1, 0.3, 1), transform 700ms cubic-bezier(0.16, 1, 0.3, 1)';
+  el.style.transition = 'opacity 200ms cubic-bezier(0.16, 1, 0.3, 1), transform 200ms cubic-bezier(0.16, 1, 0.3, 1)';
   el.style.willChange = 'opacity, transform';
 }
 
@@ -74,7 +74,7 @@ export default function useScrollAnimations({ activeTab }) {
       // KPI cards and tab bar: reveal immediately with stagger (no observer)
       instantReveal(queryAll(SELECTORS.kpi), {
         transform: 'translate3d(0, 40px, 0) scale(0.96)',
-        stagger: 90,
+        stagger: 20,
       });
       instantReveal(queryAll(SELECTORS.tabbar), {
         transform: 'translate3d(0, 20px, 0)',
@@ -86,7 +86,7 @@ export default function useScrollAnimations({ activeTab }) {
       cleanups.push(
         observeReveal(queryAll('[data-animate="professor-card"]'), {
           transform: 'translate3d(0, 36px, 0) scale(0.98)',
-          stagger: 70,
+          stagger: 15,
         }),
       );
     }
