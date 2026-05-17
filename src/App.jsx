@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react';
-import BackToTop from './components/BackToTop';
 import FilterBar from './components/FilterBar';
 import Footer from './components/Footer';
 import Header from './components/Header';
@@ -16,8 +15,7 @@ import useExplorerState from './hooks/useExplorerState';
 import useFilteredProfessors from './hooks/useFilteredProfessors';
 import useScrollAnimations from './hooks/useScrollAnimations';
 
-const ParticleLayer = lazy(() => import('./components/ParticleLayer'));
-const SplineBackground = lazy(() => import('./components/SplineBackground'));
+const Background3D = lazy(() => import('./components/Background3D'));
 
 export default function App() {
   const { theme } = useTheme();
@@ -32,19 +30,17 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-transparent overflow-x-hidden relative">
-      <Suspense fallback={null}>
-        <SplineBackground />
-      </Suspense>
-
       <div className="cursor-glow-layer" aria-hidden="true" />
 
       {theme === 'dark' && (
         <Suspense fallback={null}>
-          <ParticleLayer />
+          <Background3D activeDirection={explorerState.selectedDirection} />
         </Suspense>
       )}
 
-      <Header kpiSection={<KPISummary professors={professors} directions={directions} />} />
+      <Header
+        kpiSection={<KPISummary professors={professors} directions={directions} />}
+      />
 
       <FilterProvider value={explorerState.filterValue}>
         <div
@@ -67,7 +63,6 @@ export default function App() {
             professors={professors}
             onQuizResult={explorerState.handleQuizResult}
           />
-          <BackToTop />
           <Footer />
         </div>
       </FilterProvider>
