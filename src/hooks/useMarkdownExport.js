@@ -1,6 +1,5 @@
 import { useCallback, useState } from 'react';
-import { generateMarkdown } from '../utils/markdownExport';
-import { HTMLReportGenerator, PDFReportService, ShareCardGenerator } from '../services/ExportService';
+import { MarkdownReportBuilder, HTMLReportGenerator, PDFReportService, ShareCardGenerator } from '../services/ExportService';
 
 function downloadFile(content, mimeType, extension, filename) {
   const blob = new Blob([content], { type: `${mimeType};charset=utf-8` });
@@ -24,7 +23,7 @@ export default function useMarkdownExport({
     if (!results?.length || exportingFormat) return;
     setExportingFormat('md');
     try {
-      const markdown = generateMarkdown(results, directions, professors);
+      const markdown = new MarkdownReportBuilder({ results, directions, professors }).build();
       downloadFile(markdown, 'text/markdown', 'md', filename);
     } catch (error) {
       console.error('Export MD failed:', error);
@@ -37,7 +36,7 @@ export default function useMarkdownExport({
     if (!results?.length || exportingFormat) return;
     setExportingFormat('html');
     try {
-      const markdown = generateMarkdown(results, directions, professors);
+      const markdown = new MarkdownReportBuilder({ results, directions, professors }).build();
       const html = HTMLReportGenerator.generate(markdown);
       downloadFile(html, 'text/html', 'html', filename);
     } catch (error) {
@@ -51,7 +50,7 @@ export default function useMarkdownExport({
     if (!results?.length || exportingFormat) return;
     setExportingFormat('pdf');
     try {
-      const markdown = generateMarkdown(results, directions, professors);
+      const markdown = new MarkdownReportBuilder({ results, directions, professors }).build();
       PDFReportService.print(markdown);
     } catch (error) {
       console.error('Export PDF failed:', error);

@@ -5,10 +5,12 @@ import AppPanels from './components/layout/AppPanels';
 import KPISummary from './components/KPISummary';
 import { TAB_DEFINITIONS } from './config/tabs';
 import { FilterProvider } from './context/FilterContext';
-import directions from './data/directions.json';
-import professors from './data/professors.json';
-import quiz from './data/quiz.json';
+import { DataRepository } from './services/DataRepository';
 import useCursorGlow from './hooks/useCursorGlow';
+
+const directions = DataRepository.getDirections();
+const professors = DataRepository.getProfessors();
+const quiz = DataRepository.getQuiz();
 import useExplorerState from './hooks/useExplorerState';
 import useFilteredProfessors from './hooks/useFilteredProfessors';
 import useScrollAnimations from './hooks/useScrollAnimations';

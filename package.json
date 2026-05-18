@@ -10,6 +10,7 @@
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.{js,jsx,css,json}\"",
     "preview": "vite preview",
+    "validate-data": "node scripts/validateData.js",
     "test": "vitest",
     "test:run": "vitest run"
   },

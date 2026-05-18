@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { QUIZ_ANSWER_DELAY_MS } from '../constants';
-import { findTopMatches } from '../utils/matching';
+import { MatchingEngine } from '../services/MatchingEngine';
 
 function toQuizResult(topMatches) {
   return {
@@ -44,7 +44,8 @@ export default function useQuizFlow({ quiz, professors, directions, onResult }) 
           return;
         }
 
-        const topMatches = findTopMatches({ tags: newAnswers, quiz, professors, directions });
+        const engine = new MatchingEngine({ quiz, professors, directions });
+        const topMatches = engine.findMatches(newAnswers);
         setResults(topMatches);
         onResult(toQuizResult(topMatches));
       }, QUIZ_ANSWER_DELAY_MS);

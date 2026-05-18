@@ -1,7 +1,4 @@
-import professors from './professors.json';
-import directions from './directions.json';
-import quiz from './quiz.json';
-import roadmap from './roadmap.json';
+
 
 const REQUIRED_PROFESSOR_FIELDS = [
   'id',
@@ -73,13 +70,18 @@ function validateNonEmptyArray(value, label, errors) {
   }
 }
 
-export function validateData() {
+export function validateData({ professors, directions, quiz, roadmap } = {}) {
+  const localProfessors = professors || [];
+  const localDirections = directions || [];
+  const localQuiz = quiz || { directionProfiles: {}, dimensionWeights: {}, questions: [], defaultRecommendation: { professors: [], direction: '' } };
+  const localRoadmap = roadmap || {};
+
   const errors = [];
 
   // Validate professors' directionId references
-  const directionIds = new Set(directions.map((d) => d.id));
+  const directionIds = new Set(localDirections.map((d) => d.id));
   const professorIds = new Set();
-  for (const prof of professors) {
+  for (const prof of localProfessors) {
     validateRequiredFields(prof, REQUIRED_PROFESSOR_FIELDS, `professors.json: "${prof.name || prof.id}"`, errors);
 
     if (professorIds.has(prof.id)) {
@@ -120,7 +122,7 @@ export function validateData() {
 
   // Validate directions difficulty/recommendation range
   const directionCodes = new Set();
-  for (const dir of directions) {
+  for (const dir of localDirections) {
     validateRequiredFields(dir, REQUIRED_DIRECTION_FIELDS, `directions.json: "${dir.name || dir.id}"`, errors);
 
     if (directionCodes.has(dir.code)) {
@@ -148,8 +150,8 @@ export function validateData() {
   }
 
   // Validate each direction has a quiz profile and roadmap
-  const profileIds = new Set(Object.keys(quiz.directionProfiles));
-  const roadmapIds = new Set(Object.keys(roadmap));
+  const profileIds = new Set(Object.keys(localQuiz.directionProfiles));
+  const roadmapIds = new Set(Object.keys(localRoadmap));
   for (const dirId of directionIds) {
     if (!profileIds.has(dirId)) {
       errors.push(`quiz.json: missing directionProfile for direction "${dirId}"`);
@@ -170,7 +172,7 @@ export function validateData() {
       errors.push(`roadmap.json: roadmap "${roadmapId}" does not match any direction`);
     }
 
-    const item = roadmap[roadmapId];
+    const item = localRoadmap[roadmapId];
     validateNonEmptyArray(item?.phases, `roadmap.json: "${roadmapId}" phases`, errors);
     for (const [phaseIndex, phase] of (item?.phases || []).entries()) {
       if (isBlank(phase.period) || isBlank(phase.subtitle) || isBlank(phase.milestone)) {
@@ -186,16 +188,16 @@ export function validateData() {
   }
 
   // Validate quiz dimensionWeights sum to ~1.0
-  const weightSum = Object.values(quiz.dimensionWeights).reduce((a, b) => a + b, 0);
+  const weightSum = Object.values(localQuiz.dimensionWeights).reduce((a, b) => a + b, 0);
   if (Math.abs(weightSum - 1.0) > 0.01) {
     errors.push(`quiz.json: dimensionWeights sum to ${weightSum.toFixed(3)}, expected 1.0`);
   }
 
-  for (const [index, question] of quiz.questions.entries()) {
+  for (const [index, question] of localQuiz.questions.entries()) {
     if (Number(question.dimension) !== index) {
       errors.push(`quiz.json: question "${question.text}" dimension ${question.dimension} does not match index ${index}`);
     }
-    if (!(String(index) in quiz.dimensionWeights)) {
+    if (!(String(index) in localQuiz.dimensionWeights)) {
       errors.push(`quiz.json: missing dimensionWeight for question index ${index}`);
     }
     validateNonEmptyArray(question.options, `quiz.json: question "${question.text}" options`, errors);
@@ -203,14 +205,14 @@ export function validateData() {
 
   // Collect all question option tags
   const questionTags = new Set();
-  for (const q of quiz.questions) {
+  for (const q of localQuiz.questions) {
     for (const opt of q.options) {
       questionTags.add(opt.tag);
     }
   }
 
   // Validate that profile tags reference existing question tags
-  for (const [dirId, profile] of Object.entries(quiz.directionProfiles)) {
+  for (const [dirId, profile] of Object.entries(localQuiz.directionProfiles)) {
     for (const tag of Object.keys(profile.positive || {})) {
       if (!questionTags.has(tag)) {
         errors.push(
@@ -228,14 +230,14 @@ export function validateData() {
   }
 
   // Validate defaultRecommendation references
-  for (const pid of quiz.defaultRecommendation.professors) {
+  for (const pid of localQuiz.defaultRecommendation.professors) {
     if (!professorIds.has(pid)) {
       errors.push(`quiz.json: defaultRecommendation references unknown professor "${pid}"`);
     }
   }
-  if (!directionIds.has(quiz.defaultRecommendation.direction)) {
+  if (!directionIds.has(localQuiz.defaultRecommendation.direction)) {
     errors.push(
-      `quiz.json: defaultRecommendation references unknown direction "${quiz.defaultRecommendation.direction}"`,
+      `quiz.json: defaultRecommendation references unknown direction "${localQuiz.defaultRecommendation.direction}"`,
     );
   }
 

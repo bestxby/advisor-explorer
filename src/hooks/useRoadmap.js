@@ -1,9 +1,9 @@
 import { useCallback, useState } from 'react';
-import roadmapData from '../data/roadmap.json';
+import { DataRepository } from '../services/DataRepository';
 
 export default function useRoadmap(directionId) {
   const [expandedPhase, setExpandedPhase] = useState(0);
-  const roadmap = roadmapData[directionId];
+  const roadmap = DataRepository.getRoadmap(directionId);
 
   const togglePhase = useCallback((phaseIndex) => {
     setExpandedPhase((current) => (current === phaseIndex ? -1 : phaseIndex));

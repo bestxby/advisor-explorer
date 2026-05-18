@@ -1,17 +1,13 @@
 import { describe, expect, it } from 'vitest';
-import { findTopMatches } from '../utils/matching';
+import { MatchingEngine } from '../services/MatchingEngine';
 import quiz from '../data/quiz.json';
 import professors from '../data/professors.json';
 import directions from '../data/directions.json';
 
 describe('findTopMatches', () => {
   it('returns ranked matches with explanations', () => {
-    const matches = findTopMatches({
-      tags: ['code', 'math-ok', 'salary', 'mid-risk', 'coding', 'sys-level'],
-      quiz,
-      professors,
-      directions,
-    });
+    const engine = new MatchingEngine({ quiz, professors, directions });
+    const matches = engine.findMatches(['code', 'math-ok', 'salary', 'mid-risk', 'coding', 'sys-level']);
 
     expect(matches).toHaveLength(3);
     expect(matches[0].score).toBe(100);
@@ -28,12 +24,8 @@ describe('findTopMatches', () => {
       ),
     };
 
-    const matches = findTopMatches({
-      tags: ['code'],
-      quiz: emptyQuiz,
-      professors,
-      directions,
-    });
+    const engine = new MatchingEngine({ quiz: emptyQuiz, professors, directions });
+    const matches = engine.findMatches(['code']);
 
     expect(matches).toHaveLength(1);
     expect(matches[0].direction).toBe(quiz.defaultRecommendation.direction);

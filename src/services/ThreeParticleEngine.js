@@ -4,6 +4,10 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
+import { detectHardwareQuality, getQualityProfile } from './HardwareProfile';
+import { ShapeManager } from './ShapeManager';
+import { AmbientDustSystem } from './AmbientDustSystem';
+
 const particleSize = 120;
 
 const DIRECTION_PALETTES = {
@@ -43,15 +47,37 @@ function parseColor(rgbaString) {
   return new THREE.Color(0xffffff);
 }
 
+/**
+ * ThreeParticleEngine — orchestrator for the 3D particle background.
+ *
+ * Delegates to:
+ *   - HardwareProfile (quality detection)
+ *   - AmbientDustSystem (background floating dust)
+ *   - ShapeManager (shape loading, generation, morph cycling)
+ *
+ * Owns:
+ *   - Scene / Camera / Renderer / Bloom (infrastructure)
+ *   - Main particle BufferGeometry + ShaderMaterial
+ *   - Mouse / resize / visibility event listeners
+ *   - The animate() render loop
+ *
+ * External API (used by Background3D.jsx):
+ *   - constructor(container, theme, activeDirection)
+ *   - updateDirection(direction)
+ *   - destroy()
+ */
 export class ThreeParticleEngine {
   constructor(container, theme, activeDirection) {
     this.container = container;
-    this.theme = theme;
     this.activeDirection = activeDirection;
 
-    // Detect hardware capabilities and apply quality profile
-    this.quality = this.detectHardwareQuality();
-    this.applyQualityProfile();
+    // Hardware profiling (delegated)
+    const quality = detectHardwareQuality();
+    const profile = getQualityProfile(quality);
+    this.particleCount = profile.particleCount;
+    this.enableBloom = profile.enableBloom;
+    this.pixelRatioCap = profile.pixelRatioCap;
+    this.pointSizeMultiplier = profile.pointSizeMultiplier;
 
     this.width = window.innerWidth;
     this.height = window.innerHeight;
@@ -60,36 +86,32 @@ export class ThreeParticleEngine {
     this.explosionAngle = 0;
     this.morphTarget = 0;
     this.currentMorph = 0;
-    this.transitionState = 0; // 0 = stable, 1 = scattering, 2 = forming
-    this.currentShapeIndex = 0;
-    this.shapeKeys = ['shape4', 'infinity'];
-    this.loadedShapes = { acgi: [], shape4: [], infinity: [] };
-    this.validPoints = [];
 
     this.mouseX = 0;
     this.mouseY = 0;
     this.targetX = 0;
     this.targetY = 0;
     this.isVisible = true;
-    this.scratchColor = new THREE.Color();
 
-    this.init();
+    this.init(profile);
   }
 
-  init() {
-    // 1. Scene and Camera Setup
+  // ── Infrastructure setup ──────────────────────────────────────
+
+  init(profile) {
+    // 1. Scene and Camera
     this.scene = new THREE.Scene();
     this.camera = new THREE.PerspectiveCamera(35, this.width / this.height, 0.1, 1000);
     this.adjustCameraZ();
 
-    // 2. Renderer Setup
+    // 2. Renderer
     this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(this.pixelRatioCap);
     this.renderer.setClearColor(0x000000, 0);
     this.container.appendChild(this.renderer.domElement);
 
-    // 3. Conditional Post-Processing / Bloom Setup
+    // 3. Post-processing (conditional)
     if (this.enableBloom) {
       const renderScene = new RenderPass(this.scene, this.camera);
       const bloomPass = new UnrealBloomPass(new THREE.Vector2(this.width, this.height), 1.5, 0.4, 0.85);
@@ -103,137 +125,43 @@ export class ThreeParticleEngine {
       this.composer = null;
     }
 
-    // 4. Create Systems
-    this.createAmbientDust();
+    // 4. Subsystems
+    this.dustSystem = new AmbientDustSystem(this.scene, profile.dustCount);
     this.createMainParticles();
+    this.shapeManager = new ShapeManager({
+      geometry: this.geometry,
+      particleCount: this.particleCount,
+      material: this.material,
+    });
+
+    // 5. Events + visibility
     this.setupEventListeners();
     this.startIntersectionObserver();
 
-    // 5. Load and Cycle Shapes
-    this.loadShapes();
+    // 6. Load shapes and start cycling
+    this.shapeManager.loadAndStartCycling((val) => { this.morphTarget = val; });
 
-    // 6. Start Render Loop
+    // 7. Render loop
     this.animateBound = this.animate.bind(this);
     this.animateBound();
   }
 
   adjustCameraZ() {
     const aspect = this.width / this.height;
-    // Mathematically continuous camera distance scaling (smooth transition without any sudden jumps).
-    // Begins pulling the camera back smoothly once the aspect ratio drops below 1.55 (e.g. tablet portrait, square monitor).
-    // At aspect = 1.0 (square), Z is ~70; at aspect = 0.5 (mobile portrait), Z is ~140, keeping the 38-unit wide cloud perfectly framed.
     this.camera.position.z = 45 * Math.max(1.0, 1.55 / aspect);
   }
 
-  detectHardwareQuality() {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    const cores = navigator.hardwareConcurrency || 4;
-    let gpuName = '';
-    
-    try {
-      const canvas = document.createElement('canvas');
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-      if (gl) {
-        const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
-        if (debugInfo) {
-          gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
-        }
-      }
-    } catch (e) {
-      // Safe fallback
-    }
-
-    const gpuLower = gpuName.toLowerCase();
-    
-    // Classify extremely low-end (weak cores or very old integrated graphics)
-    if (cores <= 2 || gpuLower.includes('mali-t') || gpuLower.includes('adreno (tm) 3') || gpuLower.includes('intel hd')) {
-      return 'low';
-    }
-    
-    // Classify medium-end (general mobiles, office laptops with integrated UHD/Iris Xe graphics)
-    if (isMobile || cores <= 4 || gpuLower.includes('intel') || gpuLower.includes('uhd') || gpuLower.includes('iris') || gpuLower.includes('amd radeon(tm) graphics')) {
-      return 'medium';
-    }
-    
-    // High-end (Desktops, Apple Silicon M-series, Nvidia RTX/GTX, AMD RX discrete cards)
-    return 'high';
-  }
-
-  applyQualityProfile() {
-    console.log(`[ThreeParticleEngine] Hardware profile: ${this.quality.toUpperCase()}`);
-    
-    switch (this.quality) {
-      case 'low':
-        this.particleCount = 30000;
-        this.dustCount = 1000;
-        this.enableBloom = false;
-        this.pixelRatioCap = 1.0;
-        this.pointSizeMultiplier = 1.4; // Slightly larger points to maintain shape fullness at low density
-        break;
-      case 'medium':
-      case 'high':
-      default:
-        this.particleCount = 110000;
-        this.dustCount = 6000;
-        this.enableBloom = true;
-        this.pixelRatioCap = Math.min(window.devicePixelRatio, 2.0);
-        this.pointSizeMultiplier = 1.0;
-        break;
-    }
-  }
-
-  createAmbientDust() {
-    if (this.dustCount <= 0) return;
-    const dustGeometry = new THREE.BufferGeometry();
-    const dustCount = this.dustCount;
-    const dustPositions = new Float32Array(dustCount * 3);
-    const dustColors = new Float32Array(dustCount * 3);
-    const colorObj = new THREE.Color();
-
-    for (let i = 0; i < dustCount; i++) {
-      const i3 = i * 3;
-      dustPositions[i3] = (Math.random() - 0.5) * 100;
-      dustPositions[i3 + 1] = (Math.random() - 0.5) * 100;
-      dustPositions[i3 + 2] = (Math.random() - 0.5) * 100;
-      
-      const rand = Math.random();
-      if (rand < 0.6) {
-        colorObj.setHSL(0.58 + (Math.random() - 0.5) * 0.1, 0.9, 0.6 + Math.random() * 0.2);
-      } else if (rand < 0.9) {
-        colorObj.setHSL(0.75 + (Math.random() - 0.5) * 0.1, 0.8, 0.6 + Math.random() * 0.2);
-      } else {
-        colorObj.setHSL(0.12 + (Math.random() - 0.5) * 0.05, 0.8, 0.8 + Math.random() * 0.2);
-      }
-      
-      dustColors[i3] = colorObj.r;
-      dustColors[i3 + 1] = colorObj.g;
-      dustColors[i3 + 2] = colorObj.b;
-    }
-    
-    dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
-    dustGeometry.setAttribute('color', new THREE.BufferAttribute(dustColors, 3));
-    
-    const dustMaterial = new THREE.PointsMaterial({
-      size: 0.15,
-      transparent: true,
-      opacity: 0.4,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-      vertexColors: true
-    });
-    this.dustParticles = new THREE.Points(dustGeometry, dustMaterial);
-    this.scene.add(this.dustParticles);
-  }
+  // ── Main particle system ──────────────────────────────────────
 
   createMainParticles() {
     this.geometry = new THREE.BufferGeometry();
     const count = this.particleCount;
     const positions = new Float32Array(count * 3);
-    this.targetPositions = new Float32Array(count * 3);
+    const targetPositions = new Float32Array(count * 3);
     const colors = new Float32Array(count * 3);
-    this.targetColors = new Float32Array(count * 3);
+    const targetColors = new Float32Array(count * 3);
     const randomOffsets = new Float32Array(count * 3);
-    
+
     const palette = getPalette(this.activeDirection).map(parseColor);
 
     for (let i = 0; i < count; i++) {
@@ -241,203 +169,62 @@ export class ThreeParticleEngine {
       const x = (Math.random() - 0.5) * 80;
       const y = (Math.random() - 0.5) * 80;
       const z = (Math.random() - 0.5) * 40;
-      
+
       positions[i3] = x; positions[i3 + 1] = y; positions[i3 + 2] = z;
-      this.targetPositions[i3] = x; this.targetPositions[i3 + 1] = y; this.targetPositions[i3 + 2] = z;
-      
+      targetPositions[i3] = x; targetPositions[i3 + 1] = y; targetPositions[i3 + 2] = z;
+
       randomOffsets[i3] = (Math.random() - 0.5) * 2;
       randomOffsets[i3 + 1] = (Math.random() - 0.5) * 2;
       randomOffsets[i3 + 2] = (Math.random() - 0.5) * 2;
-      
+
       const color = palette[Math.floor(Math.random() * palette.length)];
       colors[i3] = color.r; colors[i3 + 1] = color.g; colors[i3 + 2] = color.b;
-      this.targetColors[i3] = color.r; this.targetColors[i3 + 1] = color.g; this.targetColors[i3 + 2] = color.b;
+      targetColors[i3] = color.r; targetColors[i3 + 1] = color.g; targetColors[i3 + 2] = color.b;
     }
 
     this.geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    this.geometry.setAttribute("targetPosition", new THREE.BufferAttribute(this.targetPositions, 3));
+    this.geometry.setAttribute("targetPosition", new THREE.BufferAttribute(targetPositions, 3));
     this.geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    this.geometry.setAttribute("targetColor", new THREE.BufferAttribute(this.targetColors, 3));
+    this.geometry.setAttribute("targetColor", new THREE.BufferAttribute(targetColors, 3));
     this.geometry.setAttribute("randomOffset", new THREE.BufferAttribute(randomOffsets, 3));
 
     this.material = new THREE.ShaderMaterial({
-      vertexShader, 
-      fragmentShader, 
+      vertexShader,
+      fragmentShader,
       transparent: true,
-      uniforms: { 
-        uTime: { value: 0 }, 
-        uMorph: { value: 0 }, 
-        uPointSize: { value: particleSize * this.pointSizeMultiplier }, 
-        uEffectMode: { value: 0 }, 
-        uEffectIntensity: { value: 0 }, 
-        uExplosionTime: { value: 0 } 
+      uniforms: {
+        uTime: { value: 0 },
+        uMorph: { value: 0 },
+        uPointSize: { value: particleSize * this.pointSizeMultiplier },
+        uEffectMode: { value: 0 },
+        uEffectIntensity: { value: 0 },
+        uExplosionTime: { value: 0 }
       },
-      depthWrite: false, 
+      depthWrite: false,
       blending: THREE.AdditiveBlending
     });
 
     this.points = new THREE.Points(this.geometry, this.material);
     this.points.visible = true;
     this.points.position.x = window.innerWidth > 1024 ? 3.6 : 0;
-    
+
     this.scene.add(this.points);
   }
 
-  processImageToPoints(imageUrl, { threshold = 15, zDepth = 3 } = {}) {
-    return new Promise((resolve) => {
-      if (!imageUrl) {
-        resolve([]); return;
-      }
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = imageUrl;
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        const maxDim = 120;
-        const aspect = img.width / img.height;
-        const canvasW = aspect >= 1 ? maxDim : Math.round(maxDim * aspect);
-        const canvasH = aspect >= 1 ? Math.round(maxDim / aspect) : maxDim;
-        canvas.width = canvasW; canvas.height = canvasH;
-        ctx.fillStyle = "black"; ctx.fillRect(0, 0, canvasW, canvasH);
-        ctx.drawImage(img, 0, 0, canvasW, canvasH);
-        
-        const imgData = ctx.getImageData(0, 0, canvasW, canvasH).data;
-        const valid = [];
-        
-        const worldSize = 38;
-        const scaleX = aspect >= 1 ? worldSize : worldSize * aspect;
-        const scaleY = aspect >= 1 ? worldSize / aspect : worldSize;
-        
-        for (let y = 0; y < canvasH; y++) {
-          for (let x = 0; x < canvasW; x++) {
-            const idx = (y * canvasW + x) * 4;
-            const r = imgData[idx], g = imgData[idx + 1], b = imgData[idx + 2];
-            if ((r + g + b) / 3 > threshold) {
-              valid.push({ 
-                pos: [(x / canvasW - 0.5) * scaleX, (0.5 - y / canvasH) * scaleY, ((r + g + b) / 765 - 0.5) * zDepth],
-                col: [r / 255, g / 255, b / 255]
-              });
-            }
-          }
-        }
-        resolve(valid);
-      };
-    });
-  }
-
-  generateInfinityShape() {
-    const infPoints = [];
-    const infScale = 30; 
-    for (let i = 0; i < 12000; i++) {
-      const t = (i / 12000) * Math.PI * 6; 
-      const denom = 1 + Math.sin(t) * Math.sin(t); 
-      let x = infScale * Math.cos(t) / denom; 
-      let y = infScale * Math.sin(t) * Math.cos(t) / denom; 
-      const verticalSpread = (Math.random() - 0.5) * 20; 
-      const z = (Math.random() - 0.5) * 4 + Math.sin(t * 2) * 1.5; 
-      const thickness = 6.0; 
-      const offsetX = (Math.random() - 0.5) * thickness; 
-      const offsetY = (Math.random() - 0.5) * thickness + verticalSpread * 0.3; 
-      const offsetZ = (Math.random() - 0.5) * thickness * 0.3; 
-      
-      const hue = (0.5 + (i / 12000) * 0.6 + Math.sin(t * 0.5) * 0.1) % 1.0;
-      this.scratchColor.setHSL(hue, 0.95, 0.45 + Math.random() * 0.15);
-      
-      infPoints.push({ pos: [(x + offsetX)*0.45, (y + offsetY)*0.45, (z + offsetZ)*0.45], col: [this.scratchColor.r, this.scratchColor.g, this.scratchColor.b] }); 
-    }
-    return infPoints;
-  }
-
-  applyShape(shapeName) {
-    const pts = this.loadedShapes[shapeName];
-    if (!pts || pts.length === 0) return;
-    
-    this.validPoints = pts;
-    const count = this.particleCount;
-
-    for (let i = 0; i < count; i++) {
-      const i3 = i * 3;
-      const point = pts[i % pts.length];
-      
-      this.targetPositions[i3] = point.pos[0] + (Math.random() - 0.5) * 0.4;
-      this.targetPositions[i3 + 1] = point.pos[1] + (Math.random() - 0.5) * 0.4;
-      this.targetPositions[i3 + 2] = point.pos[2] + (Math.random() - 0.5) * 1.5;
-      
-      if (point.col) {
-        if (Math.random() < 0.2) {
-          this.scratchColor.setHSL(0.12 + (Math.random() - 0.5) * 0.04, 0.9, 0.45 + Math.random() * 0.15);
-          this.targetColors[i3] = this.scratchColor.r; 
-          this.targetColors[i3 + 1] = this.scratchColor.g; 
-          this.targetColors[i3 + 2] = this.scratchColor.b;
-        } else {
-          this.targetColors[i3] = point.col[0]; 
-          this.targetColors[i3 + 1] = point.col[1]; 
-          this.targetColors[i3 + 2] = point.col[2];
-        }
-      } else {
-        this.scratchColor.setHSL(0.55 + (Math.random() - 0.5) * 0.1, 0.9, 0.5);
-        this.targetColors[i3] = this.scratchColor.r; 
-        this.targetColors[i3 + 1] = this.scratchColor.g; 
-        this.targetColors[i3 + 2] = this.scratchColor.b;
-      }
-    }
-    this.geometry.attributes.targetPosition.needsUpdate = true;
-    this.geometry.attributes.targetColor.needsUpdate = true;
-  }
-
-  loadShapes() {
-    const shape4PointsUrl = `${import.meta.env.BASE_URL}shape4_points.json`;
-    fetch(shape4PointsUrl)
-      .then((res) => res.json())
-      .then((pts2) => {
-        this.loadedShapes.shape4 = pts2;
-        
-        // Defer math-heavy infinity shape generation by 1.2s to prevent startup frame drop
-        this.loadedShapes.infinity = [];
-        this.infinityDeferredTimeout = setTimeout(() => {
-          this.loadedShapes.infinity = this.generateInfinityShape();
-        }, 1200);
-        
-        this.applyShape('shape4');
-        this.morphTarget = 1.0;
-        
-        this.cycleTimeout = setTimeout(() => {
-          this.cycleInterval = setInterval(() => {
-            this.transitionState = 1;
-            this.material.uniforms.uEffectMode.value = 1;
-            
-            setTimeout(() => {
-              this.currentShapeIndex = (this.currentShapeIndex + 1) % this.shapeKeys.length;
-              this.applyShape(this.shapeKeys[this.currentShapeIndex]);
-              this.transitionState = 2;
-              
-              setTimeout(() => {
-                this.transitionState = 0;
-              }, 1200);
-            }, 1200);
-          }, 5000);
-        }, 1500);
-      })
-      .catch((err) => {
-        console.error('Failed to load pre-calculated shape4 points:', err);
-      });
-  }
+  // ── Direction theme switching ─────────────────────────────────
 
   updateDirection(direction) {
     this.activeDirection = direction;
     const palette = getPalette(direction).map(parseColor);
     const count = this.particleCount;
-    
+
     if (this.geometry && this.geometry.attributes.color && this.geometry.attributes.targetColor) {
       const colorsAttr = this.geometry.attributes.color.array;
       const targetColorsAttr = this.geometry.attributes.targetColor.array;
-      
-      // Copy current target colors into base colors
+
       colorsAttr.set(targetColorsAttr);
       this.geometry.attributes.color.needsUpdate = true;
-      
-      // Set new theme colors into target colors
+
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
         const color = palette[Math.floor(Math.random() * palette.length)];
@@ -446,17 +233,18 @@ export class ThreeParticleEngine {
         targetColorsAttr[i3 + 2] = color.b;
       }
       this.geometry.attributes.targetColor.needsUpdate = true;
-      
-      // Smoothly morph to the new colors over 1.5s
+
       this.currentMorph = 0.0;
       this.morphTarget = 1.0;
     }
   }
 
+  // ── Events ────────────────────────────────────────────────────
+
   setupEventListeners() {
     this.resizeBound = this.handleResize.bind(this);
     this.mouseMoveBound = this.handleMouseMove.bind(this);
-    
+
     window.addEventListener("resize", this.resizeBound);
     window.addEventListener('mousemove', this.mouseMoveBound);
   }
@@ -471,7 +259,7 @@ export class ThreeParticleEngine {
     if (this.enableBloom && this.composer) {
       this.composer.setSize(this.width, this.height);
     }
-    
+
     if (this.points) {
       this.points.position.x = this.width > 1024 ? 3.6 : 0;
     }
@@ -490,28 +278,32 @@ export class ThreeParticleEngine {
     this.observer.observe(this.container);
   }
 
+  // ── Render loop ───────────────────────────────────────────────
+
   animate() {
     this.rafId = requestAnimationFrame(this.animateBound);
-    
+
     if (!this.isVisible) return;
-    
+
     this.time += 0.008;
     this.targetX = this.mouseX * 0.5;
     this.targetY = this.mouseY * 0.5;
-    
-    if (this.transitionState === 1) {
+
+    // Transition state from ShapeManager
+    const ts = this.shapeManager.transitionState;
+    if (ts === 1) {
       this.effectIntensity += (4.0 - this.effectIntensity) * 0.15;
       this.explosionAngle += 0.08;
-    } else if (this.transitionState === 2) {
+    } else if (ts === 2) {
       this.effectIntensity += (0.0 - this.effectIntensity) * 0.04;
       this.explosionAngle *= 0.92;
     } else {
       this.effectIntensity += (0.0 - this.effectIntensity) * 0.1;
       this.explosionAngle *= 0.85;
     }
-    
+
     if (Math.abs(this.explosionAngle) < 0.001) this.explosionAngle = 0;
-    
+
     if (this.points) {
       this.points.rotation.y = this.targetX + this.explosionAngle;
       this.points.rotation.x = this.targetY + this.explosionAngle * 0.5;
@@ -524,12 +316,10 @@ export class ThreeParticleEngine {
       this.material.uniforms.uMorph.value = this.currentMorph;
       this.material.uniforms.uEffectIntensity.value = this.effectIntensity;
     }
-    
-    if (this.dustParticles) {
-      this.dustParticles.rotation.y += 0.0005;
-      this.dustParticles.rotation.x += 0.0002;
-    }
-    
+
+    // Delegate dust rotation to subsystem
+    this.dustSystem.update();
+
     if (this.enableBloom && this.composer) {
       this.composer.render();
     } else {
@@ -537,19 +327,25 @@ export class ThreeParticleEngine {
     }
   }
 
+  // ── Cleanup ───────────────────────────────────────────────────
+
   destroy() {
+    // Events
     if (this.observer) this.observer.disconnect();
     window.removeEventListener("resize", this.resizeBound);
     window.removeEventListener("mousemove", this.mouseMoveBound);
     cancelAnimationFrame(this.rafId);
-    if (this.cycleTimeout) clearTimeout(this.cycleTimeout);
-    if (this.cycleInterval) clearInterval(this.cycleInterval);
-    if (this.infinityDeferredTimeout) clearTimeout(this.infinityDeferredTimeout);
-    
+
+    // Subsystems — each handles its own timers/resources
+    this.shapeManager.destroy();
+    this.dustSystem.destroy();
+
+    // Renderer DOM
     if (this.renderer && this.container.contains(this.renderer.domElement)) {
       this.container.removeChild(this.renderer.domElement);
     }
-    
+
+    // Core resources
     if (this.geometry) this.geometry.dispose();
     if (this.material) this.material.dispose();
     if (this.renderer) this.renderer.dispose();

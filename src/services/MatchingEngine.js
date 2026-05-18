@@ -3,14 +3,32 @@ export class MatchingEngine {
     this.quiz = quiz;
     this.professors = professors;
     this.directions = directions;
+
+    // 🌟 Algorithm Optimization 1: Pre-build tag lookup hashmap O(1)
+    this.tagMap = {};
+    if (quiz?.questions) {
+      quiz.questions.forEach((question) => {
+        question.options?.forEach((opt) => {
+          this.tagMap[opt.tag] = opt.text;
+        });
+      });
+    }
+
+    // 🌟 Algorithm Optimization 2: Pre-index professors by directionId O(1)
+    this.professorsByDirection = {};
+    if (professors) {
+      professors.forEach((prof) => {
+        if (!this.professorsByDirection[prof.directionId]) {
+          this.professorsByDirection[prof.directionId] = [];
+        }
+        this.professorsByDirection[prof.directionId].push(prof.id);
+      });
+    }
   }
 
   getAnswerText(tag) {
-    for (const question of this.quiz.questions) {
-      const option = question.options.find((opt) => opt.tag === tag);
-      if (option) return option.text;
-    }
-    return tag;
+    // Optimized from O(Q * O) search to O(1) hashmap lookup
+    return this.tagMap[tag] || tag;
   }
 
   getSignals(tags, profile) {
@@ -80,7 +98,8 @@ export class MatchingEngine {
 
     return top3.map((match, i) => {
       const dir = this.directions.find((d) => d.id === match.direction);
-      const profs = this.professors.filter((p) => p.directionId === match.direction).map((p) => p.id);
+      // Optimized from O(P) filter scan to O(1) pre-indexed map lookup
+      const profs = this.professorsByDirection[match.direction] || [];
       const signals = this.getSignals(tags, directionProfiles[match.direction]);
 
       return {

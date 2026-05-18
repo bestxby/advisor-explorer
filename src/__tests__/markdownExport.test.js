@@ -2,21 +2,21 @@ import { describe, expect, it } from 'vitest';
 import directions from '../data/directions.json';
 import professors from '../data/professors.json';
 import quiz from '../data/quiz.json';
-import { generateMarkdown } from '../utils/markdownExport';
-import { findTopMatches } from '../utils/matching';
+import { MarkdownReportBuilder } from '../services/ExportService';
+import { MatchingEngine } from '../services/MatchingEngine';
 
 function buildResults() {
-  return findTopMatches({
-    tags: ['code', 'math-ok', 'salary', 'mid-risk', 'coding', 'sys-level'],
+  const engine = new MatchingEngine({
     quiz,
     professors,
     directions,
   });
+  return engine.findMatches(['code', 'math-ok', 'salary', 'mid-risk', 'coding', 'sys-level']);
 }
 
 describe('generateMarkdown', () => {
   it('renders the exported report sections without leaking missing values', () => {
-    const markdown = generateMarkdown(buildResults(), directions, professors);
+    const markdown = new MarkdownReportBuilder({ results: buildResults(), directions, professors }).build();
 
     expect(markdown).toContain('# 体系结构方向匹配报告');
     expect(markdown).toContain('## 匹配排名');
@@ -33,7 +33,7 @@ describe('generateMarkdown', () => {
     const top = results[0];
     const topDirection = directions.find((direction) => direction.id === top.direction);
     const topProfessor = professors.find((professor) => top.professors.includes(professor.id));
-    const markdown = generateMarkdown(results, directions, professors);
+    const markdown = new MarkdownReportBuilder({ results, directions, professors }).build();
 
     expect(markdown).toContain(`## ${topDirection.name} · 方向详解`);
     expect(markdown).toContain(`### ${topProfessor.name} · ${topProfessor.university} ${topProfessor.department}`);
