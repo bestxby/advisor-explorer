@@ -87,10 +87,13 @@ export default function ActThreePanel({
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#2a3550]/20 pb-4 mb-6">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-purple-400 animate-pulse" />
-                {selectedDirection === 'all'
-                  ? '全部学派导师档案卡'
-                  : `专属匹配导师群 (学派: ${directions.find(d => d.id === quizResult?.direction)?.name || selectedDirection})`
-                }
+                {selectedDirection === 'all' ? (
+                  '全部学派导师档案卡'
+                ) : (
+                  <span>
+                    专属匹配导师群 (学派: <span className="neon-cool-text">{directions.find(d => d.id === quizResult?.direction)?.name || selectedDirection}</span>)
+                  </span>
+                )}
               </h3>
 
               <div className="flex flex-wrap items-center gap-3">

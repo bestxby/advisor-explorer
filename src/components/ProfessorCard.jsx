@@ -26,18 +26,16 @@ export default function ProfessorCard({ professor, isHighlighted }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       className={`
-        group relative border-2 rounded-2xl transition-all duration-300 ease-out card-glow card-glow-track
+        group relative border-2 rounded-2xl transition-all duration-300 ease-out card-glow card-glow-track tech-corner-ticks
         ${
           isHighlighted
-            ? 'border-primary shadow-lg shadow-primary/10 ring-4 ring-primary/10 shadow-blue-500/10'
+            ? 'neon-gradient-border shadow-lg shadow-cyan-500/10 ring-4 ring-cyan-500/10'
             : 'border-[#2a3550] hover:border-blue-500/20 hover:shadow-md shadow-black/30 hover:shadow-blue-500/5'
         }
         bg-[#0f1629] overflow-hidden
       `}
     >
-      {isHighlighted && (
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary via-primary-light to-accent" />
-      )}
+      <div className="corner-tick-bottom" />
 
       <button
         onClick={toggleExpanded}

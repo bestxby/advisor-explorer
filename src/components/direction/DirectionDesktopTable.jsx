@@ -29,7 +29,7 @@ function DirectionDesktopRow({
       >
         <td className="p-4">
           <div className="flex items-center gap-3">
-            {highlighted && <div className="w-1 h-10 bg-primary rounded-full" />}
+            {highlighted && <div className="w-1 h-10 neon-vertical-indicator rounded-full" />}
             <div>
               <span className="font-bold text-slate-100 font-heading">
                 {direction.code}. {direction.name}

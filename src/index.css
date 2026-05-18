@@ -493,3 +493,211 @@ html {
   --theme-accent-orb-3: rgba(250, 204, 21, 0.06);
 }
 
+/* ========================================================
+   UI/UX Pro Max - Blueprint Corner Crosshair Ticks (+)
+   ======================================================== */
+
+.tech-corner-ticks {
+  position: relative;
+}
+
+.tech-corner-ticks::before,
+.tech-corner-ticks::after,
+.tech-corner-ticks > .corner-tick-bottom::before,
+.tech-corner-ticks > .corner-tick-bottom::after {
+  content: '+';
+  position: absolute;
+  font-family: var(--font-mono);
+  color: rgba(34, 211, 238, 0.4); /* Cyan color accent by default */
+  font-size: 10px;
+  line-height: 1;
+  transition: color 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Position crosshair at top-left */
+.tech-corner-ticks::before {
+  top: 4px;
+  left: 6px;
+}
+/* Position crosshair at top-right */
+.tech-corner-ticks::after {
+  top: 4px;
+  right: 6px;
+}
+
+/* Container for bottom ticks */
+.tech-corner-ticks .corner-tick-bottom {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* Position crosshair at bottom-left */
+.tech-corner-ticks .corner-tick-bottom::before {
+  content: '+';
+  position: absolute;
+  bottom: 4px;
+  left: 6px;
+}
+
+/* Position crosshair at bottom-right */
+.tech-corner-ticks .corner-tick-bottom::after {
+  content: '+';
+  position: absolute;
+  bottom: 4px;
+  right: 6px;
+}
+
+/* Hover effect on ticks */
+.tech-corner-ticks:hover::before,
+.tech-corner-ticks:hover::after,
+.tech-corner-ticks:hover .corner-tick-bottom::before,
+.tech-corner-ticks:hover .corner-tick-bottom::after {
+  color: rgba(34, 211, 238, 0.95) !important;
+  transform: scale(1.2);
+}
+
+/* Animated Neon Gradient for Header Subtitle */
+.neon-rainbow-text {
+  background: linear-gradient(
+    45deg,
+    #ff0055, /* Radiant Hot Pink */
+    #00ffcc, /* Bright Electric Cyan */
+    #a3e635, /* Fluorescent Lime Green */
+    #facc15, /* High-contrast Neon Yellow */
+    #ff5500, /* Ultra Orange */
+    #ff0055  /* Seamless loop back */
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: neon-rainbow-flow 8s ease infinite;
+}
+
+@keyframes neon-rainbow-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animated Shifting Neon Gradient Background for Primary Button */
+.neon-cool-bg {
+  background: linear-gradient(
+    45deg,
+    #facc15, /* Neon Yellow */
+    #a3e635, /* Lime Green */
+    #00ffcc, /* Matrix Teal */
+    #00f0ff, /* Icy Cyan */
+    #3b82f6, /* Electric Blue */
+    #6366f1, /* Cool Violet */
+    #facc15  /* Loop back */
+  );
+  background-size: 400% 400%;
+  animation: neon-rainbow-flow 8s ease infinite;
+}
+
+/* Classy Yellow-to-Cool-Dark Shifting Gradient for Act 2 Text/Icon Elements */
+.neon-cool-text {
+  background: linear-gradient(
+    45deg,
+    #facc15, /* Neon Yellow */
+    #a3e635, /* Lime Green */
+    #00ffcc, /* Matrix Teal */
+    #00f0ff, /* Icy Cyan */
+    #3b82f6, /* Electric Blue */
+    #6366f1, /* Cool Violet */
+    #facc15  /* Loop back */
+  );
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  animation: neon-rainbow-flow 8s ease infinite;
+}
+
+/* Animated Neon Border-Only Gradient utilizing the same Yellow-to-Cool palette */
+.neon-cool-border {
+  position: relative;
+  border: 2px solid transparent !important;
+}
+
+.neon-cool-border::before {
+  content: '';
+  position: absolute;
+  top: -2px; bottom: -2px; left: -2px; right: -2px;
+  background: linear-gradient(
+    45deg,
+    #facc15, /* Neon Yellow */
+    #a3e635, /* Lime Green */
+    #00ffcc, /* Matrix Teal */
+    #00f0ff, /* Icy Cyan */
+    #3b82f6, /* Electric Blue */
+    #6366f1, /* Cool Violet */
+    #facc15  /* Loop back */
+  );
+  background-size: 400% 400%;
+  border-radius: inherit;
+  z-index: 0;
+  animation: neon-rainbow-flow 8s ease infinite;
+  pointer-events: none;
+}
+
+/* Ensure content overlays above the gradient border background */
+.neon-cool-border > * {
+  position: relative;
+  z-index: 10;
+}
+
+/* Animated Shifting Neon Border utilizing double backgrounds to bypass overflow:hidden clipping */
+.neon-gradient-border {
+  border: 2.5px solid transparent !important;
+  background-image: linear-gradient(#0f1629, #0f1629), linear-gradient(
+    45deg,
+    #facc15, /* Neon Yellow */
+    #a3e635, /* Lime Green */
+    #00ffcc, /* Matrix Teal */
+    #00f0ff, /* Icy Cyan */
+    #3b82f6, /* Electric Blue */
+    #6366f1, /* Cool Violet */
+    #facc15  /* Loop back */
+  ) !important;
+  background-clip: padding-box, border-box !important;
+  background-origin: padding-box, border-box !important;
+  background-size: 100% 100%, 400% 400% !important;
+  animation: neon-rainbow-flow 8s ease infinite !important;
+}
+
+@keyframes neon-cool-oscillate {
+  0% {
+    filter: hue-rotate(-45deg);
+  }
+  50% {
+    filter: hue-rotate(45deg);
+  }
+  100% {
+    filter: hue-rotate(-45deg);
+  }
+}
+
+/* Hardware-accelerated real-time color shifting strictly within a beautiful, curated cool palette */
+.neon-vertical-indicator {
+  background: linear-gradient(
+    to bottom,
+    #00ffcc, /* Matrix Teal */
+    #00f0ff, /* Icy Cyan */
+    #3b82f6, /* Electric Blue */
+    #6366f1  /* Cool Violet */
+  ) !important;
+  animation: neon-cool-oscillate 5s ease-in-out infinite !important;
+}
+
+

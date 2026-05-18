@@ -28,9 +28,10 @@ function KPICard({ icon, label, value, countUpTarget, countUpDecimals = 0, suffi
   return (
     <div
       data-animate="kpi"
-      className={`kpi-card-glow bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-t-2 ${scheme.border} min-h-[9rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow`}
+      className={`kpi-card-glow bg-white/5 backdrop-blur-md rounded-xl border border-white/10 border-t-2 ${scheme.border} min-h-[9rem] p-6 hover:shadow-md hover:border-white/20 transition-all duration-300 card-glow tech-corner-ticks`}
       style={{ '--kpi-glow-rgb': glowMap[color] }}
     >
+      <div className="corner-tick-bottom" />
       <div className="flex items-start justify-between mb-3">
         <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${scheme.iconBg} ${scheme.iconText}`}>
           {icon}

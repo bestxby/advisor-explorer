@@ -53,7 +53,7 @@ export default function Header({ kpiSection }) {
             <h1 data-parallax="slow" className="mt-4 min-w-0 text-[3.6rem] sm:text-[4.3rem] md:text-[5.2rem] lg:text-[5.6rem] xl:text-[6.2rem] font-black leading-[1] font-heading tracking-[-0.02em]">
               <span className="whitespace-nowrap">计算机体系结构</span>
               <br />
-              <span className="text-accent-light bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent inline-block mt-2">方向导航</span>
+              <span className="neon-rainbow-text inline-block mt-2">方向导航</span>
             </h1>
 
             {/* Badges */}
