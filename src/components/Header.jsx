@@ -107,7 +107,7 @@ export default function Header({ kpiSection }) {
         </div>
 
         {/* KPI 概览 */}
-        {kpiSection && <div className="mt-[14.5rem] mb-2">{kpiSection}</div>}
+        {kpiSection && <div className="mt-[10rem] mb-2">{kpiSection}</div>}
       </div>
 
       {/* Bottom fade — blends header into content area */}
