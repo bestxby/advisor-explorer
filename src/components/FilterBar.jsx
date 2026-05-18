@@ -2,7 +2,6 @@ import { useFilter } from '../context/useFilter';
 import TabBar from './filter/TabBar';
 
 export default function FilterBar({
-  directions,
   filteredProfessorsLength,
   directionsLength,
   tabs,

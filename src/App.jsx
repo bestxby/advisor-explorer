@@ -3,7 +3,6 @@ import Footer from './components/Footer';
 import Header from './components/Header';
 import AppPanels from './components/layout/AppPanels';
 import KPISummary from './components/KPISummary';
-import { TAB_DEFINITIONS } from './config/tabs';
 import { FilterProvider } from './context/FilterContext';
 import { DataRepository } from './services/DataRepository';
 import useCursorGlow from './hooks/useCursorGlow';

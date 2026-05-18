@@ -28,6 +28,7 @@ export default function Background3D({ activeDirection }) {
         engineRef.current = null;
       }
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [theme]);
 
   // Synchronize activeDirection changes to the particle engine in real-time

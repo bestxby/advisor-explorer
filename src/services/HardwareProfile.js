@@ -19,7 +19,7 @@ export function detectHardwareQuality() {
         gpuName = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || '';
       }
     }
-  } catch (e) {
+  } catch {
     // Safe fallback
   }
 
