@@ -1,5 +1,4 @@
 import { lazy, Suspense } from 'react';
-import FilterBar from './components/FilterBar';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import AppPanels from './components/layout/AppPanels';
@@ -41,6 +40,7 @@ export default function App() {
       <FilterProvider value={explorerState.filterValue}>
         <div
           id="content-wrapper"
+          data-active-theme={explorerState.selectedDirection}
           className="min-h-screen bg-transparent overflow-x-hidden content-ambient content-grid-texture relative"
         >
           {/* Ambient glow orbs */}
@@ -49,12 +49,6 @@ export default function App() {
             <div className="content-ambient-orb content-ambient-orb--2" />
             <div className="content-ambient-orb content-ambient-orb--3" />
           </div>
-          <FilterBar
-            directions={directions}
-            filteredProfessorsLength={filteredProfessors.length}
-            directionsLength={directions.length}
-            tabs={TAB_DEFINITIONS}
-          />
           <AppPanels
             activeTab={explorerState.activeTab}
             directions={directions}

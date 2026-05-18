@@ -42,8 +42,8 @@ export default function Background3D({ activeDirection }) {
   return (
     <div 
       ref={containerRef} 
-      className="absolute top-0 left-0 w-full pointer-events-none" 
-      style={{ zIndex: 1, opacity: 0.72, height: '100vh' }}
+      className="absolute top-0 left-0 overflow-hidden pointer-events-none" 
+      style={{ zIndex: 1, opacity: 0.72, width: '100vw', height: '100vh' }}
     />
   );
 }

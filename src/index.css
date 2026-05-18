@@ -224,10 +224,10 @@ html {
 }
 .card-glow:hover {
   box-shadow:
-    0 0 0 1px rgba(14, 165, 233, 0.12),
-    0 4px 24px -4px rgba(34, 211, 238, 0.1),
+    0 0 0 1px var(--theme-accent-primary, #0ea5e9),
+    0 4px 24px -4px var(--theme-accent-glow, rgba(14, 165, 233, 0.12)),
     0 12px 48px -8px rgba(0, 0, 0, 0.4);
-  border-color: rgba(14, 165, 233, 0.25);
+  border-color: var(--theme-accent-primary, #0ea5e9);
 }
 
 .kpi-card-glow {
@@ -384,8 +384,9 @@ html {
 .content-ambient-orb {
   position: absolute;
   border-radius: 9999px;
-  filter: blur(100px);
+  filter: blur(120px);
   opacity: 1;
+  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .content-ambient-orb--1 {
@@ -393,7 +394,7 @@ html {
   height: 500px;
   top: -100px;
   left: -80px;
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.06) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--theme-accent-orb-1) 0%, transparent 70%);
   animation: ambientDrift1 25s ease-in-out infinite;
 }
 
@@ -402,7 +403,7 @@ html {
   height: 400px;
   top: 30%;
   right: -120px;
-  background: radial-gradient(circle, rgba(167, 139, 250, 0.045) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--theme-accent-orb-2) 0%, transparent 70%);
   animation: ambientDrift2 30s ease-in-out infinite;
 }
 
@@ -411,7 +412,7 @@ html {
   height: 350px;
   bottom: 10%;
   left: 20%;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.04) 0%, transparent 70%);
+  background: radial-gradient(circle, var(--theme-accent-orb-3) 0%, transparent 70%);
   animation: ambientDrift3 22s ease-in-out infinite;
 }
 
@@ -456,3 +457,39 @@ html {
   z-index: 2;
   opacity: 1;
 }
+
+/* ========================================================
+   Active Theme Variable Overrides (Dynamic Chameleon Engine)
+   ======================================================== */
+#content-wrapper {
+  --theme-accent-primary: #0ea5e9;
+  --theme-accent-glow: rgba(14, 165, 233, 0.12);
+  --theme-accent-orb-1: rgba(14, 165, 233, 0.06);
+  --theme-accent-orb-2: rgba(167, 139, 250, 0.045);
+  --theme-accent-orb-3: rgba(34, 211, 238, 0.04);
+}
+
+#content-wrapper[data-active-theme="ai-compiler"] {
+  --theme-accent-primary: #22d3ee;
+  --theme-accent-glow: rgba(34, 211, 238, 0.15);
+  --theme-accent-orb-1: rgba(34, 211, 238, 0.12);
+  --theme-accent-orb-2: rgba(14, 165, 233, 0.08);
+  --theme-accent-orb-3: rgba(167, 139, 250, 0.06);
+}
+
+#content-wrapper[data-active-theme="llm-system"] {
+  --theme-accent-primary: #a78bfa;
+  --theme-accent-glow: rgba(167, 139, 250, 0.15);
+  --theme-accent-orb-1: rgba(167, 139, 250, 0.12);
+  --theme-accent-orb-2: rgba(34, 211, 238, 0.08);
+  --theme-accent-orb-3: rgba(236, 72, 153, 0.06);
+}
+
+#content-wrapper[data-active-theme="edge-ai"] {
+  --theme-accent-primary: #a3e635;
+  --theme-accent-glow: rgba(163, 230, 53, 0.15);
+  --theme-accent-orb-1: rgba(163, 230, 53, 0.12);
+  --theme-accent-orb-2: rgba(34, 211, 238, 0.08);
+  --theme-accent-orb-3: rgba(250, 204, 21, 0.06);
+}
+

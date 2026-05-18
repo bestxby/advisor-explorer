@@ -4,7 +4,7 @@ import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
-const particleSize = 212;
+const particleSize = 120;
 
 const DIRECTION_PALETTES = {
   default: [
@@ -164,25 +164,19 @@ export class ThreeParticleEngine {
     
     switch (this.quality) {
       case 'low':
-        this.particleCount = 20000;
-        this.dustCount = 0;
+        this.particleCount = 30000;
+        this.dustCount = 1000;
         this.enableBloom = false;
         this.pixelRatioCap = 1.0;
-        this.pointSizeMultiplier = 1.6; // Slightly larger points to maintain shape fullness at low density
+        this.pointSizeMultiplier = 1.4; // Slightly larger points to maintain shape fullness at low density
         break;
       case 'medium':
-        this.particleCount = 60000;
-        this.dustCount = 2000;
-        this.enableBloom = false;
-        this.pixelRatioCap = 1.2;
-        this.pointSizeMultiplier = 1.35; // Visually full representation
-        break;
       case 'high':
       default:
-        this.particleCount = 120000;
+        this.particleCount = 110000;
         this.dustCount = 6000;
         this.enableBloom = true;
-        this.pixelRatioCap = Math.min(window.devicePixelRatio, 2);
+        this.pixelRatioCap = Math.min(window.devicePixelRatio, 2.0);
         this.pointSizeMultiplier = 1.0;
         break;
     }
@@ -284,7 +278,7 @@ export class ThreeParticleEngine {
 
     this.points = new THREE.Points(this.geometry, this.material);
     this.points.visible = true;
-    this.points.position.x = window.innerWidth > 1024 ? 3.121 * (window.innerWidth / window.innerHeight) : 0;
+    this.points.position.x = window.innerWidth > 1024 ? 3.6 : 0;
     
     this.scene.add(this.points);
   }
@@ -432,19 +426,30 @@ export class ThreeParticleEngine {
 
   updateDirection(direction) {
     this.activeDirection = direction;
-    if (this.validPoints && this.validPoints.length > 0) {
-      const count = this.particleCount;
+    const palette = getPalette(direction).map(parseColor);
+    const count = this.particleCount;
+    
+    if (this.geometry && this.geometry.attributes.color && this.geometry.attributes.targetColor) {
+      const colorsAttr = this.geometry.attributes.color.array;
+      const targetColorsAttr = this.geometry.attributes.targetColor.array;
+      
+      // Copy current target colors into base colors
+      colorsAttr.set(targetColorsAttr);
+      this.geometry.attributes.color.needsUpdate = true;
+      
+      // Set new theme colors into target colors
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
-        const point = this.validPoints[i % this.validPoints.length];
-        
-        if (point.col) {
-          this.targetColors[i3] = point.col[0];
-          this.targetColors[i3 + 1] = point.col[1];
-          this.targetColors[i3 + 2] = point.col[2];
-        }
+        const color = palette[Math.floor(Math.random() * palette.length)];
+        targetColorsAttr[i3] = color.r;
+        targetColorsAttr[i3 + 1] = color.g;
+        targetColorsAttr[i3 + 2] = color.b;
       }
       this.geometry.attributes.targetColor.needsUpdate = true;
+      
+      // Smoothly morph to the new colors over 1.5s
+      this.currentMorph = 0.0;
+      this.morphTarget = 1.0;
     }
   }
 
@@ -468,7 +473,7 @@ export class ThreeParticleEngine {
     }
     
     if (this.points) {
-      this.points.position.x = this.width > 1024 ? 3.121 * (this.width / this.height) : 0;
+      this.points.position.x = this.width > 1024 ? 3.6 : 0;
     }
   }
 

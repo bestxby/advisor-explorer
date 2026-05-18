@@ -1,7 +1,4 @@
 import { useFilter } from '../context/useFilter';
-import ActiveDirectionFilter from './filter/ActiveDirectionFilter';
-import DirectionFilterControl from './filter/DirectionFilterControl';
-import DirectionSortControl from './filter/DirectionSortControl';
 import TabBar from './filter/TabBar';
 
 export default function FilterBar({
@@ -11,23 +8,17 @@ export default function FilterBar({
   tabs,
 }) {
   const {
-    selectedDirection,
-    setSelectedDirection,
-    sortBy,
-    setSortBy,
     activeTab,
     setActiveTab,
     hasQuizResult,
   } = useFilter();
-  const isProfTab = activeTab === 'professors';
-  const isRoadmapTab = activeTab === 'roadmap';
 
   return (
     <div
       data-filterbar
       className="bg-[#070b14]/90 backdrop-blur-xl border-b border-[#2a3550]/40 sticky top-0 z-20 shadow-sm shadow-[0_4px_24px_-4px_rgba(0,0,0,0.5)] overflow-hidden"
     >
-      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 min-h-[4rem] flex flex-col xl:flex-row xl:items-center gap-3 py-3 relative">
+      <div className="max-w-[1800px] mx-auto px-4 sm:px-6 min-h-[4rem] flex items-center justify-center py-3 relative">
         <TabBar
           tabs={tabs}
           activeTab={activeTab}
@@ -38,29 +29,6 @@ export default function FilterBar({
             directions: directionsLength,
           }}
         />
-
-        {!isRoadmapTab && (
-          <div className="w-full xl:w-auto xl:absolute xl:right-6 xl:top-1/2 xl:-translate-y-1/2 flex flex-col sm:flex-row sm:items-center sm:justify-center xl:justify-end gap-3">
-            {isProfTab ? (
-              <>
-                <DirectionFilterControl
-                  directions={directions}
-                  selectedDirection={selectedDirection}
-                  onDirectionChange={setSelectedDirection}
-                />
-                {selectedDirection !== 'all' && (
-                  <ActiveDirectionFilter
-                    directions={directions}
-                    selectedDirection={selectedDirection}
-                    onClear={() => setSelectedDirection('all')}
-                  />
-                )}
-              </>
-            ) : (
-              <DirectionSortControl sortBy={sortBy} onSortChange={setSortBy} />
-            )}
-          </div>
-        )}
       </div>
     </div>
   );

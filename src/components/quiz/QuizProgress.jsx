@@ -38,7 +38,7 @@ export default function QuizProgress({ currentQ, totalQuestions }) {
   return (
     <div className="flex items-center justify-between gap-3 mb-8 min-w-0">
       <div
-        className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto pb-1"
+        className="flex items-center gap-1.5 sm:gap-3 overflow-x-auto py-2.5 px-1 -my-2.5"
         role="group"
         aria-label="问卷进度"
       >
