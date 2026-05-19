@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect } from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import AppPanels from './components/layout/AppPanels';
@@ -25,6 +25,14 @@ export default function App() {
 
   useScrollAnimations({ activeTab: explorerState.activeTab });
   useCursorGlow();
+
+  // Force scroll to top on initial page mount and disable browser automatic scroll restoration
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <div className="min-h-screen bg-transparent overflow-x-hidden relative">
